@@ -1,0 +1,23 @@
+[
+  {
+    "nom": "Claire Delvaux",
+    "photo": "",
+    "description": "Facilitatrice certifiée DPE, spécialisée dans l'accompagnement des CODIR et équipes de direction. 15 ans d'expérience en transformation organisationnelle.",
+    "region": "Île-de-France",
+    "email": "claire.delvaux@example.com"
+  },
+  {
+    "nom": "Thomas Reignier",
+    "photo": "",
+    "description": "Consultant en dynamiques collectives et facilitateur DPE. Accompagne les organisations dans l'activation de leurs présences énergétiques depuis 10 ans.",
+    "region": "Auvergne-Rhône-Alpes",
+    "email": "thomas.reignier@example.com"
+  },
+  {
+    "nom": "Nadia Belkacem",
+    "photo": "",
+    "description": "Coach systémique et facilitatrice DPE. Experte en sécurité psychologique et gouvernance partagée. Intervient auprès d'équipes de 8 à 200 personnes.",
+    "region": "Nouvelle-Aquitaine",
+    "email": "nadia.belkacem@example.com"
+  }
+]

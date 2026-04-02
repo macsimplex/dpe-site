@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DPE · Dynamiques de Présences Énergétiques</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#c9a052;--g2:#8a6830;--bg:#0d0b08;--surf:#1c1710;--brd:#2a2218;--mu:#a09080;--dim:#4a4035}
+body{font-family:Georgia,serif;background:var(--bg);color:#ede8e0;min-height:100vh}
+#nav{position:fixed;top:0;left:0;right:0;z-index:99;background:var(--bg);border-bottom:1px solid var(--brd);padding:11px 18px;display:flex;align-items:center;gap:12px}
+#nav.light{background:#f4efe6;border-bottom-color:#cbbfac}
+.logo{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--g)}
+#nav.light .logo{color:var(--g2)}
+.pb{flex:1;max-width:160px;height:2px;background:var(--dim)}
+#nav.light .pb{background:#cbbfac}
+.pf{height:100%;background:var(--g);width:0;transition:width .4s}
+.ns{font-family:Arial,sans-serif;font-size:10px;color:var(--mu)}
+#nav.light .ns{color:#7a6a55}
+.sc{display:none;min-height:100vh;padding-top:52px}
+.sc.on{display:block}
+#s0{background:radial-gradient(ellipse at 50% 25%,rgba(201,160,82,.07) 0%,transparent 60%),var(--bg)}
+#s0.on{display:flex;align-items:center;justify-content:center}
+.inner{max-width:580px;margin:0 auto;padding:40px 18px 70px}
+.hbox{max-width:500px;padding:40px 18px 60px;text-align:center;margin:0 auto}
+.htag{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--g);margin-bottom:18px}
+h1{font-size:clamp(24px,5vw,42px);font-weight:normal;line-height:1.22;margin-bottom:16px}
+.gg{color:var(--g)}
+.hsub{font-family:Arial,sans-serif;font-size:14px;color:var(--mu);line-height:1.75;margin-bottom:34px}
+.hcta{font-family:Arial,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;padding:15px 38px;background:var(--g);border:none;color:var(--bg);cursor:pointer;margin-bottom:30px}
+.hrule{width:28px;height:1px;background:var(--dim);margin:0 auto 14px}
+.hnote{font-family:Arial,sans-serif;font-size:11px;color:#3a3228;line-height:1.8}
+.ey{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:8px}
+h2{font-size:clamp(18px,3vw,24px);font-weight:normal;margin-bottom:10px}
+.lead{font-family:Arial,sans-serif;font-size:13px;color:var(--mu);line-height:1.65;margin-bottom:22px}
+.fl{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--mu);display:block;margin-bottom:9px}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}
+.pill{font-family:Arial,sans-serif;font-size:12px;padding:7px 13px;cursor:pointer;border:1px solid var(--dim);background:transparent;color:var(--mu)}
+.pill.on{border-color:var(--g);background:#2a1e0e;color:var(--g)}
+.nw{display:flex;max-width:200px;margin-bottom:7px}
+.ni{width:148px;padding:11px 13px;font-family:Georgia,serif;font-size:20px;color:#ede8e0;background:var(--surf);border:1px solid var(--dim);border-right:none;outline:none}
+.ni:focus{border-color:var(--g)}
+.nu{padding:11px 12px;background:var(--surf);border:1px solid var(--dim);font-family:Arial,sans-serif;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu)}
+.hint{font-family:Arial,sans-serif;font-size:11px;color:var(--dim);font-style:italic;margin-bottom:26px}
+.btns{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid var(--dim)}
+.btn{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.17em;text-transform:uppercase;padding:11px 22px;cursor:pointer;border:1px solid var(--g);background:transparent;color:var(--g)}
+.btn.p{background:var(--g);color:var(--bg)}
+.btn:disabled{opacity:.25;cursor:not-allowed}
+.chdr{display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--brd)}
+.cnum{font-size:32px;color:var(--dim);line-height:1;flex-shrink:0;width:40px}
+.ctag{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.26em;text-transform:uppercase;margin-bottom:3px}
+.cname{font-size:clamp(16px,2.4vw,21px);line-height:1.2;margin-bottom:4px}
+.cdesc{font-family:Arial,sans-serif;font-size:12px;color:var(--mu);line-height:1.6}
+.qcard{background:var(--surf);border-left:3px solid #ffffff22;padding:14px 15px;margin-bottom:10px}
+.qnum{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#6a5030;margin-bottom:6px}
+.qtxt{font-family:Arial,sans-serif;font-size:13px;font-weight:bold;line-height:1.6;color:#ede8e0;margin-bottom:7px}
+.qanc{font-family:Arial,sans-serif;font-size:11px;color:var(--mu);font-style:italic;line-height:1.5;padding-left:9px;border-left:2px solid var(--dim);margin-bottom:12px}
+.slrow{display:flex;align-items:center;gap:9px}
+.sll{font-family:Arial,sans-serif;font-size:10px;color:var(--mu);width:72px;flex-shrink:0}
+.sll.r{text-align:right}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:2px;background:var(--dim);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--g);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--g);cursor:pointer}
+.slv{font-family:Georgia,serif;font-size:15px;color:var(--g);width:18px;text-align:center;flex-shrink:0}
+.stc{font-family:Arial,sans-serif;font-size:10px;color:var(--mu)}
+.sbox{background:var(--surf);border:1px solid var(--brd);padding:22px 18px;text-align:center;margin-bottom:16px}
+.slbl{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--g);margin-bottom:9px}
+.sbig{font-size:clamp(50px,9vw,68px);line-height:1;margin-bottom:10px}
+.sden{font-size:.38em;color:var(--mu)}
+.squal{display:inline-block;font-family:Arial,sans-serif;font-size:12px;padding:3px 12px;margin-bottom:12px}
+.scost{font-size:17px;color:#7fbf7f}
+.ebox{background:var(--surf);border:1px solid var(--brd);padding:20px 18px}
+.ebox h3{font-size:17px;font-weight:normal;color:#ede8e0;margin-bottom:7px}
+.ebox p{font-family:Arial,sans-serif;font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:15px}
+.erow{display:flex;margin-bottom:8px}
+.einp{flex:1;background:#100e08;border:1px solid var(--dim);border-right:none;padding:11px 13px;font-family:Arial,sans-serif;font-size:14px;color:#ede8e0;outline:none}
+.einp:focus{border-color:var(--g)}
+.ego{padding:11px 17px;background:var(--g);border:1px solid var(--g);color:var(--bg);font-family:Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.ego:disabled{opacity:.35;cursor:not-allowed;background:#3a2a10}
+.enote{font-family:Arial,sans-serif;font-size:10px;color:var(--dim)}
+#s8{background:#f4efe6;color:#1a1510}
+.rcov{background:var(--bg);color:#ede8e0;padding:50px 18px 38px;position:relative;overflow:hidden}
+.rcov::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,160,82,.09) 0%,transparent 60%);pointer-events:none}
+.rcin{max-width:700px;margin:0 auto;position:relative}
+.rlogo{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:20px}
+.rtag{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:10px}
+.rh1{font-size:clamp(18px,3.5vw,28px);font-weight:normal;line-height:1.25;margin-bottom:20px}
+.rmeta{display:flex;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid rgba(201,160,82,.2)}
+.rmi{display:flex;flex-direction:column;gap:2px}
+.rml{font-family:Arial,sans-serif;font-size:7px;letter-spacing:.26em;text-transform:uppercase;color:rgba(201,160,82,.45)}
+.rmv{font-size:12px}
+.rbody{max-width:700px;margin:0 auto;padding:0 18px 60px}
+.rsec{padding-top:26px;margin-top:26px;border-top:1px solid #cbbfac}
+.rsec:first-child{border-top:none}
+.rey{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--g2);display:block;margin-bottom:7px}
+.rh2{font-size:clamp(15px,2.3vw,20px);font-weight:normal;color:#1a1510;margin-bottom:10px}
+.rp{font-family:Arial,sans-serif;font-size:13px;line-height:1.72;color:#1a1510;margin-bottom:9px}
+.dkpis{background:var(--bg);color:#ede8e0;display:grid;grid-template-columns:1fr 1fr;margin:14px 0}
+.dkc{padding:18px 14px;text-align:center}
+.dkc:first-child{border-right:1px solid #2a2218}
+.dkl{font-family:Arial,sans-serif;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:7px}
+.dkv{font-size:clamp(36px,6vw,46px);line-height:1;margin-bottom:8px}
+.dkb{display:inline-block;font-family:Arial,sans-serif;font-size:11px;padding:2px 10px}
+.dks{font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,.38)}
+.finh{background:var(--bg);color:#ede8e0;padding:24px 18px;margin:13px 0;text-align:center;position:relative;overflow:hidden}
+.finh::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,160,82,.16) 0%,transparent 60%);pointer-events:none}
+.finh>*{position:relative}
+.ftag{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--g);margin-bottom:8px;display:block}
+.famt{font-size:clamp(30px,6vw,46px);color:#7fbf7f;line-height:1;margin-bottom:5px}
+.frng{font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,.3);margin-bottom:8px}
+.fper{font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,.45)}
+.krow{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#cbbfac;margin:11px 0}
+.kpi{background:#ebe4d8;padding:11px 8px;text-align:center}
+.kv{font-size:21px;line-height:1;margin-bottom:2px}
+.kl{font-family:Arial,sans-serif;font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:#7a6a55}
+.bkgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:11px 0}
+.bkc{background:#ebe4d8;border:1px solid #cbbfac;padding:11px 10px}
+.bki{font-size:16px;display:block;margin-bottom:4px}
+.bka{font-size:17px;color:#3d7040;line-height:1;margin-bottom:2px}
+.bkn{font-family:Arial,sans-serif;font-size:8px;letter-spacing:.09em;text-transform:uppercase;color:#7a6a55;margin-bottom:3px}
+.bkf{font-family:Arial,sans-serif;font-size:10px;color:#7a6a55;font-style:italic;border-top:1px solid #ddd5c5;margin-top:6px;padding-top:6px}
+.callout{background:#ebe4d8;border-top:3px solid var(--g);padding:12px 15px;margin:11px 0}
+.ct{font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:var(--g2);margin-bottom:5px}
+.cb{font-family:Arial,sans-serif;font-size:11px;color:#7a6a55;line-height:1.72;white-space:pre-line}
+.sgp-note{margin-top:9px;padding:10px 13px;font-family:Arial,sans-serif;font-size:11px;line-height:1.65;border-left:3px solid #b8924a;background:rgba(0,0,0,.04);color:#5a4030}
+.roi{background:var(--bg);margin:13px 0;position:relative;overflow:hidden}
+.roi::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 100% 50%,rgba(201,160,82,.10) 0%,transparent 60%);pointer-events:none}
+.roiin{position:relative;padding:20px 18px}
+.roibadge{font-family:Arial,sans-serif;font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--g);background:rgba(201,160,82,.12);display:inline-block;padding:3px 10px;margin-bottom:12px}
+.roihead{font-size:clamp(14px,2.2vw,18px);color:#fff;line-height:1.3;margin-bottom:8px}
+.roitag{font-family:Arial,sans-serif;font-size:12px;color:rgba(237,232,224,.5);line-height:1.65;margin-bottom:14px;border-left:2px solid rgba(201,160,82,.35);padding-left:12px;font-style:italic}
+.roig{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(201,160,82,.15);margin-bottom:13px}
+.roic{background:#141008;padding:15px 11px;text-align:center}
+.roiv{font-size:clamp(20px,4vw,30px);line-height:1;margin-bottom:4px}
+.roisub{font-family:Arial,sans-serif;font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:rgba(237,232,224,.38);line-height:1.4}
+.roidet{font-family:Arial,sans-serif;font-size:11px;color:rgba(237,232,224,.4);line-height:1.65;border-top:1px solid rgba(201,160,82,.12);padding-top:13px}
+.radwrap{display:flex;justify-content:center;margin:16px 0}
+.ccgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.ccc{background:#ebe4d8;border:1px solid #cbbfac;padding:12px 11px;position:relative}
+.ccc::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%}
+.ccn{font-size:12px;margin-bottom:2px}
+.ccd{font-family:Arial,sans-serif;font-size:9px;color:#7a6a55;margin-bottom:6px}
+.ccbt{height:3px;background:rgba(0,0,0,.08);border-radius:2px;overflow:hidden;margin-bottom:5px}
+.ccb{height:100%;border-radius:2px}
+.ccrow{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.ccnum{font-size:15px}
+.ccmax{font-family:Arial,sans-serif;font-size:9px;color:#7a6a55}
+.ccbadge{font-family:Arial,sans-serif;font-size:8px;letter-spacing:.09em;text-transform:uppercase;padding:2px 5px;color:#fff;margin-left:auto}
+.cctxt{font-family:Arial,sans-serif;font-size:10px;color:#7a6a55;line-height:1.5;border-top:1px solid #ddd5c5;padding-top:5px}
+.plist{list-style:none;margin:11px 0}
+.pi{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #ddd5c5}
+.pi:last-child{border-bottom:none}
+.pn{font-size:19px;color:#cbbfac;flex-shrink:0;width:20px;line-height:1}
+.ph{font-family:Arial,sans-serif;font-size:12px;font-weight:bold;margin-bottom:3px}
+.pd{font-family:Arial,sans-serif;font-size:11px;color:#7a6a55;line-height:1.5}
+.upside{background:var(--bg);color:#ede8e0;padding:15px 15px;margin:11px 0}
+.utag{font-family:Arial,sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:6px}
+.uamt{font-size:20px;color:#7fbf7f;margin-bottom:5px}
+.udesc{font-family:Arial,sans-serif;font-size:11px;color:rgba(237,232,224,.45);line-height:1.6}
+.wkbl{background:var(--bg);color:#ede8e0;padding:17px 15px;margin:11px 0;border-left:4px solid var(--g)}
+.wkp{font-family:Arial,sans-serif;font-size:12px;color:rgba(237,232,224,.65);line-height:1.7}
+.wkgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}
+.wkc{background:#ebe4d8;border:1px solid #cbbfac;padding:10px 10px}
+.wkct{font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:var(--g2);margin-bottom:3px}
+.wkcd{font-family:Arial,sans-serif;font-size:11px;color:#7a6a55;line-height:1.5}
+.stbl{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:11px;margin:11px 0}
+.stbl th{text-align:left;font-weight:normal;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#7a6a55;padding:5px 8px;border-bottom:1px solid #cbbfac;background:#ebe4d8}
+.stbl td{padding:5px 8px;border-bottom:1px solid #ddd5c5;color:#1a1510;line-height:1.4;vertical-align:top}
+.stbl td:first-child{color:var(--g2)}
+.rfooter{font-family:Arial,sans-serif;font-size:10px;color:#7a6a55;text-align:center;padding:22px 0;line-height:1.8}
+/* ── ENCARTS ACADÉMIQUES (dépliables) ── */
+details.ref-box{background:#f8f3eb;border:1px solid #ddd0bc;border-left:4px solid var(--g2);margin:11px 0;border-radius:2px}
+details.ref-box summary{font-family:Arial,sans-serif;font-size:11px;color:var(--g2);padding:10px 14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none;line-height:1.4}
+details.ref-box summary::-webkit-details-marker{display:none}
+details.ref-box summary::before{content:'＋';font-size:12px;flex-shrink:0;color:var(--g2);font-style:normal}
+details.ref-box[open]>summary::before{content:'－'}
+details.ref-box summary:hover{background:#f0e8d8}
+.ref-body{padding:11px 14px 14px;border-top:1px solid #ddd0bc}
+.ref-who{font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:#1a1510;margin-bottom:6px}
+.ref-txt{font-family:Arial,sans-serif;font-size:12px;line-height:1.65;color:#4a3c2a;margin-bottom:6px}
+.ref-dpe{font-family:Arial,sans-serif;font-size:11px;color:var(--g2);font-style:italic;line-height:1.55}
+details.ref-dark{background:#141008;border:1px solid #3a2a18;border-left:4px solid var(--g);margin:10px 0}
+details.ref-dark summary{font-family:Arial,sans-serif;font-size:11px;color:var(--g);padding:10px 14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none}
+details.ref-dark summary::-webkit-details-marker{display:none}
+details.ref-dark summary::before{content:'＋';font-size:12px;flex-shrink:0;color:var(--g)}
+details.ref-dark[open]>summary::before{content:'－'}
+details.ref-dark summary:hover{background:#1c1610}
+details.ref-dark .ref-body{border-top-color:#3a2a18}
+details.ref-dark .ref-who{color:#ede8e0}
+details.ref-dark .ref-txt{color:#a09080}
+details.ref-dark .ref-dpe{color:var(--g)}
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+@media(max-width:540px){.ref-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <span class="logo">DPE</span>
+  <div class="pb"><div class="pf" id="pf"></div></div>
+  <span class="ns" id="ns"></span>
+</nav>
+
+<!-- HERO -->
+<div class="sc on" id="s0">
+  <div class="hbox">
+    <p class="htag">Dynamiques de Présences Énergétiques</p>
+    <h1>Votre organisation<br><span class="gg">libère-t-elle</span><br>tout son potentiel&thinsp;?</h1>
+    <p class="hsub">L'énergie collective dissipée par le désalignement de vos cadres systémiques représente un potentiel évaluable. Découvrez-le en 10 minutes.</p>
+    <button class="hcta" onclick="go(1)">Commencer mon diagnostic →</button>
+    <div class="hrule"></div>
+    <p class="hnote">5 cadres systémiques<br><span style="opacity:.5">10 min · 15 questions · évaluation du potentiel</span></p>
+  </div>
+</div>
+
+<!-- PROFIL -->
+<div class="sc" id="s1">
+  <div class="inner">
+    <span class="ey">Étape 1 / 7</span>
+    <h2>Votre profil</h2>
+    <p class="lead">Deux clics et un chiffre — c'est tout ce dont nous avons besoin.</p>
+    <span class="fl">Vous êtes</span>
+    <div class="pills" id="rp">
+      <button class="pill" onclick="sr(this,'Dirigeant(e)')">Dirigeant(e)</button>
+      <button class="pill" onclick="sr(this,'DRH / RH')">DRH / RH</button>
+      <button class="pill" onclick="sr(this,'Manager')">Manager</button>
+      <button class="pill" onclick="sr(this,'Manager de proximité')">Manager de proximité</button>
+      <button class="pill" onclick="sr(this,'Consultant(e)')">Consultant(e)</button>
+    </div>
+    <span class="fl">Secteur</span>
+    <div class="pills" id="sp">
+      <button class="pill on" onclick="ss(this,'autre')">Tous secteurs</button>
+      <button class="pill" onclick="ss(this,'tech')">Tech / Numérique</button>
+      <button class="pill" onclick="ss(this,'conseil')">Conseil / Services</button>
+      <button class="pill" onclick="ss(this,'industrie')">Industrie</button>
+      <button class="pill" onclick="ss(this,'sante')">Santé</button>
+      <button class="pill" onclick="ss(this,'finance')">Finance</button>
+      <button class="pill" onclick="ss(this,'retail')">Commerce</button>
+      <button class="pill" onclick="ss(this,'public')">Public / Asso.</button>
+    </div>
+    <span class="fl">Nombre de collaborateurs</span>
+    <div class="nw"><input class="ni" type="number" id="hci" placeholder="100" min="1" oninput="ck()"><span class="nu">pers.</span></div>
+    <p class="hint">Seul champ requis</p>
+    <div class="btns">
+      <button class="btn" onclick="go(0)">← Retour</button>
+      <button class="btn p" id="bs" onclick="go(2)" disabled>Démarrer →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CADRES injectés par JS -->
+
+<!-- EMAIL -->
+<div class="sc" id="s7">
+  <div class="inner" style="max-width:520px">
+    <span class="ey">Votre score</span>
+    <h2>Un aperçu de vos résultats</h2>
+    <div class="sbox">
+      <p class="slbl">Score Global Pondéré (SGP)</p>
+      <div class="sbig" id="sb">—<span class="sden">/25</span></div>
+      <div class="squal" id="sq">—</div>
+      <div class="scost" id="sc2">—</div>
+    </div>
+    <div class="ebox">
+      <h3>Accédez à votre rapport complet</h3>
+      <p>Analyse par cadre, robustesse organisationnelle, tensions inter-cadres, ROI de l'atelier et priorités d'activation.</p>
+      <div class="erow">
+        <input class="einp" type="email" id="em" placeholder="votre@email.com" oninput="ce()">
+        <button class="ego" id="bgo" onclick="go(8)" disabled>Accéder →</button>
+      </div>
+      <p class="enote">Rapport immédiat. Pas de démarchage.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RAPPORT -->
+<div class="sc" id="s8">
+  <div class="rcov">
+    <div class="rcin">
+      <span class="rlogo">DYNAMIQUES DE PRÉSENCES ÉNERGÉTIQUES</span>
+      <span class="rtag">Diagnostic systémique des présences énergétiques</span>
+      <h1 class="rh1">Rapport DPE</h1>
+      <div class="rmeta">
+        <div class="rmi"><span class="rml">Rôle</span><span class="rmv" id="rr">—</span></div>
+        <div class="rmi"><span class="rml">Secteur</span><span class="rmv" id="rsec">—</span></div>
+        <div class="rmi"><span class="rml">Effectif</span><span class="rmv" id="rhc">—</span></div>
+        <div class="rmi"><span class="rml">SGP</span><span class="rmv" id="rsc">—</span></div>
+        <div class="rmi"><span class="rml">Date</span><span class="rmv" id="rd">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rbody">
+
+    <div class="rsec" style="border-top:none;padding-top:24px">
+      <span class="rey">01 · Introduction</span>
+      <h2 class="rh2">Ce que ce diagnostic révèle</h2>
+      <p class="rp">Ce DPE — Dynamiques de Présences Énergétiques — révèle l'état des cinq cadres systémiques et évalue le potentiel d'activation collective disponible. Il n'existe pas de référence objective externe à un système vivant : seul le système peut se décrire lui-même. Ce diagnostic est donc un miroir, non une norme — ses réponses sont vraies parce qu'elles viennent de l'intérieur du système.</p>
+      <details class="ref-box">
+        <summary>Pourquoi seul le système peut s'auto-évaluer — et pourquoi c'est une force</summary>
+        <div class="ref-body">
+          <p class="ref-who">Maturana &amp; Varela — <em>Autopoiesis and Cognition</em>, Reidel, 1980 · Von Foerster — <em>On Constructing a Reality</em>, 1973 · Carl Rogers — <em>Client-Centered Therapy</em>, Houghton Mifflin, 1951</p>
+          <p class="ref-txt">Maturana et Varela ont établi qu'un système vivant est organisationnellement fermé : toute description externe projette la réalité de l'observateur, non celle du système. Von Foerster a montré que l'objectivité est une illusion épistémologique — l'observateur est irrémédiablement inclus dans ce qu'il observe. Rogers a établi que le champ phénoménal de l'expérience vécue est la seule réalité psychologiquement valide : un score imposé de l'extérieur crée de l'incongruence, pas de la connaissance.</p>
+          <p class="ref-dpe">→ Le DPE tire sa validité précisément du fait qu'il n'impose aucune norme externe. En répondant à ces questions depuis votre vécu, vous produisez la seule description légitime de votre système : la vôtre.</p>
+        </div>
+      </details>
+      <div class="dkpis">
+        <div class="dkc">
+          <p class="dkl">SCORE GLOBAL PONDÉRÉ</p>
+          <div class="dkv" id="rdkv">—</div>
+          <div class="dkb" id="rdkb">—</div>
+        </div>
+        <div class="dkc">
+          <p class="dkl">ROBUSTESSE ORGANISATIONNELLE / AN</p>
+          <div class="dkv" style="color:#7fbf7f" id="rdkc">—</div>
+          <p class="dks" id="rdkp">—</p>
+        </div>
+      </div>
+      <p class="rp" id="rex">—</p>
+      <details class="ref-box">
+        <summary>La dissipation énergétique dans les systèmes vivants</summary>
+        <div class="ref-body">
+          <p class="ref-who">Ilya Prigogine &amp; Isabelle Stengers — <em>La Nouvelle Alliance</em>, 1979 · Prix Nobel de Chimie 1977</p>
+          <p class="ref-txt">Les systèmes vivants maintiennent leur organisation en échangeant constamment de l'énergie avec leur environnement. Ce qui n'est pas activement canalisé se dissipe sous forme de friction ou d'entropie. Il n'y a pas de neutralité : un système qui ne progresse pas régresse.</p>
+          <p class="ref-dpe">→ Ce que révèle votre DPE : l'énergie dissipée par le désalignement de vos cadres n'est pas perdue par négligence — c'est un phénomène naturel et quantifiable. La reconnaître est la première étape pour la recanaliser.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="rsec">
+      <span class="rey">02 · Robustesse organisationnelle</span>
+      <h2 class="rh2">Le potentiel de robustesse</h2>
+      <p class="rp">Le désalignement entre cadres systémiques génère une dissipation d'énergie collective dont le potentiel de robustesse est rarement évalué dans les organisations.</p>
+      <details class="ref-box">
+        <summary>Pourquoi la robustesse, et pas l'optimisation</summary>
+        <div class="ref-body">
+          <p class="ref-who">Olivier Hamant — <em>La Troisième Voie du Vivant</em>, Odile Jacob, 2022 · biologiste, ENS Lyon</p>
+          <p class="ref-txt">Les systèmes vivants ne cherchent pas l'optimisation — ils cherchent la robustesse : la capacité à maintenir leurs fonctions malgré les perturbations. Elle n'est pas atteinte en éliminant les tensions, mais en maintenant des fluctuations productives. Un système trop optimisé devient fragile — il performe dans un contexte stable, mais s'effondre au premier choc. La robustesse suppose des redondances, des marges, des réserves d'adaptation.</p>
+          <p class="ref-dpe">→ Le potentiel mis en évidence par le DPE n'est pas ce qu'on récupère après une perte — c'est la robustesse que l'organisation peut construire. Réduire les tensions inter-cadres (σ) ne vise pas la performance maximale, mais la résilience durable.</p>
+        </div>
+      </details>
+      <div class="finh">
+        <span class="ftag">Robustesse organisationnelle — potentiel estimé</span>
+        <div class="famt" id="rfa">—</div>
+        <div class="frng" id="rfr">—</div>
+        <div class="fper" id="rfp">—</div>
+      </div>
+      <div class="krow">
+        <div class="kpi"><div class="kv" id="rk1" style="color:#c9a052">—</div><p class="kl">SGP / 25</p></div>
+        <div class="kpi"><div class="kv" id="rk2" style="color:#b8924a">—</div><p class="kl">Taux de dissipation</p></div>
+        <div class="kpi"><div class="kv" id="rk3" style="color:#7a8aaa">—</div><p class="kl">Écart-type σ</p></div>
+      </div>
+      <div class="bkgrid" id="rbk"></div>
+      <div class="callout" id="rcalc"><div class="ct">Calculs</div><div class="cb">—</div></div>
+      <details class="ref-box">
+        <summary>Interdépendances et effets en cascade entre cadres</summary>
+        <div class="ref-body">
+          <p class="ref-who">Peter Senge — <em>The Fifth Discipline</em>, Doubleday, 1990</p>
+          <p class="ref-txt">Dans un système complexe, les composantes sont reliées par des boucles de renforcement : une dynamique positive dans un domaine amplifie les dynamiques positives dans les autres. Symétriquement, un blocage dans un domaine freine l'ensemble du système — souvent de manière non linéaire et invisible jusqu'à ce qu'il soit trop tard.</p>
+          <p class="ref-dpe">→ C'est le fondement du Score Global Pondéré (SGP) : deux organisations avec la même moyenne peuvent avoir des robustesses radicalement différentes selon la dispersion de leurs scores. Un cadre faible ne nuit pas seulement à lui-même — il dissipe l'énergie des cadres plus solides.</p>
+        </div>
+      </details>
+      <div class="ref-grid">
+        <details class="ref-box">
+        <summary>Répondre au questionnaire amorce déjà le changement</summary>
+        <div class="ref-body">
+          <p class="ref-who">Morwitz, Johnson &amp; Schmittlein — <em>Journal of Consumer Research</em>, 1993</p>
+          <p class="ref-txt">Le simple fait de répondre à un questionnaire sur ses intentions augmente significativement la probabilité de passer à l'acte. L'acte de mesurer crée lui-même l'intention de changer.</p>
+          <p class="ref-dpe">→ Répondre à ce DPE n'est pas neutre : vous avez déjà amorcé le mouvement.</p>
+        </div>
+      </details>
+        <details class="ref-box">
+        <summary>L'écart visible déclenche automatiquement la correction</summary>
+        <div class="ref-body">
+          <p class="ref-who">Carver &amp; Scheier — <em>Attention and Self-Regulation</em>, Springer, 1981</p>
+          <p class="ref-txt">Confronter son état réel à un état désiré active automatiquement un mécanisme de comparaison interne. L'écart perçu crée une tension psychologique productive qui cherche naturellement à se résorber.</p>
+          <p class="ref-dpe">→ Voir son score DPE active ce comparateur : l'écart visible entre réel et souhaité devient moteur du mouvement.</p>
+        </div>
+      </details>
+        <details class="ref-box">
+        <summary>Nommer sa réalité réactive la capacité d'agir</summary>
+        <div class="ref-body">
+          <p class="ref-who">Albert Bandura — <em>Self-Efficacy: The Exercise of Control</em>, Freeman, 1997</p>
+          <p class="ref-txt">Les croyances en sa propre capacité d'agir conditionnent les choix, l'effort fourni et la persistance face aux obstacles. Nommer sa réalité dans un cadre constitue une expérience de maîtrise partielle qui réactive la capacité d'agir et enclenche un cycle de confiance croissante.</p>
+          <p class="ref-dpe">→ L'atelier DPE crée ces expériences de maîtrise collective : chaque prise de conscience partagée renforce la croyance collective en la capacité de changer.</p>
+        </div>
+      </details>
+        <details class="ref-box">
+        <summary>Trois facteurs amplifient la réactivité à la mesure</summary>
+        <div class="ref-body">
+          <p class="ref-who">Méta-analyse — <em>Journal of Medical Internet Research</em>, 2021</p>
+          <p class="ref-txt">La réactivité à la mesure est amplifiée par trois facteurs : la facilité à changer, la conscience d'être mesuré, et la résolution des écarts entre comportement réel et désiré par l'auto-régulation. Ces trois facteurs sont précisément ce que produit une journée DPE.</p>
+          <p class="ref-dpe">→ La prise de conscience collective lors de l'atelier crée les conditions pour qu'un gain de +1 point soit quasi-certain — assurant mécaniquement le ROI de la journée.</p>
+        </div>
+      </details>
+      </div>
+
+      <!-- ROI -->
+      <div class="roi">
+        <div class="roiin">
+          <div class="roibadge">Le ROI de la prise de conscience</div>
+          <div class="roihead">Et si votre SGP augmentait d'<span style="color:#c9a052">un seul point</span>&thinsp;?</div>
+          <p class="roitag">Cinq décennies de recherche convergent : prendre conscience de son état énergétique collectif <em>suffit</em> à déclencher une amélioration mesurable. L'atelier DPE crée ces conditions — le ROI est mécaniquement assuré.</p>
+          <details class="ref-dark">
+          <summary>La prise de conscience collective garantit un gain d'au moins +1 point</summary>
+          <div class="ref-body">
+            <p class="ref-who">Morwitz, Johnson &amp; Schmittlein (1993) · Carver &amp; Scheier (1981) · Bandura (1997) · Méta-analyse JMIR (2021) · Méta-analyse QoL Research (2025)</p>
+            <p class="ref-txt">Cinq corpus de recherche indépendants établissent le même mécanisme : (1) répondre à un questionnaire augmente significativement l'intention d'agir (Morwitz) ; (2) voir l'écart entre état réel et état souhaité déclenche un mécanisme automatique de correction (Carver &amp; Scheier) ; (3) nommer sa réalité réactive la capacité d'agir et enclenche un cycle de confiance croissante (Bandura) ; (4) la facilité à changer, la conscience d'être évalué et la résolution des écarts amplifient la réactivité comportementale (JMIR) ; (5) la mesure façonne l'identité et pousse le système à s'y conformer (QoL Research 2025).</p>
+            <p class="ref-dpe">→ Ces cinq mécanismes s'activent simultanément lors d'une journée DPE collective. Un gain de +1 point sur le SGP n'est pas une projection optimiste — c'est la conséquence naturelle et documentée de la prise de conscience partagée. Le ROI de 2 000 € est donc assuré avant même la fin de l'atelier.</p>
+          </div>
+        </details>
+          <div class="roig">
+            <div class="roic"><div class="roiv" style="color:#c9a052" id="roi1">—</div><p class="roisub">Robustesse supplémentaire<br>+1 pt · équipe de 12</p></div>
+            <div class="roic"><div class="roiv" style="color:#7fbf7f" id="roi2">—</div><p class="roisub">ROI atelier<br>journée · 2 000 €</p></div>
+          </div>
+          <p class="roidet" id="roidet">—</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rsec">
+      <span class="rey">03 · Les 5 cadres</span>
+      <h2 class="rh2">L'état de vos présences énergétiques</h2>
+      <p class="rp">Les cinq cadres forment un système interdépendant. Le Relationnel est la fondation absolue — sans sécurité psychologique, aucune transformation ne tient.</p>
+      <details class="ref-box">
+        <summary>Les 5 cadres systémiques comme modèle d'analyse</summary>
+        <div class="ref-body">
+          <p class="ref-who">Le Point Zéro — Approche systémique des dynamiques organisationnelles</p>
+          <p class="ref-txt">Les cinq cadres — Relationnel, Sens, Gouvernance, Opérationnel, Apprenance — constituent un modèle d'analyse des dynamiques de présences énergétiques dans les organisations. Chaque cadre représente une dimension irréductible de la vitalité collective ; aucune ne peut être durablement activée sans tenir compte des quatre autres.</p>
+          <p class="ref-dpe">→ Le SGP traduit mathématiquement ce principe : la pénalisation par l'écart-type σ signifie que la robustesse du système est celle de son cadre le moins activé.</p>
+        </div>
+      </details>
+      <details class="ref-box">
+        <summary>La sécurité psychologique comme fondation systémique</summary>
+        <div class="ref-body">
+          <p class="ref-who">Amy Edmondson — <em>The Fearless Organization</em>, Wiley, 2018 · Projet Aristotle, Google (2016)</p>
+          <p class="ref-txt">Une étude menée par Google sur 180 équipes a identifié la sécurité psychologique comme le premier prédicteur de la performance collective — bien avant les compétences individuelles, les ressources ou les processus. Sans espace pour exprimer ses doutes et nommer les problèmes, aucune dynamique collective ne se déploie pleinement.</p>
+          <p class="ref-dpe">→ C'est pourquoi le cadre Relationnel est la fondation absolue du DPE. Un score faible sur ce cadre bloque l'activation de tous les autres, quelle que soit leur propre vitalité.</p>
+        </div>
+      </details>
+      <div class="radwrap"><svg id="rad" width="220" height="220" viewBox="0 0 220 220" style="overflow:visible"></svg></div>
+      <div class="ccgrid" id="rcc"></div>
+    </div>
+
+    <div class="rsec">
+      <span class="rey">04 · Priorités d'activation</span>
+      <h2 class="rh2">Par où commencer</h2>
+      <p class="rp">Les cadres les moins activés concentrent l'essentiel du potentiel. Les activer réduit l'écart-type σ, augmentant le SGP davantage que n'importe quel autre investissement.</p>
+      <details class="ref-box">
+        <summary>Travailler en priorité sur les freins pour un effet amplificateur</summary>
+        <div class="ref-body">
+          <p class="ref-who">Eliyahu Goldratt — <em>The Goal</em>, North River Press, 1984</p>
+          <p class="ref-txt">La performance d'un système est déterminée par son maillon le plus faible — la contrainte. Renforcer n'importe quel autre maillon en premier ne change pas la performance globale du système. Seul le travail sur la contrainte principale produit une amélioration réelle et mesurable.</p>
+          <p class="ref-dpe">→ Appliqué au DPE : activer en priorité le cadre le moins présent réduit mécaniquement l'écart-type σ, ce qui augmente le SGP davantage que n'importe quel autre investissement. Réduire la tension inter-cadres a un effet amplificateur sur l'ensemble du système.</p>
+        </div>
+      </details>
+      <ul class="plist" id="rprio"></ul>
+      <div class="upside" id="rups"></div>
+    </div>
+
+    <div class="rsec">
+      <span class="rey">05 · Passer à l'action</span>
+      <h2 class="rh2">Atelier DPE · 1 journée en équipe</h2>
+      <div class="wkbl"><p class="wkp">Ce diagnostic individuel révèle les cadres à activer. L'atelier collectif — CODIR ou management team — crée la conscience partagée et l'élan nécessaires à la transformation réelle.</p></div>
+      <details class="ref-dark">
+          <summary>L'atelier collectif amplifie ce que le diagnostic individuel initie</summary>
+          <div class="ref-body">
+            <p class="ref-who">Sigal Barsade — <em>The Ripple Effect</em>, Administrative Science Quarterly, 2002</p>
+            <p class="ref-txt">Les états émotionnels se transmettent entre individus dans un groupe de manière inconsciente et rapide — créant une dynamique collective qui influence directement la coopération, la qualité des décisions et la performance. Un groupe vivant collectivement une prise de conscience partagée crée une dynamique émotionnelle positive qui se diffuse à l'ensemble de ses membres.</p>
+            <p class="ref-dpe">→ C'est ce qui distingue l'atelier collectif du diagnostic individuel : les 12 participants ne vivent pas 12 fois la même expérience — ils vivent une expérience collective qualitativement différente, dont l'impact sur le SGP dépasse la somme des impacts individuels.</p>
+          </div>
+        </details>
+      <div class="wkgrid">
+        <div class="wkc"><p class="wkct">Conscience partagée</p><p class="wkcd">Toute l'équipe voit ses cadres simultanément.</p></div>
+        <div class="wkc"><p class="wkct">Langage commun</p><p class="wkcd">Les 5 cadres deviennent outils de dialogue.</p></div>
+        <div class="wkc"><p class="wkct">Plan co-construit</p><p class="wkcd">Priorités qui émergent du collectif.</p></div>
+        <div class="wkc"><p class="wkct">Ancrage durable</p><p class="wkcd">Engagement qui tient dans le temps.</p></div>
+      </div>
+      <p class="rp" style="margin-top:14px;color:#7a6a55;font-size:12px">→ Contactez votre facilitateur DPE pour organiser un atelier avec votre équipe.</p>
+    </div>
+
+    <div class="rsec">
+      <span class="rey">06 · Sources</span>
+      <h2 class="rh2">Références et bases de calcul</h2>
+      <p class="rp">Évaluations indicatives — elles rendent visible le potentiel de l'invisible.</p>
+      <table class="stbl"><thead><tr><th>Source</th><th>Indicateur</th><th>Valeur</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td>Gallup 2023</td><td>Désengagement</td><td>9% PIB mondial</td><td>Calibration dissipation</td></tr>
+        <tr><td>McKinsey 2022</td><td>Perte productivité</td><td>20–25%</td><td>Validation modèle</td></tr>
+        <tr><td>Institut Sapiens 2023</td><td>Coût salarié désengagé</td><td>14 310€/an</td><td>Ancrage France</td></tr>
+        <tr><td>Microsoft WTI 2023</td><td>Réunions improductives</td><td>31h/mois</td><td>Surplus réunions</td></tr>
+        <tr><td>SHRM</td><td>Coût remplacement</td><td>50–200% salaire</td><td>Calcul turnover</td></tr>
+        <tr><td>DARES/INSEE 2023</td><td>Salaires référence</td><td>Par secteur</td><td>Masse salariale</td></tr>
+      </tbody></table>
+      <div class="callout" id="rmth"></div>
+    </div>
+
+    <p class="rfooter">DPE · Dynamiques de Présences Énergétiques</p>
+  </div>
+</div>
+
+<script>
+
+var SECS={
+  autre:    {l:"Tous secteurs",      s:42000,t:.17},
+  tech:     {l:"Tech / Numerique",   s:54000,t:.22},
+  conseil:  {l:"Conseil / Services", s:56000,t:.21},
+  industrie:{l:"Industrie",          s:40000,t:.14},
+  sante:    {l:"Sante",              s:34000,t:.20},
+  finance:  {l:"Finance",            s:54000,t:.16},
+  retail:   {l:"Commerce",           s:30000,t:.28},
+  public:   {l:"Public / Asso.",     s:33000,t:.10}
+};
+var CS=[
+  {id:"r",n:"01",name:"Relationnel",col:"#c4603a",
+   desc:"S\u00e9curit\u00e9 psychologique, confiance et authenticit\u00e9.",
+   qs:[
+     {id:"r1",lo:"Personne n'ose",hi:"Souvent",
+      q:"Lors de votre derni\u00e8re r\u00e9union, quelqu'un a-t-il exprim\u00e9 ouvertement un d\u00e9saccord avec une d\u00e9cision de son manager ?",
+      a:"Pensez \u00e0 une r\u00e9union concr\u00e8te de la semaine pass\u00e9e."},
+     {id:"r2",lo:"En coulisses",hi:"Ouvertement",
+      q:"Quand un collaborateur fait une erreur, est-ce que \u00e7a se r\u00e8gle ouvertement en \u00e9quipe ou plut\u00f4t en coulisses ?",
+      a:"Pensez au dernier incident notable."},
+     {id:"r3",lo:"Des semaines",hi:"Quelques jours",
+      q:"Combien de temps dure en moyenne une tension non r\u00e9solue avant d'\u00eatre nomm\u00e9e et trait\u00e9e ?",
+      a:"Froids, d\u00e9saccords ou non-dits qui s'\u00e9tirent."}
+   ],
+   low:"La s\u00e9curit\u00e9 psychologique est encore en construction. C'est le levier d'activation le plus fondamental.",
+   high:"La confiance est solide. Les d\u00e9saccords s'expriment et les tensions se traitent au grand jour.",
+   action:"Rituels de feedback sans enjeu hi\u00e9rarchique. Former les managers \u00e0 l'\u00e9coute active."},
+  {id:"s",n:"02",name:"Sens",col:"#3d7040",
+   desc:"Clart\u00e9 de la mission, coh\u00e9rence discours/actes, boussole commune.",
+   qs:[
+     {id:"s1",lo:"5 r\u00e9ponses diff\u00e9rentes",hi:"Message unifi\u00e9",
+      q:"Si vous demandiez \u00e0 5 collaborateurs d'expliquer la raison d'\u00eatre en une phrase, obtiendriez-vous 5 r\u00e9ponses coh\u00e9rentes ?",
+      a:"Testez mentalement avec des personnes concr\u00e8tes."},
+     {id:"s2",lo:"Appris par rumeur",hi:"Expliqu\u00e9 en amont",
+      q:"Lors du dernier changement important, les \u00e9quipes ont-elles compris le pourquoi avant d'apprendre le quoi par la rumeur ?",
+      a:"Pensez \u00e0 la derni\u00e8re d\u00e9cision qui a surpris les collaborateurs."},
+     {id:"s3",lo:"Trop risqu\u00e9",hi:"Toujours bienvenu",
+      q:"Un collaborateur peut-il remettre en question une d\u00e9cision sans risquer sa r\u00e9putation ?",
+      a:"Y a-t-il des sujets dont tout le monde parle \u2014 mais jamais en r\u00e9union ?"}
+   ],
+   low:"La boussole commune est \u00e0 renforcer. Fort potentiel d'activation sur ce cadre.",
+   high:"Le sens est partag\u00e9 et v\u00e9cu. Les \u00e9quipes comprennent le pourquoi de leur travail.",
+   action:"Co-construire la raison d'\u00eatre. Incarner les valeurs dans chaque d\u00e9cision visible."},
+  {id:"g",n:"03",name:"Gouvernance",col:"#2a4a8b",
+   desc:"Clart\u00e9 d\u00e9cisionnelle, distribution du pouvoir, l\u00e9gitimit\u00e9.",
+   qs:[
+     {id:"g1",lo:"Souvent flou",hi:"Toujours clair",
+      q:"Savez-vous pr\u00e9cis\u00e9ment \u2014 sans demander \u2014 qui a le dernier mot sur une d\u00e9cision de budget dans votre p\u00e9rim\u00e8tre ?",
+      a:"Pensez \u00e0 une d\u00e9cision prise la semaine derni\u00e8re."},
+     {id:"g2",lo:"Plusieurs fois/mois",hi:"Presque jamais",
+      q:"Combien de fois par mois une d\u00e9cision d\u00e9j\u00e0 prise doit-elle \u00eatre revue parce que les bonnes personnes n'\u00e9taient pas dans la salle ?",
+      a:"Les absents qui contredisent, les d\u00e9cisions qui repartent en discussion."},
+     {id:"g3",lo:"Rarement",hi:"Syst\u00e9matiquement",
+      q:"Les d\u00e9cisions importantes sont-elles document\u00e9es et effectivement consult\u00e9es ?",
+      a:"Pas seulement r\u00e9dig\u00e9es \u2014 r\u00e9ellement utilis\u00e9es."}
+   ],
+   low:"Les r\u00e8gles du jeu d\u00e9cisionnel sont \u00e0 clarifier. L'autorit\u00e9 distribu\u00e9e lib\u00e8re de l'\u00e9nergie.",
+   high:"Les r\u00e8gles du jeu sont claires et l\u00e9gitimes. Le pouvoir circule vers la comp\u00e9tence.",
+   action:"Cartographier les processus d\u00e9cisionnels. Distribuer l'autorit\u00e9."},
+  {id:"o",n:"04",name:"Op\u00e9rationnel",col:"#6b4a9b",
+   desc:"Clart\u00e9 des r\u00f4les, efficacit\u00e9 des rituels, capacit\u00e9 d'adaptation.",
+   qs:[
+     {id:"o1",lo:"Chacun comprend autre chose",hi:"M\u00eame compr\u00e9hension",
+      q:"Apr\u00e8s une r\u00e9union d'une heure, chacun repart-il avec la m\u00eame compr\u00e9hension des actions \u00e0 faire, par qui et pour quand ?",
+      a:"Pensez \u00e0 votre derni\u00e8re r\u00e9union de coordination."},
+     {id:"o2",lo:"Tout s'arr\u00eate",hi:"L'\u00e9quipe continue",
+      q:"Quand un collaborateur cl\u00e9 est absent plusieurs jours, son travail avance-t-il normalement ?",
+      a:"Pensez aux derni\u00e8res absences impr\u00e9vues."},
+     {id:"o3",lo:"Plusieurs semaines",hi:"Quelques heures",
+      q:"La derni\u00e8re fois que votre contexte a chang\u00e9 rapidement, en combien de temps votre \u00e9quipe s'est-elle r\u00e9organis\u00e9e ?",
+      a:"Pas la r\u00e9union de crise \u2014 le retour \u00e0 l'efficacit\u00e9 normale."}
+   ],
+   low:"Les rituels et r\u00f4les sont \u00e0 optimiser. C'est un levier direct de r\u00e9duction de friction.",
+   high:"R\u00f4les clairs, rituels porteurs d'\u00e9nergie, adaptation fluide.",
+   action:"Clarifier les r\u00f4les. Auditer les rituels. Adopter des m\u00e9thodes agiles."},
+  {id:"a",n:"05",name:"Apprenance",col:"#b8924a",
+   desc:"Apprentissage collectif, changement des pratiques, r\u00e9g\u00e9n\u00e9ration.",
+   qs:[
+     {id:"a1",lo:"On tourne la page",hi:"Analyse collective",
+      q:"La derni\u00e8re erreur significative a-t-elle donn\u00e9 lieu \u00e0 une analyse collective \u2014 ou a-t-on surtout tourn\u00e9 la page ?",
+      a:"Pas un blame game \u2014 une vraie mise en commun."},
+     {id:"a2",lo:"Rien ne me vient",hi:"Plusieurs exemples",
+      q:"Pouvez-vous citer une pratique concr\u00e8te que votre \u00e9quipe a chang\u00e9e suite \u00e0 un apprentissage collectif dans les 6 derniers mois ?",
+      a:"Quelque chose qui a chang\u00e9 dans la m\u00e9thode."},
+     {id:"a3",lo:"Reste isol\u00e9e",hi:"Devient la norme",
+      q:"Quand quelqu'un d\u00e9couvre une meilleure fa\u00e7on de faire, cette pratique devient-elle la norme pour tous ?",
+      a:"Pensez \u00e0 la derni\u00e8re bonne pratique que vous avez vue rester isol\u00e9e."}
+   ],
+   low:"La capacit\u00e9 d'apprentissage collectif est \u00e0 d\u00e9velopper. Cl\u00e9 de la r\u00e9g\u00e9n\u00e9ration organisationnelle.",
+   high:"L'organisation sait apprendre collectivement. Les erreurs alimentent le progr\u00e8s.",
+   action:"R\u00e9trospectives r\u00e9guli\u00e8res. Valoriser les apprentissages. Communaut\u00e9s de pratique."}
+];
+CS.forEach(function(c,ci){
+  var d=document.createElement('div');
+  d.className='sc'; d.id='s'+(ci+2);
+  d.innerHTML='<div class="inner"><div class="chdr">'
+    +'<div class="cnum" style="color:'+c.col+'66">'+c.n+'</div>'
+    +'<div><p class="ctag" style="color:'+c.col+'">Cadre Syst\u00e9mique</p>'
+    +'<p class="cname" style="color:'+c.col+'">'+c.name+'</p>'
+    +'<p class="cdesc">'+c.desc+'</p></div></div>'
+    +c.qs.map(function(q,j){
+      return '<div class="qcard" style="border-left-color:'+c.col+'55">'
+        +'<p class="qnum">Question '+(j+1)+' / 3</p>'
+        +'<p class="qtxt">'+q.q+'</p>'
+        +'<p class="qanc">'+q.a+'</p>'
+        +'<div class="slrow">'
+        +'<span class="sll">'+q.lo+'</span>'
+        +'<input type="range" min="1" max="5" value="3" oninput="uq(\''+q.id+'\',+this.value,\'d'+q.id+'\')">'
+        +'<span class="slv" id="d'+q.id+'">3</span>'
+        +'<span class="sll r">'+q.hi+'</span>'
+        +'</div></div>';
+    }).join('')
+    +'<div class="btns">'
+    +'<button class="btn" onclick="go('+(ci+1)+')">← Pr\u00e9c\u00e9dent</button>'
+    +'<span class="stc">Cadre '+(ci+1)+' / 5</span>'
+    +'<button class="btn p" onclick="go('+(ci+3)+')">'+(ci===4?'Voir mon score \u2192':'Suivant \u2192')+'</button>'
+    +'</div></div>';
+  document.getElementById('s7').insertAdjacentElement('beforebegin',d);
+});
+var ST={role:null,sec:'autre',hc:0};
+var SC={};
+CS.forEach(function(c){c.qs.forEach(function(q){SC[q.id]=3;});});
+function go(n){
+  document.querySelectorAll('.sc').forEach(function(s){s.classList.remove('on');});
+  document.getElementById('s'+n).classList.add('on');
+  window.scrollTo(0,0);
+  document.getElementById('nav').className=n===8?'light':'';
+  document.getElementById('pf').style.width=(n/8*100)+'%';
+  document.getElementById('ns').textContent=['','Profil','1/5','2/5','3/5','4/5','5/5','Score','Rapport'][n]||'';
+  if(n===7)buildEmail();
+  if(n===8)buildReport();
+}
+function sr(el,r){document.querySelectorAll('#rp .pill').forEach(function(p){p.classList.remove('on');});el.classList.add('on');ST.role=r;ck();}
+function ss(el,s){document.querySelectorAll('#sp .pill').forEach(function(p){p.classList.remove('on');});el.classList.add('on');ST.sec=s;}
+function ck(){ST.hc=parseInt(document.getElementById('hci').value)||0;document.getElementById('bs').disabled=!(ST.role&&ST.hc>0);}
+function uq(id,v,did){SC[id]=v;document.getElementById(did).textContent=v;}
+function ce(){document.getElementById('bgo').disabled=!/\S+@\S+\.\S+/.test(document.getElementById('em').value);}
+function getCsc(){return CS.map(function(c){return c.qs.reduce(function(s,q){return s+SC[q.id];},0);});}
+function sgpCalc(csc){
+  var mean=csc.reduce(function(s,v){return s+v;},0)/csc.length;
+  var variance=csc.reduce(function(s,v){return s+Math.pow(v-mean,2);},0)/csc.length;
+  var sigma=Math.sqrt(variance);
+  var sgpRaw=Math.max(0,mean-sigma);
+  return {mean:mean,sigma:sigma,sgpRaw:sgpRaw,sgpNorm:Math.round(sgpRaw*25/15),pct:Math.round(sgpRaw/15*100),delta:Math.max.apply(null,csc)-Math.min.apply(null,csc)};
+}
+function dissipRate(n){var c=Math.max(5,Math.min(25,n));return 0.38-(0.38-0.04)*((c-5)/20);}
+function te(n){return(1-Math.max(5,Math.min(25,n))/25)*0.10;}
+function me(n){return 0.15*(1-Math.max(5,Math.min(25,n))/25)*0.32;}
+function potentiel(n,ms,hc,sal){return Math.round(ms*dissipRate(n))+Math.round(hc*te(n)*sal*0.85)+Math.round(ms*me(n));}
+function sqLabel(pct){
+  var c=pct>=80?'#4a7a4a':pct>=60?'#7a8a3a':pct>=40?'#b8924a':'#8b5a3a';
+  return{t:pct+'% du potentiel activ\u00e9',c:c};
+}
+function cadreColor(s){var p=(s-3)/12;if(p>=0.83)return'#3d7040';if(p>=0.58)return'#7a8a3a';if(p>=0.33)return'#b8924a';return'#8b5a3a';}
+function execTxt(sgp,pct,pot){
+  var f=fmtp(fmt(pot));
+  var tension=sgp.sigma>3?' Les tensions inter-cadres (\u03c3='+sgp.sigma.toFixed(1)+') amplifient la dissipation \u2014 un cadre en retrait affecte l\u2019\u00e9nergie des autres.':'';
+  var base='SGP '+sgp.sgpNorm+'/25 \u00b7 '+pct+'% du potentiel activ\u00e9. ';
+  if(pct>=80)return base+'L\u2019organisation exprime une coh\u00e9rence \u00e9nerg\u00e9tique forte. La robustesse r\u00e9siduelle estimable est de '+f+'/an.'+tension;
+  if(pct>=60)return base+'Plusieurs cadres sont bien activ\u00e9s\u00a0; d\u2019autres recèlent encore un fort potentiel. Robustesse disponible\u202f: '+f+'/an.'+tension;
+  if(pct>=40)return base+'Des leviers d\u2019activation significatifs sont disponibles. Robustesse estimable\u202f: '+f+'/an.'+tension;
+  return base+'L\u2019ensemble des cadres offre un potentiel d\u2019activation important. Robustesse estim\u00e9e\u202f: '+f+'/an. Commencer par le Relationnel cr\u00e9e les conditions pour que les autres progressent.'+tension;
+}
+function fmt(n){if(!n&&n!==0)return'\u2014';if(n>=1e6)return(n/1e6).toFixed(1).replace('.0','')+'\u202fM\u20ac';if(n>=1e3)return Math.round(n/1e3)+'\u202fK\u20ac';return n.toLocaleString('fr-FR')+'\u202f\u20ac';}
+function fmtp(s){return(typeof s==='string'?s:fmt(s)).replace(/\u202f/g,' ');}
+function buildEmail(){
+  var csc=getCsc(),sgp=sgpCalc(csc),S=SECS[ST.sec]||SECS.autre;
+  var ms=Math.round(ST.hc*S.s*1.45),t=potentiel(sgp.sgpNorm,ms,ST.hc,S.s);
+  var q=sqLabel(sgp.pct);
+  document.getElementById('sb').innerHTML=sgp.sgpNorm+'<span class="sden">/25</span>';
+  var qel=document.getElementById('sq');qel.textContent=q.t;qel.style.color=q.c;qel.style.border='1px solid '+q.c;
+  document.getElementById('sc2').innerHTML='Robustesse \u00e9valu\u00e9e\u202f: <strong>'+fmt(t)+'</strong>\u202f/\u202fan';
+}
+function buildReport(){
+  var csc=getCsc(),sgp=sgpCalc(csc),S=SECS[ST.sec]||SECS.autre;
+  var ms=Math.round(ST.hc*S.s*1.45);
+  var w=dissipRate(sgp.sgpNorm),tex=te(sgp.sgpNorm),mex=me(sgp.sgpNorm);
+  var pw=Math.round(ms*w),tw=Math.round(ST.hc*tex*S.s*0.85),mw=Math.round(ms*mex);
+  var t=pw+tw+mw,pp=ST.hc>0?Math.round(t/ST.hc):0;
+  var sgpP1=Math.min(25,sgp.sgpNorm+1);
+  var t1=potentiel(sgpP1,ms,ST.hc,S.s),gain1=t-t1;
+  var ga=ST.hc>0?Math.round(gain1*12/ST.hc):0,rf=ga>0?Math.round(ga/2000):0;
+  var srt=[...CS.map(function(c,i){return{c:c,s:csc[i]};})].sort(function(a,b){return a.s-b.s;});
+  var q=sqLabel(sgp.pct);
+  document.getElementById('rr').textContent=ST.role||'\u2014';
+  document.getElementById('rsec').textContent=S.l;
+  document.getElementById('rhc').textContent=ST.hc+' collaborateurs';
+  document.getElementById('rsc').textContent=sgp.sgpNorm+'/25 \u00b7 '+sgp.pct+'% activ\u00e9 \u00b7 \u03c3='+sgp.sigma.toFixed(1);
+  document.getElementById('rd').textContent=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('rdkv').innerHTML=sgp.sgpNorm+'<span style="font-size:.35em;opacity:.3">/25</span>';
+  var db=document.getElementById('rdkb');db.textContent=q.t;db.style.color=q.c;db.style.border='1px solid '+q.c;
+  document.getElementById('rdkc').innerHTML=fmt(t);
+  document.getElementById('rdkp').innerHTML=fmtp(fmt(pp))+' / collaborateur';
+  document.getElementById('rex').textContent=execTxt(sgp,sgp.pct,t);
+  document.getElementById('rfa').innerHTML=fmt(t)+'<span style="font-size:.37em;opacity:.35"> /an</span>';
+  document.getElementById('rfr').innerHTML='Fourchette\u202f: '+fmt(Math.round(t*.70))+' \u2014 '+fmt(Math.round(t*1.35));
+  document.getElementById('rfp').innerHTML=fmtp(fmt(pp))+' par collaborateur \u00b7 '+ST.hc+' pers. \u00b7 '+S.l;
+  document.getElementById('rk1').innerHTML=sgp.sgpNorm+'/25';
+  document.getElementById('rk2').textContent=Math.round(w*100)+'%';
+  document.getElementById('rk3').textContent='\u03c3='+sgp.sigma.toFixed(1);
+  document.getElementById('rbk').innerHTML=[
+    ['\u26a1','Productivit\u00e9',fmt(pw),fmtp(fmt(ms))+' \u00d7 '+Math.round(w*100)+'%'],
+    ['\ud83d\udd04','Turnover',fmt(tw),ST.hc+' \u00d7 '+Math.round(tex*100)+'% \u00d7 '+Math.round(S.s/1000)+'K\u20ac \u00d7 85%'],
+    ['\ud83d\udd50','R\u00e9unions',fmt(mw),fmtp(fmt(ms))+' \u00d7 '+Math.round(mex*100)+'%'],
+    ['\ud83d\udc64','Par collaborateur',fmt(pp),fmtp(fmt(t))+' \u00f7 '+ST.hc]
+  ].map(function(b){return'<div class="bkc"><span class="bki">'+b[0]+'</span><div class="bka">'+b[2]+'</div><p class="bkn">'+b[1]+'</p><p class="bkf">'+b[3]+'</p></div>';}).join('');
+  var cscStr=CS.map(function(c,i){return c.name.substring(0,3)+'.='+csc[i];}).join(', ');
+  var sigmaColor=sgp.sigma>4?'#c4603a':sgp.sigma>2?'#b8924a':'#5a7a5a';
+  var sigmaMsg=sgp.sigma>4
+    ?'Tensions fortes entre cadres (\u03c3='+sgp.sigma.toFixed(1)+', \u0394='+sgp.delta+'). Le cadre '+srt[0].c.name+' ('+srt[0].s+'/15) tire significativement l\u2019ensemble vers le bas.'
+    :sgp.sigma>2
+    ?'Tensions mod\u00e9r\u00e9es entre cadres (\u03c3='+sgp.sigma.toFixed(1)+'). Un r\u00e9\u00e9quilibrage progressif lib\u00e8re de l\u2019\u00e9nergie.'
+    :'Cadres relativement \u00e9quilibr\u00e9s (\u03c3='+sgp.sigma.toFixed(1)+'). La dissipation est coh\u00e9rente et distribu\u00e9e.';
+  document.getElementById('rcalc').innerHTML=
+    '<div class="ct">Score Global Pond\u00e9r\u00e9 (SGP) \u2014 Formule et calculs</div>'
+    +'<div class="cb">'
+    +'\u2460 Scores par cadre (sur 15) : '+cscStr+'\n'
+    +'\u2461 Moyenne : ('+csc.join('+')+') \u00f7 5 = '+sgp.mean.toFixed(1)+'/15\n'
+    +'\u2462 \u00c9cart-type \u03c3 : \u221a(variance) = '+sgp.sigma.toFixed(2)+'\n'
+    +'\u2463 SGP = moyenne \u2212 \u03c3 = '+sgp.mean.toFixed(1)+' \u2212 '+sgp.sigma.toFixed(2)+' = '+sgp.sgpRaw.toFixed(2)+'/15 \u2192 '+sgp.sgpNorm+'/25\n'
+    +'\u2464 Taux de dissipation : 38%\u2212(34%\u00d7('+sgp.sgpNorm+'\u22125)/20) = '+Math.round(w*100)+'%\n'
+    +'\u2465 Masse salariale : '+ST.hc+'\u00d7'+S.s.toLocaleString('fr-FR')+'\u20ac\u00d71,45 = '+fmtp(fmt(ms))
+    +'</div>'
+    +'<div class="sgp-note" style="border-left-color:'+sigmaColor+';color:'+sigmaColor+'"><strong>'+sigmaMsg+'</strong></div>';
+  document.getElementById('roi1').innerHTML=fmt(ga);
+  document.getElementById('roi2').textContent=rf>0?rf+'x':'\u2014';
+  document.getElementById('roidet').innerHTML=
+    'Calcul\u202f: potentiel pour +1 pt SGP sur '+ST.hc+' collaborateurs = '+fmtp(fmt(gain1))
+    +'\u202f\u00d7\u202f12/'+ST.hc+' = <strong style="color:#c9a052">'+fmtp(fmt(ga))+'</strong>.'
+    +' Pour un atelier \u00e0 <strong style="color:#fff">2\u202f000\u202f\u20ac</strong>, le ROI est de <strong style="color:#7fbf7f">'+rf+'x</strong>.'
+    +' La prise de conscience collective est le premier levier \u2014 et le moins co\u00fbteux.';
+  var svg=document.getElementById('rad'),cx=110,cy=110,rv=80,nv=5,h='';
+  for(var lv=1;lv<=5;lv++){var rd=rv*lv/5,pts=[];for(var i=0;i<nv;i++){var a=(2*Math.PI*i/nv)-Math.PI/2;pts.push((cx+rd*Math.cos(a)).toFixed(1)+','+(cy+rd*Math.sin(a)).toFixed(1));}h+='<polygon points="'+pts.join(' ')+'" fill="none" stroke="#cbbfac" stroke-width="'+(lv===5?1:.5)+'" opacity=".5"/>';}
+  for(var i=0;i<nv;i++){var a=(2*Math.PI*i/nv)-Math.PI/2;h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+rv*Math.cos(a)).toFixed(1)+'" y2="'+(cy+rv*Math.sin(a)).toFixed(1)+'" stroke="#cbbfac" stroke-width=".5" opacity=".5"/>';}
+  h+='<polygon points="'+csc.map(function(s,i){var a=(2*Math.PI*i/nv)-Math.PI/2,v=(s/15)*rv;return(cx+v*Math.cos(a)).toFixed(1)+','+(cy+v*Math.sin(a)).toFixed(1);}).join(' ')+'" fill="rgba(201,160,82,.12)" stroke="#c9a052" stroke-width="2"/>';
+  CS.forEach(function(c,i){var a=(2*Math.PI*i/nv)-Math.PI/2,v=(csc[i]/15)*rv,lx=(cx+(rv+21)*Math.cos(a)).toFixed(1),ly=(cy+(rv+21)*Math.sin(a)).toFixed(1),anc=parseFloat(lx)<cx-4?'end':parseFloat(lx)>cx+4?'start':'middle';h+='<circle cx="'+(cx+v*Math.cos(a)).toFixed(1)+'" cy="'+(cy+v*Math.sin(a)).toFixed(1)+'" r="4.5" fill="'+c.col+'" stroke="white" stroke-width="1.5"/><text x="'+lx+'" y="'+(parseFloat(ly)+4).toFixed(1)+'" text-anchor="'+anc+'" font-size="9" font-family="Georgia,serif" fill="'+c.col+'">'+c.name+'</text>';});
+  svg.innerHTML=h;
+  document.getElementById('rcc').innerHTML=CS.map(function(c,i){
+    var s=csc[i],pctC=Math.round((s-3)/12*100),col=cadreColor(s);
+    return '<div class="ccc" style="border-top-color:'+c.col+'">'
+      +'<style>.ccc:nth-child('+(i+1)+')::before{background:'+c.col+'}</style>'
+      +'<p class="ccn" style="color:'+c.col+'">'+c.name+'</p>'
+      +'<p class="ccd">'+c.desc+'</p>'
+      +'<div class="ccbt"><div class="ccb" style="background:'+c.col+';width:'+((s/15)*100)+'%"></div></div>'
+      +'<div class="ccrow"><span class="ccnum" style="color:'+c.col+'">'+s+'</span><span class="ccmax">/15</span>'
+      +'<span class="ccbadge" style="background:'+col+'">'+pctC+'% activ\u00e9</span></div>'
+      +'<p class="cctxt">'+(pctC<50?c.low:c.high)+'</p></div>';
+  }).join('');
+  document.getElementById('rprio').innerHTML=srt.slice(0,3).map(function(x,i){
+    var pctC=Math.round((x.s-3)/12*100);
+    return '<li class="pi"><span class="pn" style="color:'+x.c.col+'">'+(i+1)+'</span>'
+      +'<div><p class="ph" style="color:'+x.c.col+'">'+x.c.name+' \u00b7 '+x.s+'/15 \u00b7 '+pctC+'% activ\u00e9</p>'
+      +'<p class="pd">'+x.c.action+'</p></div></li>';
+  }).join('');
+  document.getElementById('rups').innerHTML=
+    '<span class="utag">Robustesse \u00b7 potentiel \u00b7 12\u201324 mois</span>'
+    +'<div class="uamt">'+fmtp(fmt(Math.round(t*.50)))+' \u00e0 '+fmtp(fmt(Math.round(t*.72)))+'</div>'
+    +'<p class="udesc">'+ST.hc+' collab. \u00b7 '+S.l+' \u00b7 En activant\u202f: '+srt[0].c.name+', '+srt[1].c.name+', '+srt[2].c.name+'.</p>';
+  document.getElementById('rmth').innerHTML='<div class="cb">'
+    +ST.hc+' collaborateurs \u00b7 '+S.l+' \u00b7 Salaire r\u00e9f.\u202f: '+S.s.toLocaleString('fr-FR')+'\u20ac\n'
+    +'SGP = '+sgp.mean.toFixed(1)+'\u2212'+sgp.sigma.toFixed(2)+' = '+sgp.sgpRaw.toFixed(2)+'/15 \u2192 '+sgp.sgpNorm+'/25 \u00b7 '+sgp.pct+'% activ\u00e9\n'
+    +'Dissipation\u202f: '+Math.round(w*100)+'% \u00b7 ROI +1pt\u202f: '+fmtp(fmt(gain1))+' \u00d7 12/'+ST.hc+' = '+fmtp(fmt(ga))+' \u2192 '+rf+'x / atelier 2\u202f000\u202f\u20ac'
+    +'</div>';
+}
+
+</script>
+</body>
+</html>
