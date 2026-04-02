@@ -4,12 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Auto-évaluation · DPE</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav class="site-nav">
-  <div class="nav-logo"><a href="index.html">DPE</a></div>
+  <div class="nav-logo"><a href="index.html"><img src="assets/mark.svg" alt="DPE" class="nav-mark">DPE</a></div>
   <button class="nav-burger" aria-label="Menu">&#9776;</button>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
@@ -19,7 +22,7 @@
 </nav>
 
 <nav id="nav">
-  <span class="logo">DPE</span>
+  <span class="logo">Auto-évaluation</span>
   <div class="pb"><div class="pf" id="pf"></div></div>
   <span class="ns" id="ns"></span>
 </nav>
@@ -27,10 +30,11 @@
 <!-- HERO -->
 <div class="sc on" id="s0">
   <div class="hbox">
+    <img src="assets/mark.svg" alt="" class="hero-mark">
     <p class="htag">Dynamiques de Présences Énergétiques</p>
     <h1>Votre organisation<br><span class="gg">libère-t-elle</span><br>tout son potentiel&thinsp;?</h1>
     <p class="hsub">L'énergie collective dissipée par le désalignement de vos cadres systémiques représente un potentiel évaluable. Découvrez-le en 10 minutes.</p>
-    <button class="hcta" onclick="go(1)">Commencer mon diagnostic →</button>
+    <button class="hcta" onclick="go(1)">Commencer mon évaluation →</button>
     <div class="hrule"></div>
     <p class="hnote">5 cadres systémiques<br><span style="opacity:.5">10 min · 15 questions · évaluation du potentiel</span></p>
   </div>
@@ -104,6 +108,7 @@
 <div class="sc" id="s8">
   <div class="rcov">
     <div class="rcin">
+      <img src="assets/mark.svg" alt="" class="rcov-mark">
       <span class="rlogo">DYNAMIQUES DE PRÉSENCES ÉNERGÉTIQUES</span>
       <span class="rtag">Diagnostic systémique des présences énergétiques</span>
       <h1 class="rh1">Rapport DPE</h1>
@@ -326,6 +331,11 @@
     <a href="mentions-legales.html" style="color:#7a6a55">Mentions légales</a> · <a href="politique-confidentialite.html" style="color:#7a6a55">Politique de confidentialité</a></p>
   </div>
 </div>
+
+<footer class="site-footer">
+  <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo">
+  <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a></p>
+</footer>
 
 <script src="libs/jspdf.min.js"></script>
 <script src="app.js"></script>

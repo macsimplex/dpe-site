@@ -8,7 +8,8 @@ a:hover{text-decoration:underline}
 /* ── Navigation commune ── */
 .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--brd);padding:0 24px;display:flex;align-items:center;height:48px}
 .site-nav .nav-logo{font-family:Arial,sans-serif;font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--g);font-weight:bold;margin-right:auto}
-.site-nav .nav-logo a{color:inherit;text-decoration:none}
+.site-nav .nav-logo a{color:inherit;text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-mark{width:22px;height:22px;opacity:.85}
 .site-nav .nav-links{display:flex;gap:24px;align-items:center}
 .site-nav .nav-links a{font-family:Arial,sans-serif;font-size:12px;letter-spacing:.08em;color:var(--mu);transition:color .2s}
 .site-nav .nav-links a:hover,.site-nav .nav-links a.active{color:var(--g);text-decoration:none}
@@ -31,8 +32,10 @@ a:hover{text-decoration:underline}
 #nav.light .ns{color:#7a6a55}
 
 /* ── Sections auto-évaluation ── */
-.sc{display:none;min-height:100vh;padding-top:96px}
-.sc.on{display:block}
+.sc{display:none;min-height:100vh;padding-top:96px;opacity:0;transform:translateY(30px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
+.sc.on{display:block;opacity:1;transform:translateY(0)}
+.sc.entering{display:block}
+.sc.out{display:block;position:absolute;top:0;left:0;width:100%;opacity:0;transform:translateY(-30px);pointer-events:none}
 #s0{background:radial-gradient(ellipse at 50% 25%,rgba(201,160,82,.07) 0%,transparent 60%),var(--bg)}
 #s0.on{display:flex;align-items:center;justify-content:center}
 .inner{max-width:580px;margin:0 auto;padding:40px 18px 70px}
@@ -108,6 +111,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .rcov{background:var(--bg);color:#ede8e0;padding:50px 18px 38px;position:relative;overflow:hidden}
 .rcov::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,160,82,.09) 0%,transparent 60%);pointer-events:none}
 .rcin{max-width:700px;margin:0 auto;position:relative}
+.rcov-mark{width:56px;height:56px;margin-bottom:16px;opacity:.7;display:block}
 .rlogo{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:20px}
 .rtag{font-family:Arial,sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:10px}
 .rh1{font-size:clamp(18px,3.5vw,28px);font-weight:normal;line-height:1.25;margin-bottom:20px}
@@ -221,8 +225,9 @@ details.ref-dark .ref-dpe{color:var(--g)}
 
 /* ── Landing page ── */
 .page-content{padding-top:48px}
-.hero{min-height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 24px;background:radial-gradient(ellipse at 50% 30%,rgba(201,160,82,.08) 0%,transparent 60%),var(--bg)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 24px;background:radial-gradient(ellipse at 50% 30%,rgba(201,160,82,.08) 0%,transparent 60%),var(--bg)}
 .hero-inner{max-width:600px}
+.hero-mark{width:48px;height:48px;margin-bottom:20px;opacity:.7}
 .hero .htag{margin-bottom:24px}
 .hero h1{font-size:clamp(28px,5.5vw,48px);margin-bottom:20px}
 .hero .hsub{margin-bottom:40px}
@@ -232,7 +237,15 @@ details.ref-dark .ref-dpe{color:var(--g)}
 .section h2{margin-bottom:16px}
 .section .lead{margin-bottom:24px}
 
-.section-alt{background:var(--surf);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}
+.section-alt{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--surf);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}
+
+/* ── Reveal au scroll ── */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s cubic-bezier(.16,1,.3,1),transform 0.8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.2s}
+.reveal-d3{transition-delay:.3s}
+.reveal-d4{transition-delay:.4s}
 
 .cta-section{text-align:center;padding:80px 24px}
 .cta-section h2{margin-bottom:12px}
@@ -267,6 +280,7 @@ details.ref-dark .ref-dpe{color:var(--g)}
 .legal ul{padding-left:20px;margin-bottom:16px}
 
 /* ── Footer commun ── */
-.site-footer{border-top:1px solid var(--brd);padding:24px;text-align:center}
+.site-footer{border-top:1px solid var(--brd);padding:30px 24px;text-align:center}
+.footer-logo{width:140px;margin-bottom:12px;opacity:.6}
 .site-footer p{font-family:Arial,sans-serif;font-size:10px;color:var(--dim);line-height:1.8}
 .site-footer a{color:var(--mu)}
