@@ -251,8 +251,9 @@ details.ref-dark .ref-dpe{color:var(--g)}
 .reveal-d3{transition-delay:.3s}
 .reveal-d4{transition-delay:.4s}
 
-.cta-footer-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
-.cta-section{text-align:center;padding:60px 24px}
+.cta-footer-section{height:100vh;display:flex;flex-direction:column;justify-content:center}
+.cta-footer-section .cta-section{text-align:center;padding:60px 24px}
+.cta-footer-section .site-footer{padding-bottom:24px}
 .cta-section h2{margin-bottom:12px}
 .cta-section .lead{margin-bottom:32px}
 
