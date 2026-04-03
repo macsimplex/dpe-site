@@ -58,6 +58,29 @@
     </ul>
     <p>Ce choix est cohérent avec la philosophie du DPE : un système vivant ne peut se diagnostiquer avec des outils qui ignorent leur propre impact sur le vivant.</p>
 
+    <h2>Écoconception numérique</h2>
+    <p>Ce site est conçu selon les principes de l'écoconception web, visant à minimiser son empreinte environnementale à chaque étape :</p>
+    <ul>
+      <li><strong>Zéro framework JavaScript</strong> — HTML, CSS et JS natifs uniquement, pas de React, Vue ou Angular (économie de centaines de Ko)</li>
+      <li><strong>Polices système</strong> — Aucun chargement de webfont externe (Georgia, Arial), zéro requête réseau supplémentaire</li>
+      <li><strong>Aucun tracker ni analytics</strong> — Pas de Google Analytics, pas de pixels de suivi, pas de cookies</li>
+      <li><strong>Images optimisées</strong> — SVG privilégiés, PNG compressés, poids total des assets minimal</li>
+      <li><strong>Chargement différé</strong> — La librairie PDF (356 Ko) n'est chargée qu'au moment de la génération du rapport</li>
+      <li><strong>Cache navigateur</strong> — Les ressources statiques sont mises en cache pour éviter les téléchargements répétés</li>
+      <li><strong>Compression Gzip</strong> — Toutes les ressources textuelles sont compressées à la volée</li>
+      <li><strong>Traitement côté client</strong> — Le diagnostic et le rapport PDF sont générés dans le navigateur, réduisant la charge serveur</li>
+    </ul>
+
+    <h2>Accessibilité</h2>
+    <p>Nous veillons à rendre ce site utilisable par tous :</p>
+    <ul>
+      <li>Navigation au clavier avec indicateur de focus visible</li>
+      <li>Lien d'accès rapide au contenu (skip link)</li>
+      <li>Sections identifiées par des rôles ARIA</li>
+      <li>Contrastes de couleurs conformes aux recommandations WCAG</li>
+      <li>Structure sémantique (balises main, nav, footer, section)</li>
+    </ul>
+
     <h2>Transparence</h2>
     <p>L'intégralité du code source de ce site est accessible publiquement. Notre architecture est volontairement simple et auditable :</p>
     <ul>

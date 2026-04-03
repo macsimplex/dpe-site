@@ -348,22 +348,33 @@ function buildReport(){
     +'Dissipation\u202f: '+Math.round(w*100)+'% \u00b7 ROI +1pt\u202f: '+fmtp(fmt(gain1))+' \u00d7 12/'+ST.hc+' = '+fmtp(fmt(ga))+' \u2192 '+rf+'x / atelier 2\u202f000\u202f\u20ac'
     +'</div>';
 
-  /* ── Génération PDF + envoi données ── */
-  var pdfB64=generatePDF(csc,sgp,S,t);
+  /* ── Génération PDF + envoi données (lazy load jsPDF) ── */
   var email=document.getElementById('em').value.trim();
-  if(email&&pdfB64){
-    submitEvaluation({
-      email:email,
-      role:ST.role,
-      secteur:ST.sec,
-      effectif:ST.hc,
-      scores:csc,
-      sgp_norm:sgp.sgpNorm,
-      sgp_pct:sgp.pct,
+  loadJsPDF(function(){
+    var pdfB64=generatePDF(csc,sgp,S,t);
+    if(email&&pdfB64){
+      submitEvaluation({
+        email:email,
+        role:ST.role,
+        secteur:ST.sec,
+        effectif:ST.hc,
+        scores:csc,
+        sgp_norm:sgp.sgpNorm,
+        sgp_pct:sgp.pct,
       sigma:parseFloat(sgp.sigma.toFixed(2)),
       pdf:pdfB64
     });
   }
+  });
+}
+
+/* ── Chargement différé de jsPDF ── */
+function loadJsPDF(cb){
+  if(typeof jspdf!=='undefined'&&jspdf.jsPDF)return cb();
+  var s=document.createElement('script');
+  s.src='libs/jspdf.min.js';
+  s.onload=cb;
+  document.head.appendChild(s);
 }
 
 /* ══════════════════════════════════════════
