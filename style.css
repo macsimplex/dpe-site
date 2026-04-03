@@ -283,6 +283,10 @@ details.ref-dark .ref-dpe{color:var(--g)}
 .legal h1{margin-bottom:24px}
 .legal h2{font-size:18px;margin-top:30px;margin-bottom:10px;color:var(--g)}
 .legal p,.legal li{font-family:Arial,sans-serif;font-size:13px;color:var(--mu);line-height:1.75;margin-bottom:10px}
+.audit-table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-family:Arial,sans-serif;font-size:12px}
+.audit-table th{text-align:left;padding:8px 12px;color:var(--g);border-bottom:1px solid var(--g);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.audit-table td{padding:8px 12px;color:var(--mu);border-bottom:1px solid var(--brd)}
+.audit-table strong{color:#ede8e0}
 .legal ul{padding-left:20px;margin-bottom:16px}
 
 /* ── Footer commun ── */
