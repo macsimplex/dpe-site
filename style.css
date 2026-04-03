@@ -224,7 +224,8 @@ details.ref-dark .ref-dpe{color:var(--g)}
 @media(max-width:540px){.ref-grid{grid-template-columns:1fr}}
 
 /* ── Landing page ── */
-.page-content{padding-top:48px}
+.page-content{padding-top:48px;height:calc(100vh - 48px);overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.page-content>section,.page-content>.site-footer-wrap{scroll-snap-align:start;scroll-snap-stop:always}
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 24px;background:radial-gradient(ellipse at 50% 30%,rgba(201,160,82,.08) 0%,transparent 60%),var(--bg)}
 .hero-inner{max-width:600px}
 .hero-mark{width:48px;height:48px;margin-bottom:20px;opacity:.7}
@@ -247,7 +248,9 @@ details.ref-dark .ref-dpe{color:var(--g)}
 .reveal-d3{transition-delay:.3s}
 .reveal-d4{transition-delay:.4s}
 
-.cta-section{text-align:center;padding:80px 24px}
+.cta-footer-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.cta-footer-section .site-footer{margin-top:auto}
+.cta-section{text-align:center;padding:80px 24px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .cta-section h2{margin-bottom:12px}
 .cta-section .lead{margin-bottom:32px}
 
@@ -281,6 +284,10 @@ details.ref-dark .ref-dpe{color:var(--g)}
 
 /* ── Footer commun ── */
 .site-footer{border-top:1px solid var(--brd);padding:30px 24px;text-align:center}
+.footer-trust{display:flex;justify-content:center;gap:32px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--brd);flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:8px}
+.trust-icon{font-size:10px;color:var(--g);opacity:.6}
+.trust-txt{font-family:Arial,sans-serif;font-size:10px;color:var(--dim);letter-spacing:.02em}
 .footer-logo{width:140px;margin-bottom:12px;opacity:.6}
 .site-footer p{font-family:Arial,sans-serif;font-size:10px;color:var(--dim);line-height:1.8}
 .site-footer a{color:var(--mu)}
