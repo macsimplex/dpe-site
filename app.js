@@ -348,8 +348,22 @@ function buildReport(){
     +'Dissipation\u202f: '+Math.round(w*100)+'% \u00b7 ROI +1pt\u202f: '+fmtp(fmt(gain1))+' \u00d7 12/'+ST.hc+' = '+fmtp(fmt(ga))+' \u2192 '+rf+'x / atelier 2\u202f000\u202f\u20ac'
     +'</div>';
 
-  /* ── Génération PDF ── */
-  generatePDF(csc,sgp,S,t);
+  /* ── Génération PDF + envoi données ── */
+  var pdfB64=generatePDF(csc,sgp,S,t);
+  var email=document.getElementById('em').value.trim();
+  if(email&&pdfB64){
+    submitEvaluation({
+      email:email,
+      role:ST.role,
+      secteur:ST.sec,
+      effectif:ST.hc,
+      scores:csc,
+      sgp_norm:sgp.sgpNorm,
+      sgp_pct:sgp.pct,
+      sigma:parseFloat(sgp.sigma.toFixed(2)),
+      pdf:pdfB64
+    });
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -767,8 +781,30 @@ function generatePDF(csc,sgp,S,totalPot){
   footer(6,6);
 
   doc.save('DPE-Rapport-'+new Date().toISOString().slice(0,10)+'.pdf');
+
+  /* Retourner le PDF en base64 pour l'envoi par email */
+  try{return btoa(doc.output());}catch(e){return null;}
 }
 
+
+/* ══════════════════════════════════════════
+   ENVOI DONNÉES AU BACKEND
+   ══════════════════════════════════════════ */
+function submitEvaluation(data){
+  fetch('api/submit.php',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  })
+  .then(function(r){return r.json();})
+  .then(function(res){
+    if(res.success){
+      var note=document.getElementById('enote');
+      if(note)note.innerHTML='<span style="color:#4a7a4a">Votre rapport a \u00e9t\u00e9 envoy\u00e9 par email.</span>';
+    }
+  })
+  .catch(function(){});
+}
 
 /* ══════════════════════════════════════════
    FACILITATEURS (chargé sur facilitateurs.html)
