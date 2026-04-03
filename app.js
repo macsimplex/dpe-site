@@ -791,9 +791,7 @@ function generatePDF(csc,sgp,S,totalPot){
 
   footer(6,6);
 
-  doc.save('DPE-Rapport-'+new Date().toISOString().slice(0,10)+'.pdf');
-
-  /* Retourner le PDF en base64 pour l'envoi par email */
+  /* Retourner le PDF en base64 pour l'envoi par email (pas de téléchargement automatique) */
   try{return btoa(doc.output());}catch(e){return null;}
 }
 
@@ -802,6 +800,8 @@ function generatePDF(csc,sgp,S,totalPot){
    ENVOI DONNÉES AU BACKEND
    ══════════════════════════════════════════ */
 function submitEvaluation(data){
+  var confirm=document.getElementById('emailConfirm');
+  if(confirm)confirm.innerHTML='<p class="email-sending">Envoi de votre rapport en cours\u2026</p>';
   fetch('api/submit.php',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -809,12 +809,17 @@ function submitEvaluation(data){
   })
   .then(function(r){return r.json();})
   .then(function(res){
-    if(res.success){
-      var note=document.getElementById('enote');
-      if(note)note.innerHTML='<span style="color:#4a7a4a">Votre rapport a \u00e9t\u00e9 envoy\u00e9 par email.</span>';
+    if(confirm){
+      if(res.success){
+        confirm.innerHTML='<p class="email-sent">\u2713 Votre rapport PDF a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+data.email+'</strong></p>';
+      }else{
+        confirm.innerHTML='<p class="email-error">L\u2019envoi a \u00e9chou\u00e9. V\u00e9rifiez votre adresse email et r\u00e9essayez.</p>';
+      }
     }
   })
-  .catch(function(){});
+  .catch(function(){
+    if(confirm)confirm.innerHTML='<p class="email-error">Erreur de connexion. Veuillez r\u00e9essayer.</p>';
+  });
 }
 
 /* ══════════════════════════════════════════

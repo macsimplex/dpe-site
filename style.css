@@ -111,6 +111,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
 /* ── Rapport ── */
 #s8{background:#f4efe6;color:#1a1510}
+.email-confirm{text-align:center;font-family:Arial,sans-serif}
+.email-confirm:empty{display:none}
+.email-sending{padding:12px 20px;color:var(--mu);font-size:13px}
+.email-sent{padding:14px 20px;background:#1a2e1a;border:1px solid #3d7040;color:#7fbf7f;font-size:13px;border-radius:4px;margin:0 18px}
+.email-sent strong{color:#ede8e0}
+.email-error{padding:14px 20px;background:#2e1a1a;border:1px solid #c4603a;color:#c4603a;font-size:13px;border-radius:4px;margin:0 18px}
 .rcov{background:var(--bg);color:#ede8e0;padding:50px 18px 38px;position:relative;overflow:hidden}
 .rcov::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,160,82,.09) 0%,transparent 60%);pointer-events:none}
 .rcin{max-width:700px;margin:0 auto;position:relative}
