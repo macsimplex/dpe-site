@@ -21,24 +21,72 @@
   </div>
 </nav>
 
-<div class="page-content">
+<div class="fac-page">
 
-  <div class="fac-header">
-    <span class="ey">Réseau</span>
-    <h1>Nos <span class="gg">facilitateurs</span> DPE</h1>
-    <p class="lead">Des professionnels certifiés pour accompagner votre organisation dans l'activation de ses présences énergétiques.</p>
-  </div>
+  <!-- SECTION 1 — Réseau -->
+  <section class="fac-section-list">
+    <div class="fac-header">
+      <span class="ey">Réseau</span>
+      <h1>Nos <span class="gg">facilitateurs</span> DPE</h1>
+      <p class="lead">Des professionnels certifiés pour accompagner votre organisation dans l'activation de ses présences énergétiques.</p>
+    </div>
 
-  <div class="fac-filter" id="fac-filter"></div>
+    <div class="fac-filters" id="fac-filter">
+      <input type="text" class="fac-search" id="fac-search" placeholder="Rechercher un facilitateur..." oninput="filterFac()">
+    </div>
 
-  <div class="fac-grid" id="fac-grid"></div>
+    <div class="fac-grid" id="fac-grid"></div>
+  </section>
+
+  <!-- SECTION 2 — Devenir facilitateur + footer -->
+  <section class="fac-section-form">
+    <div class="fac-devenir">
+      <span class="ey">Rejoignez le réseau</span>
+      <h2>Devenir facilitateur <span class="gg">DPE</span></h2>
+      <p class="lead">La certification DPE forme des professionnels capables d'accompagner les organisations dans le diagnostic et l'activation de leurs présences énergétiques.</p>
+
+      <div class="fac-parcours">
+        <div class="fac-etape">
+          <span class="fac-enum">01</span>
+          <h3>Formation certifiante</h3>
+          <p>3 jours intensifs sur le modèle systémique DPE, l'animation d'ateliers collectifs et l'interprétation des résultats.</p>
+        </div>
+        <div class="fac-etape">
+          <span class="fac-enum">02</span>
+          <h3>Supervision</h3>
+          <p>2 ateliers supervisés en conditions réelles pour valider la maîtrise de la posture et de la méthodologie.</p>
+        </div>
+        <div class="fac-etape">
+          <span class="fac-enum">03</span>
+          <h3>Certification</h3>
+          <p>Intégration au réseau officiel, accès aux outils et référencement sur cette page.</p>
+        </div>
+      </div>
+
+      <div class="fac-form-box">
+        <h3>Demande d'information</h3>
+        <form id="fac-form" onsubmit="return submitFacForm(event)">
+          <div class="fac-form-row">
+            <input type="text" id="ff-nom" placeholder="Nom complet" required>
+            <input type="email" id="ff-email" placeholder="Email" required>
+          </div>
+          <input type="text" id="ff-activite" placeholder="Activité / spécialité">
+          <textarea id="ff-message" placeholder="Votre message (motivation, expérience, questions...)" rows="4"></textarea>
+          <div class="fac-form-footer">
+            <p class="fac-form-note" id="ff-status">Les informations sont envoyées à contact@energetics.systems</p>
+            <button type="submit" class="fac-form-btn" id="ff-btn">Envoyer ma demande →</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo" width="140" height="44">
+      <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="engagements.html">Engagements</a></p>
+    </footer>
+  </section>
 
 </div>
-
-<footer class="site-footer">
-  <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo" width="140" height="44">
-  <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="engagements.html">Engagements</a></p>
-</footer>
 
 <script src="app.min.js"></script>
 </body>

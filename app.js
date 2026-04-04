@@ -825,6 +825,7 @@ function submitEvaluation(data){
 /* ══════════════════════════════════════════
    FACILITATEURS (chargé sur facilitateurs.html)
    ══════════════════════════════════════════ */
+var _facData=[];
 function initFacilitateurs(){
   var grid=document.getElementById('fac-grid');
   if(!grid)return;
@@ -832,6 +833,7 @@ function initFacilitateurs(){
   fetch('facilitateurs.json')
     .then(function(r){return r.json();})
     .then(function(data){
+      _facData=data;
       var regions=[];
       data.forEach(function(f){
         if(f.region&&regions.indexOf(f.region)===-1)regions.push(f.region);
@@ -840,27 +842,73 @@ function initFacilitateurs(){
       var filterEl=document.getElementById('fac-filter');
       if(filterEl&&regions.length>0){
         var sel=document.createElement('select');
+        sel.id='fac-region';
         sel.innerHTML='<option value="">Toutes les r\u00e9gions</option>'+regions.map(function(r){return'<option value="'+r+'">'+r+'</option>';}).join('');
-        sel.addEventListener('change',function(){render(data,this.value);});
+        sel.addEventListener('change',function(){filterFac();});
         filterEl.appendChild(sel);
       }
 
-      render(data,'');
+      filterFac();
     });
+}
 
-  function render(data,region){
-    var filtered=region?data.filter(function(f){return f.region===region;}):data;
-    grid.innerHTML=filtered.map(function(f){
-      var initials=f.nom.split(' ').map(function(w){return w[0];}).join('');
-      return '<div class="fac-card">'
-        +'<div class="fac-avatar">'+(f.photo?'<img src="'+f.photo+'" alt="'+f.nom+'" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':initials)+'</div>'
-        +'<h3>'+f.nom+'</h3>'
-        +(f.region?'<p class="fac-region">'+f.region+'</p>':'')
-        +'<p class="fac-desc">'+f.description+'</p>'
-        +'<a href="mailto:'+f.email+'" class="fac-contact">Contacter</a>'
-        +'</div>';
-    }).join('');
-  }
+function filterFac(){
+  var grid=document.getElementById('fac-grid');
+  if(!grid)return;
+  var region=(document.getElementById('fac-region')||{}).value||'';
+  var search=((document.getElementById('fac-search')||{}).value||'').toLowerCase();
+  var filtered=_facData.filter(function(f){
+    if(region&&f.region!==region)return false;
+    if(search){
+      var haystack=(f.nom+' '+f.description+' '+f.region+' '+f.email).toLowerCase();
+      return haystack.indexOf(search)!==-1;
+    }
+    return true;
+  });
+  grid.innerHTML=filtered.length?filtered.map(function(f){
+    var initials=f.nom.split(' ').map(function(w){return w[0];}).join('');
+    return '<div class="fac-card">'
+      +'<div class="fac-avatar">'+(f.photo?'<img src="'+f.photo+'" alt="'+f.nom+'" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':initials)+'</div>'
+      +'<h3>'+f.nom+'</h3>'
+      +(f.region?'<p class="fac-region">'+f.region+'</p>':'')
+      +'<p class="fac-desc">'+f.description+'</p>'
+      +'<a href="mailto:'+f.email+'" class="fac-contact">Contacter</a>'
+      +'</div>';
+  }).join(''):'<p style="color:var(--dim);font-family:Arial,sans-serif;font-size:13px;grid-column:1/-1;text-align:center">Aucun facilitateur trouv\u00e9.</p>';
+}
+
+/* ── Formulaire devenir facilitateur ── */
+function submitFacForm(e){
+  e.preventDefault();
+  var btn=document.getElementById('ff-btn');
+  var status=document.getElementById('ff-status');
+  var nom=document.getElementById('ff-nom').value.trim();
+  var email=document.getElementById('ff-email').value.trim();
+  var activite=document.getElementById('ff-activite').value.trim();
+  var message=document.getElementById('ff-message').value.trim();
+  if(!nom||!email)return false;
+  btn.disabled=true;
+  btn.textContent='Envoi en cours\u2026';
+  fetch('api/contact.php',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({nom:nom,email:email,activite:activite,message:message})
+  })
+  .then(function(r){return r.json();})
+  .then(function(res){
+    if(res.success){
+      status.innerHTML='<span style="color:#4a7a4a">\u2713 Votre demande a \u00e9t\u00e9 envoy\u00e9e. Nous vous recontacterons rapidement.</span>';
+      btn.textContent='Envoy\u00e9';
+    }else{
+      status.innerHTML='<span style="color:#c4603a">Erreur lors de l\u2019envoi. Veuillez r\u00e9essayer.</span>';
+      btn.disabled=false;btn.textContent='Envoyer ma demande \u2192';
+    }
+  })
+  .catch(function(){
+    status.innerHTML='<span style="color:#c4603a">Erreur de connexion. Veuillez r\u00e9essayer.</span>';
+    btn.disabled=false;btn.textContent='Envoyer ma demande \u2192';
+  });
+  return false;
 }
 
 /* ── Init ── */

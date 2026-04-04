@@ -270,19 +270,45 @@ details.ref-dark .ref-dpe{color:var(--g)}
 .cadre-card p{font-family:Arial,sans-serif;font-size:12px;color:var(--mu);line-height:1.6}
 
 /* ── Facilitateurs ── */
-.fac-header{padding:60px 24px 30px;text-align:center}
+.fac-page{padding-top:48px;height:calc(100vh - 0px);overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.fac-section-list{min-height:100vh;scroll-snap-align:start;padding-top:48px;display:flex;flex-direction:column}
+.fac-section-form{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column}
+.fac-header{padding:30px 24px 20px;text-align:center}
 .fac-header h1{margin-bottom:12px}
-.fac-filter{text-align:center;padding:0 24px 30px}
-.fac-filter select{background:var(--surf);border:1px solid var(--dim);color:#ede8e0;font-family:Arial,sans-serif;font-size:13px;padding:10px 16px;outline:none;cursor:pointer}
-.fac-filter select:focus{border-color:var(--g)}
-.fac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;max-width:960px;margin:0 auto;padding:0 24px 60px}
-.fac-card{background:var(--surf);border:1px solid var(--brd);padding:24px;display:flex;flex-direction:column;gap:12px}
-.fac-avatar{width:72px;height:72px;border-radius:50%;background:var(--dim);display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-size:24px;color:var(--g);flex-shrink:0}
-.fac-card h3{font-size:18px;font-weight:normal;color:var(--g)}
-.fac-region{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mu)}
-.fac-desc{font-family:Arial,sans-serif;font-size:13px;color:var(--mu);line-height:1.65}
-.fac-contact{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:10px 20px;border:1px solid var(--g);background:transparent;color:var(--g);cursor:pointer;align-self:flex-start}
-.fac-contact:hover{background:var(--g);color:var(--bg)}
+.fac-filters{display:flex;gap:12px;justify-content:center;padding:0 24px 20px;flex-wrap:wrap}
+.fac-search{background:var(--surf);border:1px solid var(--dim);color:#ede8e0;font-family:Arial,sans-serif;font-size:13px;padding:10px 16px;outline:none;width:260px}
+.fac-search:focus{border-color:var(--g)}
+.fac-search::placeholder{color:var(--dim)}
+.fac-filters select{background:var(--surf);border:1px solid var(--dim);color:#ede8e0;font-family:Arial,sans-serif;font-size:13px;padding:10px 16px;outline:none;cursor:pointer}
+.fac-filters select:focus{border-color:var(--g)}
+.fac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;max-width:960px;margin:0 auto;padding:0 24px 40px;flex:1;align-content:start}
+.fac-card{background:var(--surf);border:1px solid var(--brd);padding:20px;display:flex;flex-direction:column;gap:10px}
+.fac-avatar{width:56px;height:56px;border-radius:50%;background:var(--dim);display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-size:20px;color:var(--g);flex-shrink:0}
+.fac-card h3{font-size:16px;font-weight:normal;color:var(--g)}
+.fac-region{font-family:Arial,sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--mu)}
+.fac-desc{font-family:Arial,sans-serif;font-size:12px;color:var(--mu);line-height:1.65}
+.fac-contact{font-family:Arial,sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:8px 16px;border:1px solid var(--g);background:transparent;color:var(--g);cursor:pointer;align-self:flex-start;text-decoration:none}
+.fac-contact:hover{background:var(--g);color:var(--bg);text-decoration:none}
+
+/* ── Devenir facilitateur ── */
+.fac-devenir{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;max-width:800px;margin:0 auto}
+.fac-parcours{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0;width:100%}
+@media(max-width:600px){.fac-parcours{grid-template-columns:1fr}}
+.fac-etape{background:var(--surf);border:1px solid var(--brd);padding:20px;text-align:left;border-top:2px solid var(--g)}
+.fac-enum{font-family:Arial,sans-serif;font-size:10px;letter-spacing:.2em;color:var(--g);opacity:.5}
+.fac-etape h3{font-size:14px;color:var(--g);margin:6px 0 8px;font-weight:normal}
+.fac-etape p{font-family:Arial,sans-serif;font-size:12px;color:var(--mu);line-height:1.65}
+.fac-form-box{width:100%;background:var(--surf);border:1px solid var(--brd);padding:24px;text-align:left;margin-top:8px}
+.fac-form-box h3{font-size:14px;color:var(--g);margin-bottom:16px;font-weight:normal}
+.fac-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.fac-form-row{grid-template-columns:1fr}}
+.fac-form-box input,.fac-form-box textarea{background:var(--bg);border:1px solid var(--dim);color:#ede8e0;font-family:Arial,sans-serif;font-size:13px;padding:10px 14px;outline:none;width:100%;margin-bottom:12px;resize:vertical}
+.fac-form-box input:focus,.fac-form-box textarea:focus{border-color:var(--g)}
+.fac-form-box input::placeholder,.fac-form-box textarea::placeholder{color:var(--dim)}
+.fac-form-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.fac-form-note{font-family:Arial,sans-serif;font-size:10px;color:var(--dim)}
+.fac-form-btn{font-family:Arial,sans-serif;font-size:12px;letter-spacing:.1em;padding:12px 24px;border:1px solid var(--g);background:transparent;color:var(--g);cursor:pointer;white-space:nowrap}
+.fac-form-btn:hover{background:var(--g);color:var(--bg)}
 
 /* ── Pages légales ── */
 .legal{max-width:700px;margin:0 auto;padding:60px 24px}
