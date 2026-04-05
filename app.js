@@ -65,7 +65,7 @@ var CS=[
      {id:"s2",lo:"Par la rumeur",hi:"Expliqu\u00e9 en amont",
       q:"La derni\u00e8re fois que vous avez pris une d\u00e9cision importante, votre \u00e9quipe a-t-elle compris le pourquoi avant de l\u2019apprendre par hasard ?",
       a:"Un recrutement, un changement d\u2019organisation, une nouvelle priorit\u00e9\u2026"},
-     {id:"s3",lo:"Trop risqu\u00e9",hi:"Tout \u00e0 fait possible",
+     {id:"s3",lo:"Jamais arriv\u00e9",hi:"R\u00e9guli\u00e8rement",
       q:"\u00c0 quand remonte la derni\u00e8re fois qu\u2019un membre de votre \u00e9quipe vous a dit franchement \u00ab\u00a0je ne suis pas d\u2019accord\u00a0\u00bb ?",
       a:"Si \u00e7a n\u2019arrive jamais, la question est : pourquoi ?"}
    ],
