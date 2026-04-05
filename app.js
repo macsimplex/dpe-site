@@ -65,9 +65,9 @@ var CS=[
      {id:"s2",lo:"Par la rumeur",hi:"Expliqu\u00e9 en amont",
       q:"La derni\u00e8re fois que vous avez pris une d\u00e9cision importante, votre \u00e9quipe a-t-elle compris le pourquoi avant de l\u2019apprendre par hasard ?",
       a:"Un recrutement, un changement d\u2019organisation, une nouvelle priorit\u00e9\u2026"},
-     {id:"s3",lo:"Jamais arriv\u00e9",hi:"R\u00e9guli\u00e8rement",
-      q:"\u00c0 quand remonte la derni\u00e8re fois qu\u2019un membre de votre \u00e9quipe vous a dit franchement \u00ab\u00a0je ne suis pas d\u2019accord\u00a0\u00bb ?",
-      a:"Si \u00e7a n\u2019arrive jamais, la question est : pourquoi ?"}
+     {id:"s3",lo:"Chacun ses priorit\u00e9s",hi:"M\u00eame boussole",
+      q:"Quand votre \u00e9quipe doit arbitrer entre deux urgences, se r\u00e9f\u00e8re-t-elle \u00e0 une direction commune \u2014 ou chacun d\u00e9cide selon ses propres crit\u00e8res ?",
+      a:"Ce qui compte quand il faut choisir vite : y a-t-il un cap partag\u00e9 ?"}
    ],
    low:"Le cap n\u2019est pas assez partag\u00e9. Votre \u00e9quipe avance, mais sans boussole commune.",
    high:"Le cap est clair et partag\u00e9. Les gens comprennent le sens de ce qu\u2019ils font au quotidien.",
