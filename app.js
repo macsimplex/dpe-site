@@ -40,86 +40,86 @@ var SECS={
 };
 
 var CS=[
-  {id:"r",n:"01",name:"Relationnel",col:"#c4603a",
-   desc:"S\u00e9curit\u00e9 psychologique, confiance et authenticit\u00e9.",
+  {id:"r",n:"01",name:"Confiance",col:"#c4603a",
+   desc:"Est-ce que les gens se disent vraiment les choses ?",
    qs:[
-     {id:"r1",lo:"Personne n'ose",hi:"Souvent",
-      q:"Lors de votre derni\u00e8re r\u00e9union, quelqu'un a-t-il exprim\u00e9 ouvertement un d\u00e9saccord avec une d\u00e9cision de son manager ?",
-      a:"Pensez \u00e0 une r\u00e9union concr\u00e8te de la semaine pass\u00e9e."},
-     {id:"r2",lo:"En coulisses",hi:"Ouvertement",
-      q:"Quand un collaborateur fait une erreur, est-ce que \u00e7a se r\u00e8gle ouvertement en \u00e9quipe ou plut\u00f4t en coulisses ?",
-      a:"Pensez au dernier incident notable."},
+     {id:"r1",lo:"Jamais",hi:"R\u00e9guli\u00e8rement",
+      q:"Dans votre \u00e9quipe, les gens expriment-ils leurs d\u00e9saccords ouvertement \u2014 y compris avec vous ?",
+      a:"Pensez \u00e0 une situation r\u00e9cente o\u00f9 quelqu\u2019un n\u2019\u00e9tait pas d\u2019accord."},
+     {id:"r2",lo:"En priv\u00e9",hi:"Devant l\u2019\u00e9quipe",
+      q:"Quand quelqu\u2019un fait une erreur, est-ce que \u00e7a se traite en \u00e9quipe ou plut\u00f4t en apart\u00e9 ?",
+      a:"Comment \u00e7a s\u2019est pass\u00e9 la derni\u00e8re fois ?"},
      {id:"r3",lo:"Des semaines",hi:"Quelques jours",
-      q:"Combien de temps dure en moyenne une tension non r\u00e9solue avant d'\u00eatre nomm\u00e9e et trait\u00e9e ?",
-      a:"Froids, d\u00e9saccords ou non-dits qui s'\u00e9tirent."}
+      q:"Quand il y a un froid ou un non-dit dans l\u2019\u00e9quipe, combien de temps avant que quelqu\u2019un en parle ?",
+      a:"Ces tensions qu\u2019on sent mais que personne ne nomme."}
    ],
-   low:"La s\u00e9curit\u00e9 psychologique est encore en construction. C'est le levier d'activation le plus fondamental.",
-   high:"La confiance est solide. Les d\u00e9saccords s'expriment et les tensions se traitent au grand jour.",
-   action:"Rituels de feedback sans enjeu hi\u00e9rarchique. Former les managers \u00e0 l'\u00e9coute active."},
-  {id:"s",n:"02",name:"Sens",col:"#3d7040",
-   desc:"Clart\u00e9 de la mission, coh\u00e9rence discours/actes, boussole commune.",
+   low:"La confiance est fragile. C\u2019est le premier levier \u00e0 travailler \u2014 tout le reste en d\u00e9pend.",
+   high:"La confiance est solide. Les gens se parlent franchement, et les tensions se r\u00e8glent vite.",
+   action:"Cr\u00e9er des moments d\u2019\u00e9change sans enjeu. Montrer l\u2019exemple en accueillant les d\u00e9saccords."},
+  {id:"s",n:"02",name:"Cap",col:"#3d7040",
+   desc:"Est-ce que tout le monde sait o\u00f9 on va et pourquoi ?",
    qs:[
-     {id:"s1",lo:"5 r\u00e9ponses diff\u00e9rentes",hi:"Message unifi\u00e9",
-      q:"Si vous demandiez \u00e0 5 collaborateurs d'expliquer la raison d'\u00eatre en une phrase, obtiendriez-vous 5 r\u00e9ponses coh\u00e9rentes ?",
-      a:"Testez mentalement avec des personnes concr\u00e8tes."},
-     {id:"s2",lo:"Appris par rumeur",hi:"Expliqu\u00e9 en amont",
-      q:"Lors du dernier changement important, les \u00e9quipes ont-elles compris le pourquoi avant d'apprendre le quoi par la rumeur ?",
-      a:"Pensez \u00e0 la derni\u00e8re d\u00e9cision qui a surpris les collaborateurs."},
-     {id:"s3",lo:"Trop risqu\u00e9",hi:"Toujours bienvenu",
-      q:"Un collaborateur peut-il remettre en question une d\u00e9cision sans risquer sa r\u00e9putation ?",
-      a:"Y a-t-il des sujets dont tout le monde parle \u2014 mais jamais en r\u00e9union ?"}
+     {id:"s1",lo:"Chacun sa version",hi:"Tous align\u00e9s",
+      q:"Si vous demandiez \u00e0 chaque membre de votre \u00e9quipe \u00ab\u00a0pourquoi on fait ce qu\u2019on fait\u00a0\u00bb, auriez-vous la m\u00eame r\u00e9ponse ?",
+      a:"Pensez \u00e0 des personnes pr\u00e9cises. Que diraient-elles ?"},
+     {id:"s2",lo:"Par la rumeur",hi:"Expliqu\u00e9 en amont",
+      q:"La derni\u00e8re fois que vous avez pris une d\u00e9cision importante, votre \u00e9quipe a-t-elle compris le pourquoi avant de l\u2019apprendre par hasard ?",
+      a:"Un recrutement, un changement d\u2019organisation, une nouvelle priorit\u00e9\u2026"},
+     {id:"s3",lo:"Trop risqu\u00e9",hi:"Tout \u00e0 fait possible",
+      q:"Un membre de votre \u00e9quipe peut-il vous dire \u00ab\u00a0je ne suis pas d\u2019accord avec cette d\u00e9cision\u00a0\u00bb sans craindre de cons\u00e9quences ?",
+      a:"Pas seulement en th\u00e9orie \u2014 est-ce que \u00e7a arrive vraiment ?"}
    ],
-   low:"La boussole commune est \u00e0 renforcer. Fort potentiel d'activation sur ce cadre.",
-   high:"Le sens est partag\u00e9 et v\u00e9cu. Les \u00e9quipes comprennent le pourquoi de leur travail.",
-   action:"Co-construire la raison d'\u00eatre. Incarner les valeurs dans chaque d\u00e9cision visible."},
-  {id:"g",n:"03",name:"Gouvernance",col:"#2a4a8b",
-   desc:"Clart\u00e9 d\u00e9cisionnelle, distribution du pouvoir, l\u00e9gitimit\u00e9.",
+   low:"Le cap n\u2019est pas assez partag\u00e9. Votre \u00e9quipe avance, mais sans boussole commune.",
+   high:"Le cap est clair et partag\u00e9. Les gens comprennent le sens de ce qu\u2019ils font au quotidien.",
+   action:"\u00c9changer r\u00e9guli\u00e8rement sur le pourquoi, pas seulement le quoi. Expliquer vos d\u00e9cisions."},
+  {id:"g",n:"03",name:"D\u00e9cision",col:"#2a4a8b",
+   desc:"Qui d\u00e9cide quoi ? Est-ce que c\u2019est clair pour tout le monde ?",
    qs:[
      {id:"g1",lo:"Souvent flou",hi:"Toujours clair",
-      q:"Savez-vous pr\u00e9cis\u00e9ment \u2014 sans demander \u2014 qui a le dernier mot sur une d\u00e9cision de budget dans votre p\u00e9rim\u00e8tre ?",
-      a:"Pensez \u00e0 une d\u00e9cision prise la semaine derni\u00e8re."},
-     {id:"g2",lo:"Plusieurs fois/mois",hi:"Presque jamais",
-      q:"Combien de fois par mois une d\u00e9cision d\u00e9j\u00e0 prise doit-elle \u00eatre revue parce que les bonnes personnes n'\u00e9taient pas dans la salle ?",
-      a:"Les absents qui contredisent, les d\u00e9cisions qui repartent en discussion."},
-     {id:"g3",lo:"Rarement",hi:"Syst\u00e9matiquement",
-      q:"Les d\u00e9cisions importantes sont-elles document\u00e9es et effectivement consult\u00e9es ?",
-      a:"Pas seulement r\u00e9dig\u00e9es \u2014 r\u00e9ellement utilis\u00e9es."}
+      q:"Dans votre \u00e9quipe, chacun sait-il pr\u00e9cis\u00e9ment qui a le dernier mot sur quoi \u2014 sans avoir besoin de demander ?",
+      a:"Budget, recrutement, priorit\u00e9s du mois\u2026 c\u2019est clair ?"},
+     {id:"g2",lo:"Souvent",hi:"Presque jamais",
+      q:"Vous arrive-t-il de devoir revenir sur une d\u00e9cision parce que quelqu\u2019un de concern\u00e9 n\u2019\u00e9tait pas au courant ?",
+      a:"Ces d\u00e9cisions qui repartent en discussion alors qu\u2019on pensait avoir tranch\u00e9."},
+     {id:"g3",lo:"Rarement",hi:"Toujours",
+      q:"Quand une d\u00e9cision importante est prise, est-elle \u00e9crite quelque part et r\u00e9ellement utilis\u00e9e ensuite ?",
+      a:"Pas un compte-rendu que personne ne relit \u2014 un vrai point de r\u00e9f\u00e9rence."}
    ],
-   low:"Les r\u00e8gles du jeu d\u00e9cisionnel sont \u00e0 clarifier. L'autorit\u00e9 distribu\u00e9e lib\u00e8re de l'\u00e9nergie.",
-   high:"Les r\u00e8gles du jeu sont claires et l\u00e9gitimes. Le pouvoir circule vers la comp\u00e9tence.",
-   action:"Cartographier les processus d\u00e9cisionnels. Distribuer l'autorit\u00e9."},
-  {id:"o",n:"04",name:"Op\u00e9rationnel",col:"#6b4a9b",
-   desc:"Clart\u00e9 des r\u00f4les, efficacit\u00e9 des rituels, capacit\u00e9 d'adaptation.",
+   low:"Les r\u00e8gles du jeu ne sont pas assez claires. \u00c7a cr\u00e9e de la lenteur et de la frustration.",
+   high:"C\u2019est clair et fluide. Chacun sait ce qu\u2019il peut d\u00e9cider et ce qui doit remonter.",
+   action:"Clarifier qui d\u00e9cide quoi. \u00c9crire les d\u00e9cisions cl\u00e9s. Donner plus d\u2019autonomie."},
+  {id:"o",n:"04",name:"Organisation",col:"#6b4a9b",
+   desc:"Les r\u00e9unions servent-elles \u00e0 quelque chose ? L\u2019\u00e9quipe s\u2019adapte-t-elle vite ?",
    qs:[
-     {id:"o1",lo:"Chacun comprend autre chose",hi:"M\u00eame compr\u00e9hension",
-      q:"Apr\u00e8s une r\u00e9union d'une heure, chacun repart-il avec la m\u00eame compr\u00e9hension des actions \u00e0 faire, par qui et pour quand ?",
-      a:"Pensez \u00e0 votre derni\u00e8re r\u00e9union de coordination."},
-     {id:"o2",lo:"Tout s'arr\u00eate",hi:"L'\u00e9quipe continue",
-      q:"Quand un collaborateur cl\u00e9 est absent plusieurs jours, son travail avance-t-il normalement ?",
-      a:"Pensez aux derni\u00e8res absences impr\u00e9vues."},
-     {id:"o3",lo:"Plusieurs semaines",hi:"Quelques heures",
-      q:"La derni\u00e8re fois que votre contexte a chang\u00e9 rapidement, en combien de temps votre \u00e9quipe s'est-elle r\u00e9organis\u00e9e ?",
-      a:"Pas la r\u00e9union de crise \u2014 le retour \u00e0 l'efficacit\u00e9 normale."}
+     {id:"o1",lo:"Chacun comprend autre chose",hi:"Tous align\u00e9s",
+      q:"Apr\u00e8s une r\u00e9union, tout le monde repart-il avec la m\u00eame compr\u00e9hension de qui fait quoi et pour quand ?",
+      a:"Pensez \u00e0 votre derni\u00e8re r\u00e9union d\u2019\u00e9quipe."},
+     {id:"o2",lo:"Tout s\u2019arr\u00eate",hi:"\u00c7a tourne",
+      q:"Quand quelqu\u2019un est absent plusieurs jours, le travail continue-t-il normalement ?",
+      a:"Cong\u00e9s, maladie\u2026 l\u2019\u00e9quipe tient-elle le coup ?"},
+     {id:"o3",lo:"Plusieurs semaines",hi:"Quelques jours",
+      q:"Quand les priorit\u00e9s changent brusquement, en combien de temps votre \u00e9quipe retrouve-t-elle ses marques ?",
+      a:"Un client qui change d\u2019avis, une urgence, un d\u00e9part\u2026"}
    ],
-   low:"Les rituels et r\u00f4les sont \u00e0 optimiser. C'est un levier direct de r\u00e9duction de friction.",
-   high:"R\u00f4les clairs, rituels porteurs d'\u00e9nergie, adaptation fluide.",
-   action:"Clarifier les r\u00f4les. Auditer les rituels. Adopter des m\u00e9thodes agiles."},
-  {id:"a",n:"05",name:"Apprenance",col:"#b8924a",
-   desc:"Apprentissage collectif, changement des pratiques, r\u00e9g\u00e9n\u00e9ration.",
+   low:"L\u2019organisation est fragile. \u00c7a repose trop sur quelques personnes et quelques habitudes.",
+   high:"L\u2019\u00e9quipe est bien rod\u00e9e. Les r\u00f4les sont clairs, les r\u00e9unions utiles, l\u2019adaptation rapide.",
+   action:"Clarifier les r\u00f4les de chacun. Simplifier les r\u00e9unions. Pr\u00e9voir des rel\u00e8ves."},
+  {id:"a",n:"05",name:"Apprentissage",col:"#b8924a",
+   desc:"L\u2019\u00e9quipe progresse-t-elle vraiment \u2014 ou refait-elle toujours les m\u00eames erreurs ?",
    qs:[
-     {id:"a1",lo:"On tourne la page",hi:"Analyse collective",
-      q:"La derni\u00e8re erreur significative a-t-elle donn\u00e9 lieu \u00e0 une analyse collective \u2014 ou a-t-on surtout tourn\u00e9 la page ?",
-      a:"Pas un blame game \u2014 une vraie mise en commun."},
-     {id:"a2",lo:"Rien ne me vient",hi:"Plusieurs exemples",
-      q:"Pouvez-vous citer une pratique concr\u00e8te que votre \u00e9quipe a chang\u00e9e suite \u00e0 un apprentissage collectif dans les 6 derniers mois ?",
-      a:"Quelque chose qui a chang\u00e9 dans la m\u00e9thode."},
-     {id:"a3",lo:"Reste isol\u00e9e",hi:"Devient la norme",
-      q:"Quand quelqu'un d\u00e9couvre une meilleure fa\u00e7on de faire, cette pratique devient-elle la norme pour tous ?",
-      a:"Pensez \u00e0 la derni\u00e8re bonne pratique que vous avez vue rester isol\u00e9e."}
+     {id:"a1",lo:"On passe \u00e0 autre chose",hi:"On en parle ensemble",
+      q:"La derni\u00e8re fois que quelque chose s\u2019est mal pass\u00e9, en avez-vous parl\u00e9 en \u00e9quipe pour \u00e9viter que \u00e7a se reproduise ?",
+      a:"Pas pour chercher un coupable \u2014 pour comprendre ce qui s\u2019est pass\u00e9."},
+     {id:"a2",lo:"Rien ne me vient",hi:"Oui, plusieurs",
+      q:"Pouvez-vous citer une fa\u00e7on de travailler que votre \u00e9quipe a concr\u00e8tement chang\u00e9e ces 6 derniers mois ?",
+      a:"Un processus simplifi\u00e9, une habitude abandonn\u00e9e, un outil adopt\u00e9\u2026"},
+     {id:"a3",lo:"Non, \u00e7a reste isol\u00e9",hi:"Oui, \u00e7a se diffuse",
+      q:"Quand quelqu\u2019un trouve une meilleure fa\u00e7on de faire, les autres l\u2019adoptent-ils ?",
+      a:"Ou est-ce que chacun garde ses bonnes pratiques pour soi ?"}
    ],
-   low:"La capacit\u00e9 d'apprentissage collectif est \u00e0 d\u00e9velopper. Cl\u00e9 de la r\u00e9g\u00e9n\u00e9ration organisationnelle.",
-   high:"L'organisation sait apprendre collectivement. Les erreurs alimentent le progr\u00e8s.",
-   action:"R\u00e9trospectives r\u00e9guli\u00e8res. Valoriser les apprentissages. Communaut\u00e9s de pratique."}
+   low:"L\u2019\u00e9quipe a du mal \u00e0 tirer les le\u00e7ons. Les m\u00eames probl\u00e8mes reviennent.",
+   high:"L\u2019\u00e9quipe apprend de ses erreurs et s\u2019am\u00e9liore en continu. Les bonnes id\u00e9es circulent.",
+   action:"Prendre 15 minutes apr\u00e8s les projets pour d\u00e9briefer. Partager les le\u00e7ons apprises."}
 ];
 
 /* ── Initialisation auto-évaluation ── */
@@ -131,7 +131,7 @@ function initAutoEval(){
     d.className='sc'; d.id='s'+(ci+2);
     d.innerHTML='<div class="inner"><div class="chdr">'
       +'<div class="cnum" style="color:'+c.col+'66">'+c.n+'</div>'
-      +'<div><p class="ctag" style="color:'+c.col+'">Cadre Syst\u00e9mique</p>'
+      +'<div><p class="ctag" style="color:'+c.col+'">Dimension</p>'
       +'<p class="cname" style="color:'+c.col+'">'+c.name+'</p>'
       +'<p class="cdesc">'+c.desc+'</p></div></div>'
       +c.qs.map(function(q,j){
