@@ -800,8 +800,8 @@ function generatePDF(csc,sgp,S,totalPot){
    ENVOI DONNÉES AU BACKEND
    ══════════════════════════════════════════ */
 function submitEvaluation(data){
-  var confirm=document.getElementById('emailConfirm');
-  if(confirm)confirm.innerHTML='<p class="email-sending">Envoi de votre rapport en cours\u2026</p>';
+  var st=document.getElementById('thankyou-status');
+  if(st)st.textContent='Votre rapport est en cours de pr\u00e9paration\u2026';
   fetch('api/submit.php',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -809,16 +809,21 @@ function submitEvaluation(data){
   })
   .then(function(r){return r.json();})
   .then(function(res){
-    if(confirm){
+    if(st){
       if(res.success){
-        confirm.innerHTML='<p class="email-sent">\u2713 Votre rapport PDF a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+data.email+'</strong></p>';
+        st.innerHTML='\u2713 Votre rapport a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+data.email+'</strong>. Consultez votre bo\u00eete mail.';
+        st.className='hsub thankyou-ok';
       }else{
-        confirm.innerHTML='<p class="email-error">L\u2019envoi a \u00e9chou\u00e9. V\u00e9rifiez votre adresse email et r\u00e9essayez.</p>';
+        st.innerHTML='L\u2019envoi a \u00e9chou\u00e9. V\u00e9rifiez votre adresse email et r\u00e9essayez.';
+        st.className='hsub thankyou-err';
       }
     }
   })
   .catch(function(){
-    if(confirm)confirm.innerHTML='<p class="email-error">Erreur de connexion. Veuillez r\u00e9essayer.</p>';
+    if(st){
+      st.innerHTML='Erreur de connexion. Veuillez r\u00e9essayer.';
+      st.className='hsub thankyou-err';
+    }
   });
 }
 
