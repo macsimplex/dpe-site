@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+/* ── RESET ── */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'jost',Arial,sans-serif;font-weight:300;font-size:11px;}
+
+/* ── SHARED TYPOGRAPHY ── */
+.display{font-family:'cormorant',Georgia,serif;font-weight:300;line-height:1.05;letter-spacing:-0.01em;}
+.display-italic{font-family:'cormorant',Georgia,serif;font-weight:300;font-style:italic;}
+.eyebrow{font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;display:block;margin-bottom:16px;}
+.label{font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;}
+.body-text{font-family:'jost',Arial,sans-serif;font-size:11.5px;font-weight:300;line-height:1.78;}
+
+/* ── DARK PAGE STYLES ── */
+.dark-page{background-color:#090805;color:#ede8e0;padding:0 56px;}
+.dark-eyebrow{color:#c9a052;}
+.dark-muted{color:#7a6a50;}
+.dark-body{color:rgba(237,232,224,0.75);}
+.dark-rule{background-color:rgba(201,160,82,0.2);height:1px;width:100%;}
+
+/* ── LIGHT PAGE STYLES ── */
+.light-page{background-color:#f5f0e6;color:#1a1510;padding:0 56px;}
+.light-eyebrow{color:#a07838;}
+.light-muted{color:#7a6a55;}
+.light-body{color:#3a3228;}
+.light-rule{background-color:#c8bba4;height:1px;width:100%;}
+
+/* ── ENTRELACS LOGO SVG ── */
+.logo-svg-dark{display:inline-block;vertical-align:middle;margin-right:11px;}
+.logo-svg-light{display:inline-block;vertical-align:middle;margin-right:11px;}
+
+/* ── KPI ── */
+.kpi-label{font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:7px;}
+.kpi-value{font-family:'cormorant',Georgia,serif;font-weight:300;font-size:38px;line-height:1;color:#c9a052;margin-bottom:4px;}
+.kpi-sub{font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;letter-spacing:0.08em;}
+
+/* ── QUOTE ── */
+.quote-block{padding:20px 22px;border-left:3px solid #c9a052;margin:24px 0;}
+.quote-text{font-family:'cormorant',Georgia,serif;font-size:16px;font-style:italic;font-weight:300;line-height:1.55;}
+
+/* ── CADRE CARD ── */
+.cadre-card{background-color:#ede6d8;border:1px solid #c8bba4;padding:16px 16px;margin-bottom:8px;}
+.cadre-name{font-family:'cormorant',Georgia,serif;font-size:15px;font-weight:400;margin-bottom:4px;}
+.cadre-desc{font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:#7a6a55;margin-bottom:10px;line-height:1.5;}
+.cadre-bar-bg{height:2px;background-color:rgba(0,0,0,0.08);margin-bottom:9px;}
+.cadre-bar{height:2px;}
+.cadre-score{font-family:'cormorant',Georgia,serif;font-size:24px;font-weight:300;line-height:1;}
+.cadre-max{font-family:'jost',Arial,sans-serif;font-size:8px;color:#7a6a55;}
+.cadre-pct{font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;color:#ffffff;}
+.cadre-insight{font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.68;color:#7a6a55;border-top:1px solid #c8bba4;padding-top:9px;margin-top:10px;}
+
+/* ── FINANCE ── */
+.finance-block{background-color:#090805;color:#ede8e0;padding:24px 22px;margin:20px 0;}
+.finance-label{font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;color:#c9a052;margin-bottom:8px;}
+.finance-amount{font-family:'cormorant',Georgia,serif;font-size:48px;font-weight:300;color:#7fbf7f;line-height:1;margin-bottom:4px;}
+.finance-range{font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.35);margin-bottom:12px;}
+
+/* ── ROI ── */
+.roi-block{background-color:#090805;color:#ede8e0;padding:22px 22px;margin:16px 0;border-left:3px solid #c9a052;}
+.roi-title{font-family:'cormorant',Georgia,serif;font-size:18px;font-style:italic;font-weight:300;margin-bottom:10px;color:#c9a052;}
+.roi-val{font-family:'cormorant',Georgia,serif;font-size:28px;font-weight:300;color:#c9a052;line-height:1;margin-bottom:4px;}
+.roi-sub{font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.1em;color:rgba(237,232,224,0.4);text-transform:uppercase;line-height:1.4;}
+
+/* ── PRIORITY ── */
+.priority-num{font-family:'cormorant',Georgia,serif;font-size:28px;font-weight:300;line-height:1;width:22px;}
+.priority-title{font-family:'cormorant',Georgia,serif;font-size:16px;font-weight:400;margin-bottom:3px;}
+.priority-action{font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.6;color:#7a6a55;}
+
+/* ── JOURNEY ── */
+.journey-icon{width:32px;height:32px;border:1px solid rgba(201,160,82,0.3);text-align:center;font-family:'cormorant',Georgia,serif;font-size:13px;color:#c9a052;font-style:italic;line-height:32px;}
+.journey-title{font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;margin-bottom:3px;}
+.journey-desc{font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.6;}
+
+/* ── TABLE HELPERS ── */
+table{border-collapse:collapse;}
+td,th{vertical-align:top;}
+</style>
+</head>
+<body>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 1 — COUVERTURE (dark)
+══════════════════════════════════════════════════════════════ -->
+<div class="dark-page" style="padding-top:0;padding-bottom:0;">
+
+  <!-- Gold top line -->
+  <div style="height:2px;background-color:#c9a052;opacity:0.55;"></div>
+
+  <div style="padding:52px 64px 0 64px;">
+
+    <!-- Header: logo + metadata -->
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:50%;">
+          <table cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="vertical-align:middle;padding-right:11px;">
+                <svg width="44" height="44" viewBox="-52 -52 104 104" fill="none">
+                  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+                  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+                  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+                  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+                  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+                  <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+                </svg>
+              </td>
+              <td style="vertical-align:middle;">
+                <span style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#c9a052;">DPE</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td style="width:50%;text-align:right;">
+          <span style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.14em;color:#7a6a50;line-height:1.8;">Rapport diagnostique<br>Document confidentiel</span>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Main title -->
+    <div style="padding-top:160px;">
+      <span class="eyebrow dark-eyebrow" style="margin-bottom:24px;">Dynamiques de Pr&eacute;sences &Eacute;nerg&eacute;tiques</span>
+      <div class="display" style="font-size:82px;color:#ede8e0;margin-bottom:6px;">Rapport</div>
+      <div class="display-italic" style="font-size:82px;color:#c9a052;">DPE</div>
+      <div style="width:48px;height:1px;background-color:#c9a052;opacity:0.4;margin:20px 0;"></div>
+      <div class="display-italic" style="font-size:17px;color:#a09070;letter-spacing:0.04em;">
+        Pour voir ce que les indicateurs habituels<br>ne montrent pas encore
+      </div>
+    </div>
+
+    <!-- Radar SVG -->
+    <div style="text-align:right;margin-top:-180px;">
+      {{RADAR_SVG}}
+    </div>
+
+    <!-- Score block -->
+    <div style="margin-top:40px;border-top:1px solid rgba(201,160,82,0.15);padding-top:24px;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="width:33%;padding:14px 18px;">
+            <div class="kpi-label dark-muted">Score global pond&eacute;r&eacute;</div>
+            <div class="kpi-value">{{SGP}}<sup style="font-size:0.38em;color:#7a6a50;">/25</sup></div>
+            <div class="kpi-sub dark-muted">{{PCT}}% du potentiel activ&eacute;</div>
+          </td>
+          <td style="width:33%;padding:14px 18px;border-left:1px solid rgba(201,160,82,0.15);">
+            <div class="kpi-label dark-muted">Robustesse estim&eacute;e</div>
+            <div class="kpi-value">{{POTENTIEL}}</div>
+            <div class="kpi-sub dark-muted">par an &middot; {{EFFECTIF}}</div>
+          </td>
+          <td style="width:34%;padding:14px 18px;border-left:1px solid rgba(201,160,82,0.15);">
+            <div class="kpi-label dark-muted">Niveau d'activation</div>
+            <div class="display-italic" style="font-size:20px;color:#c9a052;margin:6px 0 4px;">{{NIVEAU_LABEL}}</div>
+            <div class="kpi-sub" style="color:#7a8a6a;">&sigma; = {{SIGMA}} &middot; &Delta; = {{DELTA}} pts</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Recipient block -->
+    <div style="margin-top:40px;">
+      <div style="padding:18px 20px;border:1px solid rgba(201,160,82,0.12);background-color:rgba(201,160,82,0.03);display:inline-block;">
+        <div class="label dark-muted" style="margin-bottom:7px;">Pr&eacute;par&eacute; pour</div>
+        <div class="display" style="font-size:20px;color:#ede8e0;margin-bottom:2px;">{{ROLE}} &middot; {{SECTEUR_LABEL}}</div>
+        <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#a09070;">{{EFFECTIF}} &middot; Auto-&eacute;valuation individuelle</div>
+      </div>
+    </div>
+
+    <!-- Notice -->
+    <div style="margin-top:40px;padding:7px 16px;background-color:rgba(201,160,82,0.06);border-top:1px solid rgba(201,160,82,0.12);border-bottom:1px solid rgba(201,160,82,0.08);text-align:center;">
+      <span style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.1em;color:#7a6a50;">Ce document est con&ccedil;u pour une lecture sur &eacute;cran. Son impression n'est pas recommand&eacute;e.</span>
+    </div>
+
+    <!-- Footer -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;">
+      <tr>
+        <td style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;letter-spacing:0.1em;color:#7a6a50;">energetics.systems</td>
+        <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-style:italic;color:#7a6a50;">{{DATE}}</td>
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 2 — PREAMBULE (dark, page 01)
+══════════════════════════════════════════════════════════════ -->
+<div class="dark-page" style="padding-top:0;">
+
+  <div style="height:2px;background-color:#c9a052;opacity:0.55;"></div>
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid rgba(201,160,82,0.1);">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;">
+            <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#c9a052"/></svg>
+          </td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#c9a052;">Dynamiques de Pr&eacute;sences &Eacute;nerg&eacute;tiques</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a50;">DPE &middot; {{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:20px 56px;">
+
+    <!-- Section tag -->
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:18px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a50;padding-right:10px;">Pr&eacute;ambule</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:rgba(201,160,82,0.35);"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#c9a052;">Ce que ce rapport cherche &agrave; faire</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:46px;color:#ede8e0;margin-bottom:20px;line-height:1.08;">
+      Une organisation :<br>un groupe de personnes<br><span style="color:#c9a052;font-style:italic;">qui se font confiance.</span>
+    </div>
+
+    <div class="dark-rule" style="margin-bottom:22px;"></div>
+
+    <!-- Two-column layout -->
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:48%;vertical-align:top;padding-right:14px;">
+          <div class="body-text dark-body" style="font-size:12.5px;margin-bottom:14px;">
+Ce rapport n'est pas un audit. C'est un miroir. Il ne vous dit pas ce que vous devriez faire &mdash; il met des mots sur ce que vous observez d&eacute;j&agrave; au quotidien : ce qui fonctionne, ce qui coince, ce qui pourrait &ecirc;tre diff&eacute;rent. Une grande partie de ce que vous y lirez, vous le sentez d&eacute;j&agrave;. Nous lui donnons simplement un nom.
+          </div>
+          <div class="body-text dark-body" style="font-size:12.5px;margin-bottom:14px;">
+Une organisation ne se pilote pas comme une machine. Quand quelque chose coince &mdash; une tension qui dure, une &eacute;quipe qui peine, une d&eacute;cision qui n'avance pas &mdash; ce n'est pas une d&eacute;faillance. C'est un signal. Ce rapport apprend &agrave; lire ces signaux : pas pour les juger, mais pour comprendre ce qu'ils disent.
+          </div>
+          <div class="body-text dark-body" style="font-size:12.5px;margin-bottom:14px;">
+Cette auto-&eacute;valuation ne vous compare pas &agrave; une norme ext&eacute;rieure. Elle s'appuie sur votre v&eacute;cu, votre ressenti, votre lecture concr&egrave;te du quotidien. C'est pr&eacute;cis&eacute;ment pour &ccedil;a qu'elle est juste : personne ne conna&icirc;t mieux votre organisation que ceux qui y travaillent.
+          </div>
+          <div class="body-text dark-body" style="font-size:12.5px;">
+Ce que produit une &eacute;quipe soud&eacute;e ne ressemble &agrave; rien de ce que chacun de ses membres aurait pu accomplir seul. La confiance, l'&eacute;lan collectif, la capacit&eacute; &agrave; tenir dans les moments difficiles &mdash; aucun tableau de bord ne les mesure. C'est pr&eacute;cis&eacute;ment ce que ce rapport cherche &agrave; rendre visible.
+          </div>
+        </td>
+        <td style="width:52%;vertical-align:top;padding-left:14px;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#7a6a50;margin-bottom:10px;">&Eacute;l&eacute;ments de preuve</div>
+
+          <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background-color:rgba(201,160,82,0.04);margin-bottom:8px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;color:#c9a052;margin-bottom:4px;letter-spacing:0.06em;">Le tout est plus grand que la somme des parties</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Une &eacute;quipe soud&eacute;e accomplit des choses qu'aucun de ses membres n'aurait pu faire seul. Ce n'est pas une question de comp&eacute;tences &mdash; c'est une question de dynamique.</div>
+          </div>
+
+          <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background-color:rgba(201,160,82,0.04);margin-bottom:8px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;color:#c9a052;margin-bottom:4px;letter-spacing:0.06em;">Rien ne se maintient seul</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Une &eacute;quipe qui "tourne bien" sans qu'on y fasse attention n'est pas stable &mdash; elle s'&eacute;rode lentement. Ce qui ne progresse pas recule.</div>
+          </div>
+
+          <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background-color:rgba(201,160,82,0.04);margin-bottom:8px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;color:#c9a052;margin-bottom:4px;letter-spacing:0.06em;">Les r&egrave;gles informelles s'imposent d'elles-m&ecirc;mes</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Dans toute &eacute;quipe, des habitudes et des codes non &eacute;crits s'installent avec le temps. Ce qui n'est pas consciemment orient&eacute;, les gens le remplissent &agrave; leur fa&ccedil;on.</div>
+          </div>
+
+          <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background-color:rgba(201,160,82,0.04);margin-bottom:8px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;color:#c9a052;margin-bottom:4px;letter-spacing:0.06em;">Les tensions sont des messages</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Quand quelqu'un part, quand les r&eacute;unions deviennent silencieuses, quand les conflits s'accumulent &mdash; ce sont des signaux que quelque chose dans le collectif demande &agrave; &ecirc;tre ajust&eacute;.</div>
+          </div>
+
+          <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background-color:rgba(201,160,82,0.04);">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;color:#c9a052;margin-bottom:4px;letter-spacing:0.06em;">Tout se tient</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Dans une &eacute;quipe, rien n'est vraiment isol&eacute;. Une tension entre deux personnes affecte les r&eacute;unions. Un flou sur qui d&eacute;cide quoi ralentit tout le monde.</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Economie regenerative -->
+    <div style="margin-top:12px;padding:12px 16px;border-left:2px solid rgba(201,160,82,0.45);background-color:rgba(201,160,82,0.06);">
+      <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#c9a052;margin-bottom:5px;">&Eacute;conomie r&eacute;g&eacute;n&eacute;rative</div>
+      <div class="body-text dark-body" style="font-size:11px;">Le DPE s'inscrit dans une vision plus large. Une organisation qui fonctionne bien pour ses &eacute;quipes ne se contente pas de mieux performer &mdash; elle devient plus solide face aux coups durs, attire et garde les talents, et rayonne au-del&agrave; de ses propres murs.</div>
+    </div>
+
+    <!-- Quote bar -->
+    <div style="margin-top:16px;background-color:#c9a052;padding:14px 24px;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="width:40px;vertical-align:middle;">
+            <svg width="26" height="26" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(0)" opacity="0.35"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(36)" opacity="0.35"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(72)" opacity="0.35"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(108)" opacity="0.35"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(144)" opacity="0.35"/><circle cx="0" cy="0" r="3.8" fill="#090805" opacity="0.4"/></svg>
+          </td>
+          <td style="vertical-align:middle;padding-left:14px;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:17px;font-style:italic;font-weight:300;color:#090805;line-height:1.4;">"Un syst&egrave;me qui ne progresse pas r&eacute;gresse. Il n'y a pas de neutralit&eacute;."</div>
+          </td>
+          <td style="text-align:right;vertical-align:middle;width:200px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:rgba(9,8,5,0.6);letter-spacing:0.1em;line-height:1.7;">Ilya Prigogine &amp; Isabelle Stengers<br>La Nouvelle Alliance, 1979<br>Prix Nobel de Chimie 1977</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid rgba(201,160,82,0.1);">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a50;">Pr&eacute;ambule</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a50;">01</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 3 — PHOTOGRAPHIE (light, page 02)
+══════════════════════════════════════════════════════════════ -->
+<div class="light-page" style="padding-top:0;">
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid #c8bba4;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;">
+            <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg>
+          </td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#a07838;">energetics.systems</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">{{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:16px 56px;">
+
+    <!-- Section tag -->
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a55;padding-right:10px;">I</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:#c8bba4;"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#a07838;">Photographie</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:40px;color:#1a1510;margin-bottom:10px;line-height:1.1;">
+      Ce que votre organisation<br>r&eacute;v&egrave;le d'elle-m&ecirc;me
+    </div>
+    <div class="light-rule" style="margin-bottom:16px;"></div>
+
+    <!-- KPIs -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #c8bba4;margin-bottom:14px;">
+      <tr>
+        <td style="width:33%;padding:14px 18px;">
+          <div class="kpi-label light-muted">Score global pond&eacute;r&eacute;</div>
+          <div class="kpi-value">{{SGP}}<sup style="font-size:0.38em;color:#7a6a55;">/25</sup></div>
+          <div class="kpi-sub light-muted">{{PCT}}% du potentiel activ&eacute;</div>
+        </td>
+        <td style="width:33%;padding:14px 18px;border-left:1px solid #c8bba4;">
+          <div class="kpi-label light-muted">Tension inter-cadres</div>
+          <div class="kpi-value" style="font-size:28px;padding-top:6px;">&sigma; = {{SIGMA}}</div>
+          <div class="kpi-sub light-muted">&Eacute;cart-type &middot; &Delta; = {{DELTA}} pts</div>
+        </td>
+        <td style="width:34%;padding:14px 18px;border-left:1px solid #c8bba4;">
+          <div class="kpi-label light-muted">Robustesse estim&eacute;e</div>
+          <div class="kpi-value" style="color:#3d7040;">{{POTENTIEL}}</div>
+          <div class="kpi-sub light-muted">potentiel annuel</div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Niveau badge -->
+    <div style="margin-bottom:12px;padding:12px 16px;background-color:rgba(184,146,74,0.08);border:1px solid rgba(184,146,74,0.2);display:inline-block;">
+      <span class="label" style="color:#a07838;">Niveau &middot; {{NIVEAU_LABEL}}</span>
+      <p style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#7a6a55;margin-top:5px;line-height:1.6;">{{NIVEAU_DESC}}</p>
+    </div>
+
+    <!-- Synthese -->
+    <div class="body-text" style="font-size:11px;color:#3a3228;margin-bottom:10px;">
+      {{SYNTHESE}}
+    </div>
+
+    <!-- Sigma analysis - two columns -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+      <tr>
+        <td style="width:49%;vertical-align:top;padding-right:5px;">
+          <div style="padding:12px 14px;background-color:#ede6d8;border:1px solid #c8bba4;border-top:3px solid #8b5a3a;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#8b5a3a;margin-bottom:6px;">Ce que mesure &sigma; = {{SIGMA}}</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">Ce chiffre mesure l'&eacute;cart entre vos dimensions les plus fortes et les plus fragiles. Plus l'&eacute;cart est grand, plus les domaines solides gaspillent leur &eacute;nergie &agrave; compenser les domaines en difficult&eacute;.</div>
+          </div>
+        </td>
+        <td style="width:49%;vertical-align:top;padding-left:5px;">
+          <div style="padding:12px 14px;background-color:#ede6d8;border:1px solid #c8bba4;border-top:3px solid #a07838;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#a07838;margin-bottom:6px;">Tout est li&eacute;</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">Les cinq dimensions ne fonctionnent pas ind&eacute;pendamment. Quand l'une est fragile, elle p&egrave;se sur toutes les autres &mdash; comme le maillon le plus faible d'une cha&icirc;ne.</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- SGP explanation -->
+    <div style="padding:10px 14px;background-color:rgba(201,160,82,0.06);border:1px solid rgba(201,160,82,0.18);margin-bottom:10px;">
+      <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a07838;margin-bottom:6px;">Pourquoi ce score tient compte des d&eacute;s&eacute;quilibres</div>
+      <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.7;">Deux organisations avec les m&ecirc;mes moyennes peuvent &ecirc;tre dans des situations tr&egrave;s diff&eacute;rentes. C'est pourquoi le SGP int&egrave;gre les &eacute;carts entre dimensions : <em>SGP = moyenne &minus; &eacute;cart entre dimensions</em>. Plus vos points forts et vos points faibles sont &eacute;loign&eacute;s, plus le score est impact&eacute;.</div>
+    </div>
+
+    <!-- Mini radar + scores par cadre -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+      <tr>
+        <td style="width:180px;vertical-align:top;">
+          {{RADAR_SVG}}
+        </td>
+        <td style="vertical-align:top;padding-left:20px;padding-top:8px;">
+          <div class="label light-muted" style="margin-bottom:10px;">Scores par cadre</div>
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="width:70px;color:#c4603a;font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;padding:4px 0;">{{CADRE_0_NOM}}</td>
+              <td style="padding:4px 8px;"><div style="height:2px;background-color:#f0e8dc;"><div style="width:{{CADRE_0_BAR_WIDTH}};height:2px;background-color:#c4603a;opacity:0.6;"></div></div></td>
+              <td style="width:50px;text-align:right;color:#7a6a55;font-family:'jost',Arial,sans-serif;font-size:9px;">{{CADRE_0_SCORE}}/15</td>
+            </tr>
+            <tr>
+              <td style="width:70px;color:#3d7040;font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;padding:4px 0;">{{CADRE_1_NOM}}</td>
+              <td style="padding:4px 8px;"><div style="height:2px;background-color:#f0e8dc;"><div style="width:{{CADRE_1_BAR_WIDTH}};height:2px;background-color:#3d7040;opacity:0.6;"></div></div></td>
+              <td style="width:50px;text-align:right;color:#7a6a55;font-family:'jost',Arial,sans-serif;font-size:9px;">{{CADRE_1_SCORE}}/15</td>
+            </tr>
+            <tr>
+              <td style="width:70px;color:#2a4a8b;font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;padding:4px 0;">{{CADRE_2_NOM}}</td>
+              <td style="padding:4px 8px;"><div style="height:2px;background-color:#f0e8dc;"><div style="width:{{CADRE_2_BAR_WIDTH}};height:2px;background-color:#2a4a8b;opacity:0.6;"></div></div></td>
+              <td style="width:50px;text-align:right;color:#7a6a55;font-family:'jost',Arial,sans-serif;font-size:9px;">{{CADRE_2_SCORE}}/15</td>
+            </tr>
+            <tr>
+              <td style="width:70px;color:#6b4a9b;font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;padding:4px 0;">{{CADRE_3_NOM}}</td>
+              <td style="padding:4px 8px;"><div style="height:2px;background-color:#f0e8dc;"><div style="width:{{CADRE_3_BAR_WIDTH}};height:2px;background-color:#6b4a9b;opacity:0.6;"></div></div></td>
+              <td style="width:50px;text-align:right;color:#7a6a55;font-family:'jost',Arial,sans-serif;font-size:9px;">{{CADRE_3_SCORE}}/15</td>
+            </tr>
+            <tr>
+              <td style="width:70px;color:#b8924a;font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;padding:4px 0;">{{CADRE_4_NOM}}</td>
+              <td style="padding:4px 8px;"><div style="height:2px;background-color:#f0e8dc;"><div style="width:{{CADRE_4_BAR_WIDTH}};height:2px;background-color:#b8924a;opacity:0.6;"></div></div></td>
+              <td style="width:50px;text-align:right;color:#7a6a55;font-family:'jost',Arial,sans-serif;font-size:9px;">{{CADRE_4_SCORE}}/15</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Lewin interpretation -->
+    <div style="padding:12px 14px;background-color:#ede6d8;border:1px solid #c8bba4;border-left:3px solid #a07838;">
+      <div style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#a07838;margin-bottom:6px;">Par o&ugrave; commencer ? Enlever ce qui bloque, pas ajouter ce qui manque</div>
+      <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:#3a3228;line-height:1.7;">
+        Vos forces sont de vrais atouts. Vos priorit&eacute;s freinent le reste &mdash; elles emp&ecirc;chent vos forces de se d&eacute;ployer pleinement. La strat&eacute;gie la plus efficace : s'attaquer d'abord &agrave; ce qui freine. D&eacute;bloquer le cadre le plus faible lib&egrave;re imm&eacute;diatement l'&eacute;nergie d&eacute;j&agrave; pr&eacute;sente dans vos autres dimensions.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid #c8bba4;">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">I &middot; Photographie</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a55;">02</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 4 — LE POINT ZERO (light, page 03)
+══════════════════════════════════════════════════════════════ -->
+<div class="light-page" style="padding-top:0;">
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid #c8bba4;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#a07838;">energetics.systems</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">{{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:16px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a55;padding-right:10px;">II</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:#c8bba4;"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#a07838;">Cadre</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:40px;color:#1a1510;margin-bottom:10px;line-height:1.1;">
+      L'approche<br><span style="color:#a07838;font-style:italic;">Le Point Z&eacute;ro 2050</span>
+    </div>
+    <div class="light-rule" style="margin-bottom:14px;"></div>
+    <div style="font-family:'jost',Arial,sans-serif;font-size:11px;font-weight:300;color:#7a6a55;line-height:1.75;margin-bottom:16px;font-style:italic;">Ces cinq dimensions ne sont pas une grille abstraite. Ce sont cinq fa&ccedil;ons de regarder ce qui se passe dans votre &eacute;quipe &mdash; des choses que vous vivez chaque jour mais que vos indicateurs habituels ne mesurent pas.</div>
+
+    <!-- Two columns: philosophy + 5 cadres -->
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:48%;vertical-align:top;padding-right:14px;">
+
+          <div style="margin-bottom:14px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#7a6a55;margin-bottom:7px;">L'enqu&ecirc;te</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:10.5px;font-weight:300;color:#3a3228;line-height:1.75;">Le Point Z&eacute;ro 2050 est le fruit d'une enqu&ecirc;te de trente ans men&eacute;e par Boris Sirbey pour comprendre pourquoi tant d'organisations n'arrivent pas &agrave; lib&eacute;rer leur vrai potentiel humain. Son constat : ce ne sont pas des probl&egrave;mes de comp&eacute;tences ou d'outils. Ce sont des probl&egrave;mes de dynamiques collectives.</div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#7a6a55;margin-bottom:7px;">Le logiciel invisible de l'&eacute;quipe</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:10.5px;font-weight:300;color:#3a3228;line-height:1.75;">Derri&egrave;re les comportements visibles de chaque &eacute;quipe, il y a un ensemble de croyances et d'habitudes collectives inconscientes &mdash; une sorte de logiciel invisible qui programme ce qu'on dit, ce qu'on tait, comment on d&eacute;cide. Ce rapport commence &agrave; le rendre visible.</div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#7a6a55;margin-bottom:7px;">Comment &ccedil;a fonctionne</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:10.5px;font-weight:300;color:#3a3228;line-height:1.75;">Ce qu'une &eacute;quipe croit possible d&eacute;termine ce qu'elle fait. Agir directement sur les comportements &mdash; sans toucher aux croyances collectives qui les produisent &mdash; ne change rien durablement. C'est pourquoi cette approche travaille d'abord sur les dynamiques, pas sur les individus.</div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#7a6a55;margin-bottom:7px;">Un impact qui d&eacute;passe votre organisation</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:10.5px;font-weight:300;color:#3a3228;line-height:1.75;">Une organisation qui fonctionne bien pour ses gens ne s'arr&ecirc;te pas &agrave; ses murs. Elle attire, elle inspire, elle montre que performance et bien-&ecirc;tre ne s'opposent pas.</div>
+          </div>
+
+          <div style="padding:11px 13px;background-color:rgba(201,160,82,0.07);border:1px solid rgba(201,160,82,0.2);">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:#a07838;margin-bottom:6px;">Le DPE dans cette approche</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">Cette auto-&eacute;valuation est le premier regard sur ce qui se passe vraiment dans votre &eacute;quipe. C'est le point de d&eacute;part d'un travail plus profond.</div>
+          </div>
+
+        </td>
+        <td style="width:52%;vertical-align:top;padding-left:14px;">
+
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#7a6a55;margin-bottom:7px;">Les cinq pr&eacute;sences &eacute;nerg&eacute;tiques</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:10.5px;font-weight:300;color:#3a3228;line-height:1.75;margin-bottom:12px;">Cinq dimensions essentielles &mdash; et elles sont li&eacute;es. Chacune conditionne les suivantes. Ensemble, elles d&eacute;terminent si une &eacute;quipe tourne &agrave; plein r&eacute;gime ou &agrave; mi-r&eacute;gime.</div>
+
+          <!-- Cadre 1 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #c8bba4;margin-bottom:7px;">
+            <tr>
+              <td style="width:4px;background-color:#c4603a;"></td>
+              <td style="padding:11px 13px;background-color:#ede6d8;">
+                <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#c4603a;margin-bottom:4px;">1. Relationnel</div>
+                <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">La base de tout. Quand les gens peuvent dire ce qu'ils pensent sans craindre les cons&eacute;quences, tout le reste devient possible.</div>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Cadre 2 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #c8bba4;margin-bottom:7px;">
+            <tr>
+              <td style="width:4px;background-color:#3d7040;"></td>
+              <td style="padding:11px 13px;background-color:#ede6d8;">
+                <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#3d7040;margin-bottom:4px;">2. Sens</div>
+                <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">Comprendre pourquoi on fait ce qu'on fait &mdash; et y croire vraiment. Quand chacun voit le sens de son travail, l'engagement se vit.</div>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Cadre 3 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #c8bba4;margin-bottom:7px;">
+            <tr>
+              <td style="width:4px;background-color:#2a4a8b;"></td>
+              <td style="padding:11px 13px;background-color:#ede6d8;">
+                <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#2a4a8b;margin-bottom:4px;">3. Gouvernance</div>
+                <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">Savoir qui d&eacute;cide quoi, comment, avec qui. Quand les r&egrave;gles du jeu sont claires, les gens agissent avec confiance.</div>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Cadre 4 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #c8bba4;margin-bottom:7px;">
+            <tr>
+              <td style="width:4px;background-color:#6b4a9b;"></td>
+              <td style="padding:11px 13px;background-color:#ede6d8;">
+                <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#6b4a9b;margin-bottom:4px;">4. Op&eacute;rationnel</div>
+                <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">Passer du discours aux actes, simplement et efficacement. Les r&eacute;unions aboutissent, les r&ocirc;les sont clairs.</div>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Cadre 5 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #c8bba4;margin-bottom:7px;">
+            <tr>
+              <td style="width:4px;background-color:#b8924a;"></td>
+              <td style="padding:11px 13px;background-color:#ede6d8;">
+                <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#b8924a;margin-bottom:4px;">5. Apprenance</div>
+                <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.65;">Apprendre vraiment de ce qu'on vit &mdash; ensemble. Les &eacute;quipes qui y arrivent s'am&eacute;liorent en continu, naturellement.</div>
+              </td>
+            </tr>
+          </table>
+
+          <div style="padding:9px 12px;background-color:rgba(201,160,82,0.07);border:1px solid rgba(201,160,82,0.2);">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:#3a3228;line-height:1.65;font-style:italic;">L'&eacute;tat d&eacute;taill&eacute; de ces cinq dimensions dans votre organisation est pr&eacute;sent&eacute; dans la section suivante &mdash; Cartographie.</div>
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
+    <!-- Quote bar -->
+    <div style="margin-top:14px;background-color:#1a1510;padding:14px 24px;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="vertical-align:middle;padding-right:14px;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:15px;font-style:italic;font-weight:300;color:#c9a052;line-height:1.4;">"Les organisations ne souffrent pas d'un manque de comp&eacute;tences. Elles souffrent d'un d&eacute;salignement entre leurs cadres."</div>
+          </td>
+          <td style="text-align:right;vertical-align:middle;width:160px;border-left:1px solid rgba(201,160,82,0.15);padding-left:16px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a50;letter-spacing:0.1em;line-height:1.8;">Boris Sirbey<br>Le Point Z&eacute;ro, 2025</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid #c8bba4;">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">II &middot; Cadre</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a55;">03</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 5 — CARTOGRAPHIE (light, page 04)
+══════════════════════════════════════════════════════════════ -->
+<div class="light-page" style="padding-top:0;">
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid #c8bba4;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#a07838;">energetics.systems</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">{{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:12px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a55;padding-right:10px;">III</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:#c8bba4;"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#a07838;">Cartographie</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:38px;color:#1a1510;margin-bottom:6px;line-height:1.1;">
+      L'&eacute;tat de vos<br>cinq dimensions
+    </div>
+    <div class="light-rule" style="margin-bottom:10px;"></div>
+
+    <div class="body-text light-body" style="margin-bottom:10px;">
+Ce qui suit d&eacute;crit chacune de vos cinq dimensions en d&eacute;tail. Quand une dimension est fragile, elle ne souffre pas seule &mdash; elle p&egrave;se sur toutes les autres.
+    </div>
+
+    <!-- Cadre cards grid: 2x2 -->
+    <table width="100%" cellpadding="0" cellspacing="5">
+      <tr>
+        <!-- Cadre 0 -->
+        <td style="width:50%;vertical-align:top;">
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-left:3px solid {{CADRE_0_COLOR}};padding:14px 14px;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:15px;font-weight:400;color:{{CADRE_0_COLOR}};margin-bottom:4px;">{{CADRE_0_NOM}}</div>
+            <div class="cadre-desc">{{CADRE_0_DESC}}</div>
+            <div style="height:2px;background-color:rgba(0,0,0,0.08);margin-bottom:9px;"><div style="width:{{CADRE_0_BAR_WIDTH}};height:2px;background-color:{{CADRE_0_COLOR}};opacity:0.5;"></div></div>
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="font-family:'cormorant',Georgia,serif;font-size:24px;font-weight:300;color:{{CADRE_0_COLOR}};line-height:1;">{{CADRE_0_SCORE}}</td>
+              <td style="font-family:'jost',Arial,sans-serif;font-size:8px;color:#7a6a55;padding-left:4px;vertical-align:bottom;padding-bottom:4px;">/15</td>
+              <td style="padding-left:12px;vertical-align:bottom;padding-bottom:4px;"><span style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;color:#ffffff;background-color:{{CADRE_0_COLOR}};">{{CADRE_0_BADGE}}</span></td>
+            </tr></table>
+            <div class="cadre-insight">{{CADRE_0_INSIGHT}}</div>
+          </div>
+        </td>
+        <!-- Cadre 1 -->
+        <td style="width:50%;vertical-align:top;">
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-left:3px solid {{CADRE_1_COLOR}};padding:14px 14px;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:15px;font-weight:400;color:{{CADRE_1_COLOR}};margin-bottom:4px;">{{CADRE_1_NOM}}</div>
+            <div class="cadre-desc">{{CADRE_1_DESC}}</div>
+            <div style="height:2px;background-color:rgba(0,0,0,0.08);margin-bottom:9px;"><div style="width:{{CADRE_1_BAR_WIDTH}};height:2px;background-color:{{CADRE_1_COLOR}};opacity:0.5;"></div></div>
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="font-family:'cormorant',Georgia,serif;font-size:24px;font-weight:300;color:{{CADRE_1_COLOR}};line-height:1;">{{CADRE_1_SCORE}}</td>
+              <td style="font-family:'jost',Arial,sans-serif;font-size:8px;color:#7a6a55;padding-left:4px;vertical-align:bottom;padding-bottom:4px;">/15</td>
+              <td style="padding-left:12px;vertical-align:bottom;padding-bottom:4px;"><span style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;color:#ffffff;background-color:{{CADRE_1_COLOR}};">{{CADRE_1_BADGE}}</span></td>
+            </tr></table>
+            <div class="cadre-insight">{{CADRE_1_INSIGHT}}</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <!-- Cadre 2 -->
+        <td style="width:50%;vertical-align:top;">
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-left:3px solid {{CADRE_2_COLOR}};padding:14px 14px;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:15px;font-weight:400;color:{{CADRE_2_COLOR}};margin-bottom:4px;">{{CADRE_2_NOM}}</div>
+            <div class="cadre-desc">{{CADRE_2_DESC}}</div>
+            <div style="height:2px;background-color:rgba(0,0,0,0.08);margin-bottom:9px;"><div style="width:{{CADRE_2_BAR_WIDTH}};height:2px;background-color:{{CADRE_2_COLOR}};opacity:0.5;"></div></div>
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="font-family:'cormorant',Georgia,serif;font-size:24px;font-weight:300;color:{{CADRE_2_COLOR}};line-height:1;">{{CADRE_2_SCORE}}</td>
+              <td style="font-family:'jost',Arial,sans-serif;font-size:8px;color:#7a6a55;padding-left:4px;vertical-align:bottom;padding-bottom:4px;">/15</td>
+              <td style="padding-left:12px;vertical-align:bottom;padding-bottom:4px;"><span style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;color:#ffffff;background-color:{{CADRE_2_COLOR}};">{{CADRE_2_BADGE}}</span></td>
+            </tr></table>
+            <div class="cadre-insight">{{CADRE_2_INSIGHT}}</div>
+          </div>
+        </td>
+        <!-- Cadre 3 -->
+        <td style="width:50%;vertical-align:top;">
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-left:3px solid {{CADRE_3_COLOR}};padding:14px 14px;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:15px;font-weight:400;color:{{CADRE_3_COLOR}};margin-bottom:4px;">{{CADRE_3_NOM}}</div>
+            <div class="cadre-desc">{{CADRE_3_DESC}}</div>
+            <div style="height:2px;background-color:rgba(0,0,0,0.08);margin-bottom:9px;"><div style="width:{{CADRE_3_BAR_WIDTH}};height:2px;background-color:{{CADRE_3_COLOR}};opacity:0.5;"></div></div>
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="font-family:'cormorant',Georgia,serif;font-size:24px;font-weight:300;color:{{CADRE_3_COLOR}};line-height:1;">{{CADRE_3_SCORE}}</td>
+              <td style="font-family:'jost',Arial,sans-serif;font-size:8px;color:#7a6a55;padding-left:4px;vertical-align:bottom;padding-bottom:4px;">/15</td>
+              <td style="padding-left:12px;vertical-align:bottom;padding-bottom:4px;"><span style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;color:#ffffff;background-color:{{CADRE_3_COLOR}};">{{CADRE_3_BADGE}}</span></td>
+            </tr></table>
+            <div class="cadre-insight">{{CADRE_3_INSIGHT}}</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Cadre 4 full width -->
+    <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-left:3px solid {{CADRE_4_COLOR}};padding:14px 14px;margin-top:5px;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="width:50%;vertical-align:top;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:15px;font-weight:400;color:{{CADRE_4_COLOR}};margin-bottom:4px;">{{CADRE_4_NOM}}</div>
+            <div class="cadre-desc">{{CADRE_4_DESC}}</div>
+            <div style="height:2px;background-color:rgba(0,0,0,0.08);margin-bottom:9px;max-width:280px;"><div style="width:{{CADRE_4_BAR_WIDTH}};height:2px;background-color:{{CADRE_4_COLOR}};opacity:0.5;"></div></div>
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="font-family:'cormorant',Georgia,serif;font-size:24px;font-weight:300;color:{{CADRE_4_COLOR}};line-height:1;">{{CADRE_4_SCORE}}</td>
+              <td style="font-family:'jost',Arial,sans-serif;font-size:8px;color:#7a6a55;padding-left:4px;vertical-align:bottom;padding-bottom:4px;">/15</td>
+              <td style="padding-left:12px;vertical-align:bottom;padding-bottom:4px;"><span style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:2px 7px;color:#ffffff;background-color:{{CADRE_4_COLOR}};">{{CADRE_4_BADGE}}</span></td>
+            </tr></table>
+          </td>
+          <td style="width:50%;vertical-align:top;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.68;color:#7a6a55;padding-top:4px;">{{CADRE_4_INSIGHT}}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Point saillant bar -->
+  <div style="background-color:#1a1510;padding:13px 56px;margin-top:8px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:100px;vertical-align:top;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#7a6a50;margin-bottom:4px;">Point saillant</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:28px;font-weight:300;color:#c9a052;line-height:1;">&sigma; = {{SIGMA}}</div>
+        </td>
+        <td style="vertical-align:middle;padding-left:20px;border-left:1px solid rgba(201,160,82,0.15);">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.75);line-height:1.7;padding-left:20px;">{{POINT_SAILLANT}}</div>
+        </td>
+        <td style="width:120px;text-align:center;vertical-align:top;padding:10px 16px;border:1px solid rgba(201,160,82,0.2);">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:#7a6a50;margin-bottom:4px;">Priorit&eacute;</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:16px;font-weight:400;font-style:italic;color:{{CADRE_0_COLOR}};">{{PRIO_1_NOM}}</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#7a6a50;margin-top:2px;">{{PRIO_1_SCORE}}/15 &middot; {{PRIO_1_PCT}}% activ&eacute;</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid #c8bba4;">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">III &middot; Cartographie</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a55;">04</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 6 — DEFI (light, page 05)
+══════════════════════════════════════════════════════════════ -->
+<div class="light-page" style="padding-top:0;">
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid #c8bba4;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#a07838;">energetics.systems</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">{{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:16px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a55;padding-right:10px;">IV</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:#c8bba4;"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#a07838;">D&eacute;fi</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:38px;color:#1a1510;margin-bottom:8px;line-height:1.1;">
+      Ce que ces frictions<br>co&ucirc;tent r&eacute;ellement
+    </div>
+    <div class="light-rule" style="margin-bottom:10px;"></div>
+    <div style="font-family:'jost',Arial,sans-serif;font-size:11px;font-weight:300;color:#7a6a55;line-height:1.75;margin-bottom:12px;font-style:italic;">Ce n'est pas parce que votre organisation fonctionne mal. C'est parce qu'une partie de son &eacute;nergie part ailleurs &mdash; dans des tensions, des flous, des frictions du quotidien.</div>
+
+    <!-- Finance block -->
+    <div class="finance-block">
+      <div class="finance-label">Robustesse organisationnelle &mdash; potentiel estim&eacute;</div>
+      <div class="finance-amount">{{POTENTIEL}}</div>
+      <div class="finance-range">Fourchette : {{FOURCHETTE_BAS}} &mdash; {{FOURCHETTE_HAUT}} &middot; par an</div>
+
+      <!-- Breakdown -->
+      <table width="100%" cellpadding="0" cellspacing="1" style="margin-top:16px;background-color:rgba(201,160,82,0.12);">
+        <tr>
+          <td style="width:33%;background-color:#141008;padding:12px 10px;text-align:center;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:20px;font-weight:300;color:#c9a052;line-height:1;margin-bottom:4px;">{{PROD}}</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:300;letter-spacing:0.1em;color:rgba(237,232,224,0.4);text-transform:uppercase;">Productivit&eacute;</div>
+          </td>
+          <td style="width:33%;background-color:#141008;padding:12px 10px;text-align:center;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:20px;font-weight:300;color:#c9a052;line-height:1;margin-bottom:4px;">{{TURNOVER}}</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:300;letter-spacing:0.1em;color:rgba(237,232,224,0.4);text-transform:uppercase;">Turnover</div>
+          </td>
+          <td style="width:34%;background-color:#141008;padding:12px 10px;text-align:center;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:20px;font-weight:300;color:#c9a052;line-height:1;margin-bottom:4px;">{{REUNIONS}}</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:300;letter-spacing:0.1em;color:rgba(237,232,224,0.4);text-transform:uppercase;">R&eacute;unions</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Robustesse explanation -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;">
+      <tr>
+        <td style="width:49%;vertical-align:top;padding-right:5px;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.72;padding:12px 14px;background-color:rgba(201,160,82,0.05);border-left:3px solid #a07838;">
+            Ce chiffre ne mesure pas ce que vous perdez &mdash; il mesure ce que votre &eacute;quipe <strong style="font-weight:500;">pourrait g&eacute;n&eacute;rer</strong> si l'&eacute;nergie qui s'&eacute;chappe dans les frictions &eacute;tait r&eacute;investie dans ce qui compte.
+          </div>
+        </td>
+        <td style="width:49%;vertical-align:top;padding-left:5px;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.72;padding:12px 14px;background-color:rgba(201,160,82,0.05);border-left:3px solid #a07838;">
+            Ces montants ne sont pas une perte future &mdash; ils disparaissent <strong style="font-weight:500;">aujourd'hui</strong>, silencieusement : dans les non-dits qui s'accumulent, les d&eacute;cisions repass&eacute;es trois fois en r&eacute;union, les talents qui partent.
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Circular economy -->
+    <div style="margin-top:14px;">
+      <div class="label" style="color:#a07838;margin-bottom:6px;">Ce que &ccedil;a change concr&egrave;tement</div>
+      <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:#3a3228;line-height:1.7;margin-bottom:10px;">La question n'est pas de travailler plus, ni de d&eacute;penser davantage. C'est de r&eacute;cup&eacute;rer ce qui se perd &mdash; et de le r&eacute;investir l&agrave; o&ugrave; &ccedil;a cr&eacute;e vraiment de la valeur.</div>
+
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="width:33%;vertical-align:top;padding-right:4px;">
+            <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-top:3px solid #c9a052;padding:14px 12px;text-align:center;">
+              <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a07838;margin-bottom:5px;">Moins de friction</div>
+              <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;line-height:1.55;color:#7a6a55;">Moins de d&eacute;parts non voulus, moins de tensions, moins d'&eacute;nergie d&eacute;pens&eacute;e &agrave; compenser les flous et les non-dits.</div>
+            </div>
+          </td>
+          <td style="width:34%;vertical-align:top;padding:0 4px;">
+            <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-top:3px solid #c9a052;padding:14px 12px;text-align:center;">
+              <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a07838;margin-bottom:5px;">Plus de fluidit&eacute;</div>
+              <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;line-height:1.55;color:#7a6a55;">Des d&eacute;cisions qui tiennent, des gens qui coop&egrave;rent, une &eacute;quipe qui rebondit vite quand quelque chose change.</div>
+            </div>
+          </td>
+          <td style="width:33%;vertical-align:top;padding-left:4px;">
+            <div style="background-color:#ede6d8;border:1px solid #c8bba4;border-top:3px solid #c9a052;padding:14px 12px;text-align:center;">
+              <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a07838;margin-bottom:5px;">Rentabilit&eacute; durable</div>
+              <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;line-height:1.55;color:#7a6a55;">Pas plus d'effort &mdash; moins de gaspillage. Une rentabilit&eacute; qui vient du bon fonctionnement est plus solide.</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Detail breakdown -->
+    <div style="margin-top:14px;">
+      <div class="label" style="color:#a07838;margin-bottom:9px;">D'o&ugrave; viennent ces chiffres</div>
+      <table width="100%" cellpadding="0" cellspacing="1" style="background-color:#c8bba4;">
+        <tr>
+          <td style="width:33%;background-color:#f5f0e6;padding:11px 12px;vertical-align:top;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:20px;font-weight:300;color:#a07838;line-height:1;margin-bottom:5px;">{{PROD}}</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#7a6a55;margin-bottom:5px;">Productivit&eacute;</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:#3a3228;line-height:1.65;">La part de ce que vous payez qui part dans les frictions du quotidien &mdash; r&eacute;unions sans d&eacute;cision, malentendus, &eacute;nergie d&eacute;pens&eacute;e &agrave; compenser des flous.</div>
+          </td>
+          <td style="width:33%;background-color:#f5f0e6;padding:11px 12px;vertical-align:top;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:20px;font-weight:300;color:#a07838;line-height:1;margin-bottom:5px;">{{TURNOVER}}</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#7a6a55;margin-bottom:5px;">Turnover</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:#3a3228;line-height:1.65;">Remplacer quelqu'un co&ucirc;te entre 50 et 200% de son salaire annuel (SHRM). Une bonne partie des d&eacute;parts est &eacute;vitable.</div>
+          </td>
+          <td style="width:34%;background-color:#f5f0e6;padding:11px 12px;vertical-align:top;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:20px;font-weight:300;color:#a07838;line-height:1;margin-bottom:5px;">{{REUNIONS}}</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#7a6a55;margin-bottom:5px;">R&eacute;unions</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:#3a3228;line-height:1.65;">31 heures de r&eacute;unions par mois jug&eacute;es inutiles (Microsoft, 2023). Sympt&ocirc;me d'un flou dans la Gouvernance.</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- A retenir bar -->
+  <div style="background-color:#1a1510;padding:14px 56px;margin-top:8px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:140px;vertical-align:top;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#7a6a50;margin-bottom:5px;">&Agrave; retenir</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:16px;font-weight:300;font-style:italic;color:#c9a052;line-height:1.3;">L'&eacute;nergie dissip&eacute;e<br>ne dispara&icirc;t pas.</div>
+        </td>
+        <td style="vertical-align:middle;padding-left:20px;border-left:1px solid rgba(201,160,82,0.15);">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.72);line-height:1.7;padding-left:20px;">Elle se retrouve ailleurs &mdash; dans les d&eacute;parts, les absences, les d&eacute;cisions qui n'avancent pas. R&eacute;duire les tensions internes, c'est convertir du gaspillage en &eacute;lan &mdash; sans ajouter de ressources, sans augmenter la pression.</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid #c8bba4;">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">IV &middot; D&eacute;fi</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a55;">05</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 7 — POTENTIEL (light, page 06)
+══════════════════════════════════════════════════════════════ -->
+<div class="light-page" style="padding-top:0;">
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid #c8bba4;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#a07838;">energetics.systems</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">{{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:12px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a55;padding-right:10px;">V</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:#c8bba4;"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#a07838;">Potentiel</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:38px;color:#1a1510;margin-bottom:8px;line-height:1.1;">
+      Ce qui est d&eacute;j&agrave;<br>disponible
+    </div>
+    <div class="light-rule" style="margin-bottom:16px;"></div>
+
+    <div class="body-text light-body" style="margin-bottom:10px;">
+      Ce potentiel n'est pas &agrave; cr&eacute;er de toutes pi&egrave;ces. Il est d&eacute;j&agrave; l&agrave;, dans votre organisation. L'activer ne demande pas de travailler davantage. Il demande de lever ce qui freine.
+    </div>
+
+    <!-- ROI block -->
+    <div class="roi-block" style="margin:10px 0;padding:16px 22px;">
+      <div class="roi-title">Et si votre SGP augmentait d'un seul point ?</div>
+      <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.55);margin-bottom:8px;line-height:1.65;border-left:2px solid rgba(201,160,82,0.3);padding-left:12px;font-style:italic;">
+        Une journ&eacute;e pass&eacute;e &agrave; voir ensemble ce qui se passe vraiment suffit &agrave; d&eacute;clencher des changements concrets sur toute l'ann&eacute;e.
+      </div>
+      <table width="100%" cellpadding="0" cellspacing="1" style="margin:8px 0;background-color:rgba(201,160,82,0.15);">
+        <tr>
+          <td style="width:50%;background-color:#141008;padding:14px 12px;text-align:center;">
+            <div class="roi-val">{{GAIN_UN_PT}}</div>
+            <div class="roi-sub">Robustesse suppl&eacute;mentaire<br>+1 pt &middot; sur 1 an</div>
+          </td>
+          <td style="width:50%;background-color:#141008;padding:14px 12px;text-align:center;">
+            <div class="roi-val" style="color:#7fbf7f;">{{ROI_X}}x</div>
+            <div class="roi-sub">ROI atelier<br>{{GAIN_UN_PT}} de gain &middot; 2 000 &euro; investis</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Forces -->
+    <div style="margin-top:10px;">
+      <div class="label" style="color:#a07838;margin-bottom:10px;">Forces identifi&eacute;es &middot; sur quoi capitaliser</div>
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="width:49%;vertical-align:top;padding-right:4px;">
+            <div style="padding:11px 13px;border:1px solid rgba(61,112,64,0.2);border-left:3px solid {{FORCE_1_COLOR}};margin-bottom:8px;">
+              <div style="font-family:'cormorant',Georgia,serif;font-size:13px;font-weight:400;color:{{FORCE_1_COLOR}};margin-bottom:4px;">{{FORCE_1_NOM}} &middot; {{FORCE_1_SCORE}}/15</div>
+              <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:#3a3228;line-height:1.65;">{{FORCE_1_TEXTE}}</div>
+            </div>
+          </td>
+          <td style="width:49%;vertical-align:top;padding-left:4px;">
+            <div style="padding:11px 13px;border:1px solid rgba(196,96,58,0.18);border-left:3px solid {{FORCE_2_COLOR}};margin-bottom:8px;">
+              <div style="font-family:'cormorant',Georgia,serif;font-size:13px;font-weight:400;color:{{FORCE_2_COLOR}};margin-bottom:4px;">{{FORCE_2_NOM}} &middot; {{FORCE_2_SCORE}}/15</div>
+              <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:#3a3228;line-height:1.65;">{{FORCE_2_TEXTE}}</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Priorities -->
+    <div style="margin-top:4px;">
+      <div class="label" style="color:#a07838;margin-bottom:6px;">Par o&ugrave; commencer</div>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid #c8bba4;padding:10px 0;">
+        <tr>
+          <td style="width:30px;vertical-align:top;">
+            <div class="priority-num" style="color:{{PRIO_1_COLOR}};">1</div>
+          </td>
+          <td style="vertical-align:top;">
+            <div class="priority-title" style="color:{{PRIO_1_COLOR}};">{{PRIO_1_NOM}} &middot; {{PRIO_1_SCORE}}/15 &middot; {{PRIO_1_PCT}}% activ&eacute;</div>
+            <div class="priority-action">{{PRIO_1_ACTION}}</div>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid #c8bba4;padding:10px 0;">
+        <tr>
+          <td style="width:30px;vertical-align:top;">
+            <div class="priority-num" style="color:{{PRIO_2_COLOR}};">2</div>
+          </td>
+          <td style="vertical-align:top;">
+            <div class="priority-title" style="color:{{PRIO_2_COLOR}};">{{PRIO_2_NOM}} &middot; {{PRIO_2_SCORE}}/15 &middot; {{PRIO_2_PCT}}% activ&eacute;</div>
+            <div class="priority-action">{{PRIO_2_ACTION}}</div>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 0;">
+        <tr>
+          <td style="width:30px;vertical-align:top;">
+            <div class="priority-num" style="color:#c4603a;">&#8594;</div>
+          </td>
+          <td style="vertical-align:top;">
+            <div style="font-family:'cormorant',Georgia,serif;font-size:9px;font-weight:400;color:#7a6a55;">{{PRIO_MAINTIEN}} &middot; &agrave; entretenir</div>
+            <div class="priority-action">Ces points forts sont ce qui fait tenir votre &eacute;quipe. Ils ne demandent pas d'effort particulier en ce moment, mais une attention continue.</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Horizon bar -->
+  <div style="background-color:#090805;padding:14px 56px;border-top:1px solid rgba(201,160,82,0.12);">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="vertical-align:top;width:220px;">
+          <div class="label" style="color:#7a6a50;margin-bottom:4px;">Horizon 12&ndash;24 mois</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:24px;font-weight:300;color:#7fbf7f;line-height:1;">{{HORIZON}}</div>
+        </td>
+        <td style="vertical-align:middle;border-left:1px solid rgba(201,160,82,0.15);padding-left:16px;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:rgba(237,232,224,0.45);line-height:1.6;">En activant {{PRIO_1_NOM}}, {{PRIO_2_NOM}} et les cadres forts &middot; {{EFFECTIF}} &middot; {{SECTEUR_LABEL}}</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid #c8bba4;">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">V &middot; Potentiel</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a55;">06</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 8 — PREMIER PAS (dark, page 07)
+══════════════════════════════════════════════════════════════ -->
+<div class="dark-page" style="padding-top:0;">
+
+  <div style="height:2px;background-color:#c9a052;opacity:0.55;"></div>
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid rgba(201,160,82,0.1);">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#c9a052"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#c9a052;">Dynamiques de Pr&eacute;sences &Eacute;nerg&eacute;tiques</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a50;">DPE &middot; {{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:16px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a50;padding-right:10px;">VI</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:rgba(201,160,82,0.35);"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#c9a052;">Premier pas</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:42px;color:#ede8e0;margin-bottom:8px;line-height:1.1;">
+      Ce que vous venez<br>de faire est un<br><span style="color:#c9a052;font-style:italic;">premier aper&ccedil;u.</span>
+    </div>
+    <div class="dark-rule" style="margin-bottom:20px;"></div>
+
+    <div class="body-text" style="color:rgba(237,232,224,0.7);margin-bottom:18px;">
+      Cette auto-&eacute;valuation vous a donn&eacute; une premi&egrave;re lecture de votre organisation &mdash; rapide, mais ancr&eacute;e dans votre v&eacute;cu r&eacute;el. Si quelque chose dans ce rapport a soulev&eacute; une question que vous ne vous posiez pas, c'est exactement l'effet recherch&eacute;.
+    </div>
+
+    <!-- Comparison: auto-eval vs DPE approfondi -->
+    <table width="100%" cellpadding="0" cellspacing="1" style="background-color:rgba(201,160,82,0.15);margin-bottom:22px;">
+      <tr>
+        <td style="width:50%;background-color:#141008;padding:18px 16px;vertical-align:top;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:#7a6a50;margin-bottom:10px;">Cette auto-&eacute;valuation</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.45);line-height:1.8;">
+            &middot; Auto-&eacute;valuation en 10 minutes<br>
+            &middot; 3 questions par cadre<br>
+            &middot; Rapport illustratif du potentiel<br>
+            &middot; Estimation financi&egrave;re indicative<br>
+            &middot; Point d'entr&eacute;e dans l'approche DPE
+          </div>
+        </td>
+        <td style="width:50%;background-color:#0f0c07;padding:18px 16px;border-left:2px solid #c9a052;vertical-align:top;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:#c9a052;margin-bottom:10px;">Le DPE approfondi</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.8;">
+            &#8594; Exploration de votre &eacute;cologie interne<br>
+            &#8594; Comment vous fonctionnez dans l'&eacute;quipe<br>
+            &#8594; Rapport individuel fin &middot; anonyme<br>
+            &#8594; Pistes de mise en action personnalis&eacute;es<br>
+            &#8594; Inclus dans l'atelier d'&eacute;quipe
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Parcours complet: 4 steps -->
+    <div style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;color:#7a6a50;margin-bottom:14px;">Le parcours complet</div>
+    <table width="100%" cellpadding="0" cellspacing="1" style="background-color:rgba(201,160,82,0.15);margin-bottom:20px;">
+      <tr>
+        <td style="width:25%;background-color:#1c1408;padding:16px 13px;vertical-align:top;border-top:2px solid #c9a052;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#c9a052;margin-bottom:6px;">1. Vous &ecirc;tes ici</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:13px;font-weight:400;color:#ede8e0;margin-bottom:10px;">Auto-&eacute;valuation</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.5);line-height:1.55;">Votre v&eacute;cu de manager, 10 minutes, 15 questions ancr&eacute;es dans le r&eacute;el. Vous repartez avec ce rapport.</div>
+        </td>
+        <td style="width:25%;background-color:#141008;padding:16px 13px;vertical-align:top;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,160,82,0.45);margin-bottom:6px;">2. &Eacute;tape suivante</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:13px;font-weight:400;color:rgba(237,232,224,0.7);margin-bottom:10px;">DPE approfondi</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Un lien d'acc&egrave;s fourni par votre facilitateur. Anonyme. Rapport individuel fin, t&eacute;l&eacute;chargeable.</div>
+        </td>
+        <td style="width:25%;background-color:#141008;padding:16px 13px;vertical-align:top;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,160,82,0.45);margin-bottom:6px;">3. Pour l'&eacute;quipe</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:13px;font-weight:400;color:rgba(237,232,224,0.7);margin-bottom:10px;">Rapport collectif</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Agr&eacute;gation anonymis&eacute;e des DPE individuels. Zones de consensus et angles morts visibles.</div>
+        </td>
+        <td style="width:25%;background-color:#141008;padding:16px 13px;vertical-align:top;">
+          <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,160,82,0.45);margin-bottom:6px;">4. Le seuil</div>
+          <div style="font-family:'cormorant',Georgia,serif;font-size:13px;font-weight:400;color:rgba(237,232,224,0.7);margin-bottom:10px;">Atelier &middot; 1 journ&eacute;e</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">12 personnes maximum. Un facilitateur certifi&eacute;. Plan co-construit, ancr&eacute; dans le v&eacute;cu de l'&eacute;quipe.</div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA facilitateur -->
+    <div style="padding:22px 24px;background-color:#c9a052;">
+      <div style="font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:rgba(9,8,5,0.55);margin-bottom:8px;">Pour aller plus loin</div>
+      <div style="font-family:'cormorant',Georgia,serif;font-size:18px;font-style:italic;font-weight:300;color:#090805;line-height:1.4;margin-bottom:14px;">Demandez &agrave; un facilitateur certifi&eacute; de vous proposer le DPE approfondi &mdash; pour vous, et pour votre &eacute;quipe.</div>
+      <div style="padding-top:12px;border-top:1px solid rgba(9,8,5,0.15);">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;color:rgba(9,8,5,0.6);line-height:1.65;">Trouvez un facilitateur certifi&eacute; ou renseignez-vous<br>sur la formation &agrave; la certification DPE.</td>
+            <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#090805;letter-spacing:0.1em;font-style:italic;">energetics.systems/facilitateurs &#8594;</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid rgba(201,160,82,0.1);">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a50;">VI &middot; Premier pas</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a50;">07</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 9 — LE PARCOURS (dark, page 08)
+══════════════════════════════════════════════════════════════ -->
+<div class="dark-page" style="padding-top:0;">
+
+  <div style="height:2px;background-color:#c9a052;opacity:0.55;"></div>
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid rgba(201,160,82,0.1);">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#c9a052"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#c9a052;">Dynamiques de Pr&eacute;sences &Eacute;nerg&eacute;tiques</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a50;">DPE &middot; {{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:16px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a50;padding-right:10px;">VII</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:rgba(201,160,82,0.35);"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#c9a052;">Le parcours</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:42px;color:#ede8e0;margin-bottom:8px;line-height:1.1;">
+      C'est le premier pas<br>d'un <span style="color:#c9a052;font-style:italic;">long voyage.</span>
+    </div>
+    <div class="dark-rule" style="margin-bottom:18px;"></div>
+
+    <div class="body-text" style="color:rgba(237,232,224,0.7);margin-bottom:24px;">
+      L'atelier est le moment o&ugrave; l'on bascule &mdash; d'une prise de conscience individuelle &agrave; une d&eacute;cision collective. Ce qui vient apr&egrave;s, c'est le travail r&eacute;el : avec ses avanc&eacute;es, ses rechutes, ses surprises. Changer la dynamique d'une &eacute;quipe ne ressemble pas &agrave; un projet qu'on planifie et qu'on ex&eacute;cute. &Ccedil;a ressemble davantage &agrave; un apprentissage.
+    </div>
+
+    <!-- Journey steps -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid rgba(201,160,82,0.1);padding-bottom:14px;margin-bottom:14px;">
+      <tr>
+        <td style="width:50px;vertical-align:top;">
+          <div class="journey-icon">I</div>
+        </td>
+        <td style="vertical-align:top;padding-left:14px;">
+          <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#ede8e0;margin-bottom:3px;">L'auto-&eacute;valuation collective</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.6;color:rgba(237,232,224,0.5);">Chaque membre de l'&eacute;quipe r&eacute;alise son DPE individuel. La cartographie collective r&eacute;v&egrave;le ce que chaque auto-&eacute;valuation individuelle ne peut montrer seule : les zones d'ombre partag&eacute;es, les forces invisibles, les tensions syst&eacute;miques qui ne sont pas encore nomm&eacute;es.</div>
+        </td>
+      </tr>
+    </table>
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid rgba(201,160,82,0.1);padding-bottom:14px;margin-bottom:14px;">
+      <tr>
+        <td style="width:50px;vertical-align:top;">
+          <div class="journey-icon">II</div>
+        </td>
+        <td style="vertical-align:top;padding-left:14px;">
+          <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#ede8e0;margin-bottom:3px;">L'atelier de conscience partag&eacute;e &middot; 1 journ&eacute;e</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.6;color:rgba(237,232,224,0.5);">Une journ&eacute;e pour voir ensemble, nommer ensemble, d&eacute;cider ensemble. Le facilitateur cr&eacute;e l'espace pour que l'&eacute;quipe trouve elle-m&ecirc;me ses r&eacute;ponses. Ce qui &eacute;merge tient dans le temps, parce que c'est le collectif qui l'a construit.</div>
+        </td>
+      </tr>
+    </table>
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid rgba(201,160,82,0.1);padding-bottom:14px;margin-bottom:14px;">
+      <tr>
+        <td style="width:50px;vertical-align:top;">
+          <div class="journey-icon">III</div>
+        </td>
+        <td style="vertical-align:top;padding-left:14px;">
+          <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#ede8e0;margin-bottom:3px;">Les &eacute;preuves du chemin</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.6;color:rgba(237,232,224,0.5);">Des r&eacute;sistances surgiront &mdash; c'est in&eacute;vitable, et c'est bon signe. Des cadres qui retombent dans leurs anciens sch&eacute;mas, des habitudes qui reprennent le dessus. Ces moments ne sont pas des &eacute;checs : ils sont la preuve que quelque chose change vraiment.</div>
+        </td>
+      </tr>
+    </table>
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="width:50px;vertical-align:top;">
+          <div class="journey-icon">IV</div>
+        </td>
+        <td style="vertical-align:top;padding-left:14px;">
+          <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-weight:400;color:#ede8e0;margin-bottom:3px;">L'accompagnement dans la dur&eacute;e</div>
+          <div style="font-family:'jost',Arial,sans-serif;font-size:9px;font-weight:300;line-height:1.6;color:rgba(237,232,224,0.5);">Un facilitateur certifi&eacute; vous accompagne &agrave; chaque &eacute;tape &mdash; pas pour d&eacute;cider &agrave; votre place, mais pour maintenir le cap quand les anciennes habitudes reprennent le dessus, et r&eacute;ajuster quand la r&eacute;alit&eacute; diff&egrave;re de ce qu'on avait anticip&eacute;.</div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Retour poetic block -->
+    <div style="text-align:center;padding:32px 40px;border:1px solid rgba(201,160,82,0.2);background-color:rgba(201,160,82,0.04);">
+      <div style="font-family:'cormorant',Georgia,serif;font-size:14px;font-style:italic;font-weight:300;line-height:1.7;color:#a09070;">
+        "Au bout du parcours, l'organisation ne revient pas &agrave; son &eacute;tat initial.<br>
+        Elle revient &agrave; elle-m&ecirc;me &mdash; mais avec moins de frottement, plus de fluidit&eacute;, et une capacit&eacute; &agrave; traverser les prochaines &eacute;preuves.<br>
+        Elle n'a pas chang&eacute; de nature. Elle a retrouv&eacute; sa propre puissance."
+      </div>
+      <div style="margin-top:14px;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.2em;text-transform:uppercase;color:#7a6a50;">Le retour &middot; Le Point Z&eacute;ro 2050</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid rgba(201,160,82,0.1);">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a50;">VII &middot; Le parcours</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a50;">08</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 10 — FONDEMENTS (light, page 09)
+══════════════════════════════════════════════════════════════ -->
+<div class="light-page" style="padding-top:0;">
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid #c8bba4;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#a07838;">energetics.systems</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">{{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:10px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a55;padding-right:10px;">&mdash;</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:#c8bba4;"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#a07838;">Fondements</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:22px;color:#1a1510;margin-bottom:8px;line-height:1.1;">Ce qui fonde chaque notion de ce rapport</div>
+
+    <!-- Fondements table -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+      <!-- Header row -->
+      <tr style="background-color:#1a1510;">
+        <th style="width:140px;padding:5px 8px;text-align:left;font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Notion</th>
+        <th style="padding:5px 8px;text-align:left;font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Id&eacute;e re&ccedil;ue &#8594; Recherche</th>
+        <th style="padding:5px 8px;text-align:left;font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Application DPE</th>
+        <th style="width:120px;padding:5px 8px;text-align:left;font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">R&eacute;f&eacute;rence</th>
+      </tr>
+      <!-- Row 1 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">L'auto-&eacute;valuation comme miroir l&eacute;gitime</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">Un syst&egrave;me vivant est organisationnellement ferm&eacute; : toute description externe projette la r&eacute;alit&eacute; de l'observateur. Le champ ph&eacute;nom&eacute;nal v&eacute;cu est la seule r&eacute;alit&eacute; valide.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; Le DPE n'impose aucune norme externe. Vos r&eacute;ponses sont vraies parce qu'elles viennent de l'int&eacute;rieur du syst&egrave;me.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Maturana &amp; Varela, 1980<br>Von Foerster, 1973<br>Carl Rogers, 1951</td>
+      </tr>
+      <!-- Row 2 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">La robustesse plut&ocirc;t que l'optimisation</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">Les syst&egrave;mes vivants cherchent la robustesse &mdash; la capacit&eacute; &agrave; maintenir leurs fonctions malgr&eacute; les perturbations. Un syst&egrave;me trop optimis&eacute; s'effondre au premier choc.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; Le potentiel DPE mesure la robustesse que l'organisation peut construire en r&eacute;duisant ses tensions.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Olivier Hamant<br>La Troisi&egrave;me Voie du Vivant, 2022</td>
+      </tr>
+      <!-- Row 3 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">La s&eacute;curit&eacute; psychologique comme fondation</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">Projet Aristotle (Google, 180 &eacute;quipes, 2016) : la s&eacute;curit&eacute; psychologique est le premier pr&eacute;dicteur de la performance collective.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; Le Relationnel est la fondation absolue. Un score faible ici bloque tous les autres cadres.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Amy Edmondson<br>The Fearless Organization, 2018</td>
+      </tr>
+      <!-- Row 4 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">La mesure d&eacute;clenche le changement</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">R&eacute;pondre &agrave; un questionnaire sur ses intentions augmente la probabilit&eacute; de passer &agrave; l'acte. L'acte de mesurer cr&eacute;e lui-m&ecirc;me l'intention.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; R&eacute;pondre &agrave; cette auto-&eacute;valuation n'est pas neutre. Vous avez d&eacute;j&agrave; amorc&eacute; le mouvement.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Morwitz, Johnson &amp; Schmittlein, 1993</td>
+      </tr>
+      <!-- Row 5 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">L'interd&eacute;pendance des cadres</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">La performance d'un syst&egrave;me est d&eacute;termin&eacute;e par son maillon le plus faible. Seul le travail sur la contrainte principale produit un effet r&eacute;el.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; Le SGP p&eacute;nalise les d&eacute;s&eacute;quilibres via &sigma;. Activer le cadre le moins pr&eacute;sent augmente le SGP davantage.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Eliyahu Goldratt<br>The Goal, 1984</td>
+      </tr>
+      <!-- Row 6 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">Champs de force &middot; lever les freins</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">Renforcer les moteurs sans lever les r&eacute;sistances cr&eacute;e plus de tension &mdash; pas plus de mouvement. La strat&eacute;gie gagnante : r&eacute;duire les freins en premier.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; Le cadre le moins activ&eacute; est le frein principal. L'activer lib&egrave;re l'&eacute;nergie captive.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Kurt Lewin<br>Field Theory, 1951</td>
+      </tr>
+      <!-- Row 7 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">Le sens comme construction collective</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">Le sens n'est pas transmis : il est construit collectivement &agrave; travers l'action et l'interpr&eacute;tation r&eacute;trospective.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; Le cadre Sens &eacute;value la coh&eacute;rence de cette construction collective.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Karl Weick<br>Sensemaking, 1995</td>
+      </tr>
+      <!-- Row 8 -->
+      <tr style="border-bottom:1px solid #c8bba4;">
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">L'apprentissage en double boucle</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">L'apprentissage en double boucle remet en cause les mod&egrave;les mentaux sous-jacents. Sans cette boucle profonde, les m&ecirc;mes sch&eacute;mas se reproduisent.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; L'Apprenance &eacute;value la capacit&eacute; &agrave; apprendre en double boucle.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Argyris &amp; Sch&ouml;n<br>Organizational Learning, 1978</td>
+      </tr>
+      <!-- Row 9 -->
+      <tr>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:3px solid #a07838;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:400;color:#a07838;line-height:1.25;">L'&eacute;nergie dissip&eacute;e comme ph&eacute;nom&egrave;ne mesurable</td>
+        <td style="padding:7px 8px;background-color:#f5f0e6;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.55;">Les syst&egrave;mes vivants maintiennent leur organisation en &eacute;changeant de l'&eacute;nergie. Ce qui n'est pas canalis&eacute; se dissipe. Cette dissipation est quantifiable et r&eacute;versible.</td>
+        <td style="padding:7px 8px;background-color:rgba(201,160,82,0.05);border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#a07838;line-height:1.55;font-style:italic;">&#8594; Fondement thermodynamique du DPE : l'&eacute;nergie dissip&eacute;e par le d&eacute;salignement est &eacute;valuable et recirculable.</td>
+        <td style="padding:7px 8px;background-color:#ede6d8;border-left:1px solid #c8bba4;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;color:#7a6a55;line-height:1.55;">Prigogine &amp; Stengers<br>La Nouvelle Alliance, 1979</td>
+      </tr>
+    </table>
+
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid #c8bba4;">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">Fondements</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a55;">09</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 11 — SOURCES & CALCULS (light, page 10)
+══════════════════════════════════════════════════════════════ -->
+<div class="light-page" style="padding-top:0;">
+
+  <!-- Header -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:0 56px;height:52px;border-bottom:1px solid #c8bba4;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:8px;"><svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg></td>
+          <td style="vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#a07838;">energetics.systems</td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">{{ROLE}} &middot; {{SECTEUR_LABEL}} &middot; {{EFFECTIF}}</td>
+    </tr>
+  </table>
+
+  <div style="padding:10px 56px;">
+
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+      <tr>
+        <td style="vertical-align:middle;font-family:'cormorant',Georgia,serif;font-size:13px;font-style:italic;color:#7a6a55;padding-right:10px;">&mdash;</td>
+        <td style="vertical-align:middle;"><div style="width:28px;height:1px;background-color:#c8bba4;"></div></td>
+        <td style="vertical-align:middle;padding-left:10px;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:#a07838;">R&eacute;f&eacute;rences &amp; Calculs</td>
+      </tr>
+    </table>
+
+    <div class="display" style="font-size:26px;color:#1a1510;margin-bottom:8px;line-height:1.15;">
+      Une approche ancr&eacute;e<br>dans <span style="color:#a07838;font-style:italic;">de nombreuses sciences</span>
+    </div>
+    <div class="light-rule" style="margin-bottom:12px;"></div>
+
+    <!-- Two columns: Sources + Calculs -->
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:49%;vertical-align:top;padding-right:7px;">
+
+          <!-- Epistemo blocks -->
+          <div style="padding:10px 12px;background-color:rgba(201,160,82,0.06);border-left:3px solid #a07838;margin-bottom:10px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#a07838;margin-bottom:5px;">Une approche multi-r&eacute;f&eacute;rentielle</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:#3a3228;line-height:1.65;">Ce rapport croise des d&eacute;cennies de recherche en psychologie, en sociologie des organisations, en biologie des syst&egrave;mes et en sciences du management.</div>
+          </div>
+
+          <div class="label" style="color:#a07838;margin-bottom:10px;">Donn&eacute;es de r&eacute;f&eacute;rence &middot; six sources crois&eacute;es</div>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+            <tr style="border-bottom:1px solid #c8bba4;background-color:#ede6d8;">
+              <th style="text-align:left;padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#7a6a55;">Source</th>
+              <th style="text-align:left;padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#7a6a55;">Indicateur</th>
+              <th style="text-align:left;padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#7a6a55;">Valeur</th>
+            </tr>
+            <tr style="border-bottom:1px solid #c8bba4;">
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#a07838;font-weight:500;">Gallup 2023</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">Co&ucirc;t d&eacute;sengagement</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">9% du PIB mondial</td>
+            </tr>
+            <tr style="border-bottom:1px solid #c8bba4;">
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#a07838;font-weight:500;">McKinsey 2022</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">Perte productivit&eacute;</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">20&ndash;25% masse salariale</td>
+            </tr>
+            <tr style="border-bottom:1px solid #c8bba4;">
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#a07838;font-weight:500;">SHRM</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">Co&ucirc;t remplacement</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">50&ndash;200% salaire annuel</td>
+            </tr>
+            <tr style="border-bottom:1px solid #c8bba4;">
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#a07838;font-weight:500;">Microsoft WTI 2023</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">R&eacute;unions improductives</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">31h/mois &middot; 68%</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#a07838;font-weight:500;">DARES / INSEE 2023</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">Salaires par secteur</td>
+              <td style="padding:5px 7px;font-family:'jost',Arial,sans-serif;font-size:8px;color:#3a3228;">{{SAL_REF}} ({{SECTEUR_LABEL}})</td>
+            </tr>
+          </table>
+
+          <div style="padding:10px 13px;background-color:rgba(201,160,82,0.06);border-left:3px solid #a07838;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#a07838;margin-bottom:5px;">Ces chiffres &mdash; une illustration de la complexit&eacute;</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:#3a3228;line-height:1.65;">Ces estimations sont des indicateurs de potentiel, non des certitudes comptables. Elles rendent visible ce qui est ordinairement invisible &mdash; la valeur de l'&eacute;nergie collective non mobilis&eacute;e.</div>
+          </div>
+
+        </td>
+        <td style="width:49%;vertical-align:top;padding-left:7px;">
+
+          <div class="label" style="color:#a07838;margin-bottom:10px;">Transparence des calculs &middot; six &eacute;tapes</div>
+
+          <!-- Step 1: SGP -->
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;padding:9px 11px;margin-bottom:5px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:500;color:#1a1510;margin-bottom:5px;">1. Score Global Pond&eacute;r&eacute; (SGP)</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.75;font-style:italic;">
+              Moyenne des 5 cadres (/15) &#8594; SGP brut = moyenne &minus; &sigma; &#8594; SGP normalis&eacute; /25<br>
+              <span style="color:#7a6a55;">Cadres = {{CSC_STR}} &#8594; moy = {{MEAN}} &#8594; &sigma; = {{SIGMA}} &#8594; SGP brut = {{SGP_RAW}}/15 &#8594; SGP = {{SGP}}/25</span>
+            </div>
+          </div>
+
+          <!-- Step 2: Masse salariale -->
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;padding:9px 11px;margin-bottom:5px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:500;color:#1a1510;margin-bottom:5px;">2. Masse salariale charg&eacute;e</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.75;font-style:italic;">
+              MS = effectif &times; salaire sectoriel &times; 1,45 (charges patronales)<br>
+              <span style="color:#7a6a55;">{{EFFECTIF}} &times; {{SAL_REF_K}} &times; 1,45 = {{MASSE_SAL}}</span>
+            </div>
+          </div>
+
+          <!-- Step 3: Dissipation -->
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;padding:9px 11px;margin-bottom:5px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:500;color:#1a1510;margin-bottom:5px;">3. Taux de dissipation par productivit&eacute;</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.75;font-style:italic;">
+              w = 38% &minus; 34% &times; (SGP &minus; 5) / 20<br>
+              <span style="color:#7a6a55;">SGP={{SGP}} &#8594; w = {{DISSIP_PCT}} &#8594; {{MASSE_SAL}} &times; {{DISSIP_PCT}} = {{PROD}}</span>
+            </div>
+          </div>
+
+          <!-- Step 4: Turnover -->
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;padding:9px 11px;margin-bottom:5px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:500;color:#1a1510;margin-bottom:5px;">4. Surplus de turnover</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.75;font-style:italic;">
+              Taux surplus = (1 &minus; SGP/25) &times; 10% &middot; co&ucirc;t = 85% du salaire<br>
+              <span style="color:#7a6a55;">(1&minus;{{SGP}}/25)&times;10% = {{TURNOVER_PCT}} &#8594; {{TURNOVER}}</span>
+            </div>
+          </div>
+
+          <!-- Step 5: Reunions -->
+          <div style="background-color:#ede6d8;border:1px solid #c8bba4;padding:9px 11px;margin-bottom:5px;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:500;color:#1a1510;margin-bottom:5px;">5. Surplus de r&eacute;unions improductives</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:#3a3228;line-height:1.75;font-style:italic;">
+              Taux surplus = 15% &times; (1 &minus; SGP/25) &times; 32%<br>
+              <span style="color:#7a6a55;">15%&times;(1&minus;{{SGP}}/25)&times;32% = {{REUNIONS_PCT}} &#8594; {{REUNIONS}}</span>
+            </div>
+          </div>
+
+          <!-- Step 6: ROI -->
+          <div style="background-color:#090805;color:#ede8e0;padding:11px 13px;border-left:3px solid #c9a052;">
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:500;color:#c9a052;margin-bottom:5px;">6. ROI atelier (+1 point SGP &middot; sur 1 an)</div>
+            <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.65);line-height:1.75;font-style:italic;">
+              Gain annuel = Potentiel(SGP) &minus; Potentiel(SGP+1)<br>
+              ROI = Gain annuel / Co&ucirc;t atelier (2 000&euro;)<br>
+              <span style="color:rgba(237,232,224,0.4);">Gain +1pt = {{GAIN_UN_PT}}/an &#8594; ROI = {{ROI_X}}x</span>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+  <!-- Footer -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:10px 56px;border-top:1px solid #c8bba4;">
+    <tr>
+      <td style="font-family:'jost',Arial,sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.12em;color:#7a6a55;">R&eacute;f&eacute;rences &amp; Calculs</td>
+      <td style="text-align:right;font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;font-style:italic;color:#7a6a55;">10</td>
+    </tr>
+  </table>
+
+</div>
+
+<pagebreak />
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 12 — CLOTURE (dark)
+══════════════════════════════════════════════════════════════ -->
+<div class="dark-page" style="padding:64px 72px 52px;">
+
+  <!-- Top: Logo + tag -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:40px;">
+    <tr>
+      <td style="vertical-align:middle;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="vertical-align:middle;padding-right:11px;">
+            <svg width="32" height="32" viewBox="-52 -52 104 104" fill="none">
+              <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+              <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+              <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+              <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+              <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+              <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+            </svg>
+          </td>
+          <td style="vertical-align:middle;">
+            <span style="font-family:'jost',Arial,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:#c9a052;">DPE</span>
+          </td>
+        </tr></table>
+      </td>
+      <td style="text-align:right;vertical-align:middle;font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:#7a6a50;">Cl&ocirc;ture &middot; Rapport diagnostique</td>
+    </tr>
+  </table>
+
+  <!-- Main message -->
+  <div style="margin-bottom:40px;">
+    <div style="font-family:'cormorant',Georgia,serif;font-size:11px;font-weight:300;letter-spacing:0.28em;text-transform:uppercase;color:#c9a052;margin-bottom:28px;opacity:0.8;">Ce que vous venez de faire</div>
+
+    <div style="font-family:'cormorant',Georgia,serif;font-size:38px;font-weight:300;color:#ede8e0;line-height:1.18;margin-bottom:32px;">
+      Vous avez observ&eacute;<br>une facette de<br>votre r&eacute;alit&eacute;.<br>
+      <span style="color:#c9a052;font-style:italic;">C'est d&eacute;j&agrave; un acte.</span>
+    </div>
+
+    <div style="width:40px;height:1px;background-color:rgba(201,160,82,0.4);margin-bottom:32px;"></div>
+
+    <div style="font-family:'jost',Arial,sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;margin-bottom:22px;">
+Ce rapport &eacute;tait fait pour &ccedil;a : mettre des mots sur ce que vous vivez, ouvrir des angles que vous n'aviez peut-&ecirc;tre pas encore regard&eacute;s, rendre visible ce qui restait flou. Pas pour vous dire quoi faire &mdash; mais pour que vous puissiez voir plus clairement ce qui est d&eacute;j&agrave; l&agrave;.
+    </div>
+
+    <div style="font-family:'jost',Arial,sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;margin-bottom:22px;">
+      Ce rapport vous appartient. Il ne vise pas &agrave; vous convaincre ni &agrave; vous vendre une prochaine &eacute;tape. Nos &eacute;quipes ne reviendront pas vers vous. Ce n'est pas notre r&ocirc;le &mdash; et ce n'est pas notre fa&ccedil;on d'&ecirc;tre.
+    </div>
+
+    <div style="font-family:'jost',Arial,sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;margin-bottom:22px;">
+      Ce rapport est gratuit. Non pas comme un teaser tronqu&eacute;, mais comme une lecture compl&egrave;te &mdash; construite sur des d&eacute;cennies de recherche crois&eacute;e, offerte sans condition. Parce que nous pensons que voir clairement est d&eacute;j&agrave; un acte de transformation.
+    </div>
+
+    <div style="font-family:'jost',Arial,sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;">
+La suite appartient &agrave; celui ou celle qui choisit de franchir le prochain seuil &mdash; librement, au bon moment, pour les bonnes raisons. Pas parce qu'on l'y a pouss&eacute;. Mais parce que quelque chose, en lisant ces pages, s'est mis en mouvement.
+    </div>
+  </div>
+
+  <!-- Citation -->
+  <div style="border-left:2px solid rgba(201,160,82,0.35);padding-left:24px;margin-bottom:40px;">
+    <div style="font-family:'cormorant',Georgia,serif;font-size:20px;font-style:italic;font-weight:300;color:#c9a052;line-height:1.45;margin-bottom:10px;">"Le h&eacute;ros n'est pas celui qui n'a pas peur. C'est celui qui, ayant peur, choisit quand m&ecirc;me de partir."</div>
+    <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;letter-spacing:0.14em;color:#7a6a50;">Joseph Campbell &middot; Le H&eacute;ros aux mille et un visages, 1949</div>
+  </div>
+
+  <!-- Bottom -->
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="vertical-align:bottom;">
+        <div style="font-family:'jost',Arial,sans-serif;font-size:8.5px;font-weight:300;color:rgba(237,232,224,0.45);line-height:1.8;">Si et quand vous choisissez de continuer &mdash;</div>
+        <div style="font-family:'cormorant',Georgia,serif;font-size:18px;font-weight:300;color:#c9a052;letter-spacing:0.04em;">energetics.systems</div>
+      </td>
+      <td style="text-align:right;vertical-align:bottom;">
+        <div style="font-family:'jost',Arial,sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.35);line-height:1.7;">Accompagnement &middot; Conscience &middot; Responsabilit&eacute;</div>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+
+</body>
+</html>

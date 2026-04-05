@@ -15,7 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+set_time_limit(60);
+
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/DpeCalculator.php';
+require_once __DIR__ . '/ClaudeClient.php';
+require_once __DIR__ . '/PdfGenerator.php';
 
 $input = json_decode(file_get_contents('php://input'), true);
 if (!$input) {
@@ -29,10 +34,6 @@ $role     = htmlspecialchars($input['role'] ?? '', ENT_QUOTES, 'UTF-8');
 $secteur  = htmlspecialchars($input['secteur'] ?? '', ENT_QUOTES, 'UTF-8');
 $effectif = intval($input['effectif'] ?? 0);
 $scores   = $input['scores'] ?? [];
-$sgpNorm  = intval($input['sgp_norm'] ?? 0);
-$sgpPct   = intval($input['sgp_pct'] ?? 0);
-$sigma    = floatval($input['sigma'] ?? 0);
-$pdfB64   = $input['pdf'] ?? '';
 
 if (!$email) {
     http_response_code(400);
@@ -46,7 +47,32 @@ if (count($scores) !== 5) {
     exit;
 }
 
-/* ── Enregistrement en base ── */
+$csc = array_map('intval', $scores);
+
+/* ── 1. Calculs ── */
+$sgp  = DpeCalculator::sgpCalc($csc);
+$data = DpeCalculator::computeAll($csc, $role, $secteur, $effectif);
+
+/* ── 2. Appel IA (optionnel) ── */
+try {
+    $claude  = new ClaudeClient();
+    $aiTexts = $claude->generate($data);
+    $data    = array_merge($data, $aiTexts);
+} catch (\Exception $e) {
+    // Fallback texts already in $data
+}
+
+/* ── 3. Génération PDF ── */
+try {
+    $pdf    = new PdfGenerator();
+    $pdfB64 = $pdf->generate($data);
+} catch (\Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Erreur génération PDF', 'details' => $e->getMessage()]);
+    exit;
+}
+
+/* ── 4. Enregistrement en base ── */
 try {
     $pdo = new PDO(
         'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
@@ -61,18 +87,17 @@ try {
 
     $stmt->execute([
         $email, $role, $secteur, $effectif,
-        intval($scores[0]), intval($scores[1]), intval($scores[2]),
-        intval($scores[3]), intval($scores[4]),
-        $sgpNorm, $sgpPct, $sigma
+        $csc[0], $csc[1], $csc[2], $csc[3], $csc[4],
+        $sgp['sgpNorm'], $sgp['pct'], $sgp['sigma']
     ]);
 } catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Erreur base de données']);
-    exit;
+    // DB error is non-blocking — still send email
 }
 
-/* ── Envoi email via Brevo ── */
+/* ── 5. Envoi email via Brevo ── */
 $dateStr = date('d/m/Y');
+$sgpNorm = $data['SGP'];
+
 $htmlBody = '
 <!DOCTYPE html>
 <html lang="fr">
@@ -83,29 +108,29 @@ $htmlBody = '
         <p style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:#c9a052;margin:0">DYNAMIQUES DE PRÉSENCES ÉNERGÉTIQUES</p>
     </div>
     <div style="background:#0d0b08;border-radius:8px;padding:40px 32px;color:#ede8e0">
-        <h1 style="font-size:22px;font-weight:normal;margin:0 0 20px;color:#ede8e0">Bravo et merci !</h1>
+        <h1 style="font-size:22px;font-weight:normal;margin:0 0 20px;color:#ede8e0">Bravo — et merci.</h1>
         <p style="font-size:14px;line-height:1.7;color:#b0a898;margin:0 0 16px">
-            Vous avez complété votre auto-évaluation DPE. C\'est un premier pas concret vers une meilleure compréhension de vos dynamiques collectives.
+            Vous avez pris 10 minutes pour poser un regard honnête sur votre équipe. C\'est déjà un acte de leadership.
         </p>
         <p style="font-size:14px;line-height:1.7;color:#b0a898;margin:0 0 24px">
-            Votre rapport complet est en pièce jointe de cet email. Vous y retrouverez :
+            Votre rapport complet est en pièce jointe. Vous y trouverez :
         </p>
         <ul style="font-size:13px;line-height:1.8;color:#b0a898;margin:0 0 24px;padding-left:20px">
-            <li>Votre Score Global Pondéré (SGP) : <strong style="color:#c9a052">' . $sgpNorm . '/25</strong></li>
-            <li>L\'analyse détaillée de vos 5 cadres systémiques</li>
-            <li>Vos priorités d\'activation et le potentiel de robustesse</li>
-            <li>Le ROI estimé d\'un atelier DPE</li>
+            <li>L\'état de vos 5 dimensions : <strong style="color:#c9a052">' . $sgpNorm . '/25</strong></li>
+            <li>Ce qui freine votre équipe — et ce qui la porte</li>
+            <li>Par où commencer pour avancer</li>
+            <li>Le potentiel concret que vous pouvez libérer</li>
         </ul>
         <div style="border-top:1px solid #2a2218;padding-top:20px;margin-top:20px">
             <p style="font-size:13px;color:#7a6a55;margin:0 0 8px">Et ensuite ?</p>
             <p style="font-size:14px;line-height:1.7;color:#b0a898;margin:0">
-                Partagez vos résultats avec votre équipe et découvrez comment un <strong style="color:#ede8e0">atelier DPE d\'une journée</strong> peut transformer ces insights en actions concrètes.
+                Un <strong style="color:#ede8e0">atelier DPE d\'une journée avec votre équipe</strong> transforme ces constats en actions concrètes. Contactez un facilitateur pour organiser le vôtre.
             </p>
         </div>
     </div>
     <div style="text-align:center;margin-top:24px">
         <p style="font-size:11px;color:#7a6a55;margin:0">DPE · Dynamiques de Présences Énergétiques</p>
-        <p style="font-size:10px;color:#7a6a55;margin:4px 0 0">Généré le ' . $dateStr . '</p>
+        <p style="font-size:10px;color:#7a6a55;margin:4px 0 0">energetics.systems · ' . $dateStr . '</p>
     </div>
 </div>
 </body>
@@ -147,7 +172,7 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode >= 200 && $httpCode < 300) {
-    echo json_encode(['success' => true, 'message' => 'Email envoyé']);
+    echo json_encode(['success' => true, 'message' => 'Rapport envoyé']);
 } else {
     http_response_code(502);
     echo json_encode(['error' => 'Erreur envoi email', 'details' => $response]);
