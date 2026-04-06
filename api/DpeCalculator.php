@@ -277,6 +277,7 @@ class DpeCalculator
             'QUAL_LABEL'      => $ql['t'],
             'QUAL_COLOR'      => $ql['c'],
             'RADAR_SVG'       => self::generateRadarSvg($csc),
+            'RADAR_SVG_MINI'  => self::generateRadarSvg($csc, 80, 80, 55),
         ];
 
         // Per-cadre markers
