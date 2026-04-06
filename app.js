@@ -167,7 +167,7 @@ function go(n){
   if(!nxt||nxt===cur)return;
 
   /* Update nav immediately */
-  document.getElementById('nav').className=n===8?'light':'';
+  document.getElementById('nav').className='';
   document.getElementById('pf').style.width=(n/8*100)+'%';
   document.getElementById('ns').textContent=['','Profil','1/5','2/5','3/5','4/5','5/5','Score','Rapport'][n]||'';
   if(n===7)buildEmail();
