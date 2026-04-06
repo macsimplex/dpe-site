@@ -290,32 +290,31 @@ function buildReport(){
 
     if(st)st.textContent='G\u00e9n\u00e9ration du PDF en cours\u2026';
 
-    /* 2. Rendre le HTML dans un conteneur caché */
-    var container=document.createElement('div');
-    container.style.cssText='position:fixed;left:-9999px;top:0;width:794px;';
-    container.innerHTML=res.html;
-    document.body.appendChild(container);
+    /* 2. Utiliser l'iframe pour le rendu (les styles s'appliquent correctement) */
+    var renderFrame=document.createElement('iframe');
+    renderFrame.style.cssText='position:fixed;left:-9999px;top:0;width:794px;height:1123px;border:none;';
+    document.body.appendChild(renderFrame);
+    var rdoc=renderFrame.contentDocument||renderFrame.contentWindow.document;
+    rdoc.open();rdoc.write(res.html);rdoc.close();
 
-    /* 3. Charger html2pdf.js si pas déjà chargé */
-    loadLib('libs/html2pdf.min.js',function(){
-      /* 4. Générer le PDF page par page */
-      var pages=container.querySelectorAll('.page');
-      if(!pages.length){
-        /* fallback : traiter tout le conteneur */
-        pages=[container];
-      }
+    /* 3. Attendre le chargement des fonts et images dans l'iframe */
+    renderFrame.onload=function(){
+      setTimeout(function(){
+        var container=rdoc.body;
 
-      html2pdf().set({
-        margin:0,
-        filename:'DPE-Rapport.pdf',
-        image:{type:'jpeg',quality:0.92},
-        html2canvas:{scale:2,useCORS:true,letterRendering:true,width:794,windowWidth:794},
-        jsPDF:{unit:'px',format:[794,1123],hotfixes:['px_scaling']},
-        pagebreak:{mode:['css','legacy'],before:'.page'}
-      }).from(container).toPdf().get('pdf').then(function(pdf){
-        /* 5. Extraire le PDF en base64 */
-        var pdfB64=pdf.output('datauristring').split(',')[1];
-        document.body.removeChild(container);
+        /* 4. Charger html2pdf.js si pas déjà chargé */
+        loadLib('libs/html2pdf.min.js',function(){
+          html2pdf().set({
+            margin:0,
+            filename:'DPE-Rapport.pdf',
+            image:{type:'jpeg',quality:0.92},
+            html2canvas:{scale:2,useCORS:true,letterRendering:true,width:794,windowWidth:794,
+              foreignObjectRendering:false,logging:false},
+            jsPDF:{unit:'px',format:[794,1123],hotfixes:['px_scaling']},
+            pagebreak:{mode:['css'],avoid:'.kpi-row'}
+          }).from(container).toPdf().get('pdf').then(function(pdf){
+            var pdfB64=pdf.output('datauristring').split(',')[1];
+            document.body.removeChild(renderFrame);
 
         /* 6. Envoyer le PDF au serveur pour email */
         fetch('api/send.php',{
@@ -339,7 +338,9 @@ function buildReport(){
           if(st){st.innerHTML='Erreur de connexion lors de l\u2019envoi.';st.className='hsub thankyou-err';}
         });
       });
-    });
+        });
+      },2000);
+    };
   })
   .catch(function(){
     if(st){st.innerHTML='Erreur de connexion. Veuillez r\u00e9essayer.';st.className='hsub thankyou-err';}
