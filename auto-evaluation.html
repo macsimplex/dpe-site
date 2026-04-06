@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Auto-évaluation · DPE</title>
+<meta name="description" content="Évaluez la vitalité de votre équipe en 10 minutes. 15 questions, 5 dimensions, un rapport complet par email.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="stylesheet" href="style.min.css?v=3">
+<link rel="stylesheet" href="style.min.css?v=4">
 </head>
 <body>
 
@@ -27,11 +28,13 @@
   <span class="ns" id="ns"></span>
 </nav>
 
-<!-- HERO -->
+<!-- ═══════════════════════════════════════
+     ÉCRAN 0 — ACCUEIL
+     ═══════════════════════════════════════ -->
 <div class="sc on" id="s0">
   <div class="hbox">
     <img src="assets/mark.svg" alt="" class="hero-mark" width="48" height="48">
-    <p class="htag">Auto-évaluation</p>
+    <p class="htag">Dynamiques de Présences Énergétiques</p>
     <h1>Comment va <span class="gg">vraiment</span><br>votre équipe&thinsp;?</h1>
     <p class="hsub">Vous avez des intuitions sur ce qui coince. Cette évaluation vous aide à les confirmer — et à savoir par où commencer. Aucune expertise requise, juste votre vécu.</p>
     <button class="hcta" onclick="go(1)">C'est parti →</button>
@@ -40,20 +43,25 @@
   </div>
 </div>
 
-<!-- PROFIL -->
+<!-- ═══════════════════════════════════════
+     ÉCRAN 1 — PROFIL
+     ═══════════════════════════════════════ -->
 <div class="sc" id="s1">
   <div class="inner">
     <span class="ey">Étape 1 / 7</span>
-    <h2>Votre profil</h2>
-    <p class="lead">Deux clics et un chiffre — c'est tout ce dont nous avons besoin.</p>
+    <h2>Quelques informations sur vous</h2>
+    <p class="lead">Trois clics et c'est tout. Ces informations permettent de contextualiser votre rapport.</p>
+
     <span class="fl">Vous êtes</span>
     <div class="pills" id="rp">
       <button class="pill" onclick="sr(this,'Dirigeant(e)')">Dirigeant(e)</button>
       <button class="pill" onclick="sr(this,'DRH / RH')">DRH / RH</button>
       <button class="pill" onclick="sr(this,'Manager')">Manager</button>
       <button class="pill" onclick="sr(this,'Manager de proximité')">Manager de proximité</button>
+      <button class="pill" onclick="sr(this,'Président(e) / Bureau')">Président(e) / Bureau</button>
       <button class="pill" onclick="sr(this,'Consultant(e)')">Consultant(e)</button>
     </div>
+
     <span class="fl">Secteur</span>
     <div class="pills" id="sp">
       <button class="pill on" onclick="ss(this,'autre')">Tous secteurs</button>
@@ -65,52 +73,66 @@
       <button class="pill" onclick="ss(this,'retail')">Commerce</button>
       <button class="pill" onclick="ss(this,'public')">Public / Asso.</button>
     </div>
-    <span class="fl">Nombre de collaborateurs</span>
-    <div class="nw"><input class="ni" type="number" id="hci" placeholder="100" min="1" oninput="ck()"><span class="nu">pers.</span></div>
-    <p class="hint">Seul champ requis</p>
+
+    <span class="fl">Combien de personnes dans votre équipe ?</span>
+    <div class="nw"><input class="ni" type="number" id="hci" placeholder="12" min="1" oninput="ck()"><span class="nu">pers.</span></div>
+    <p class="hint">Le seul champ obligatoire</p>
+
     <div class="btns">
       <button class="btn" onclick="go(0)">← Retour</button>
-      <button class="btn p" id="bs" onclick="go(2)" disabled>Démarrer →</button>
+      <button class="btn p" id="bs" onclick="go(2)" disabled>Commencer →</button>
     </div>
   </div>
 </div>
 
-<!-- CADRES injectés par JS -->
+<!-- ═══════════════════════════════════════
+     ÉCRANS 2-6 — LES 5 DIMENSIONS (injectées par JS)
+     ═══════════════════════════════════════ -->
 
-<!-- EMAIL -->
+<!-- ═══════════════════════════════════════
+     ÉCRAN 7 — RÉSULTATS + EMAIL
+     ═══════════════════════════════════════ -->
 <div class="sc" id="s7">
   <div class="inner" style="max-width:520px">
     <span class="ey">Vos résultats</span>
     <h2>Voici où en est votre équipe</h2>
+
     <div class="sbox">
-      <p class="slbl">Score Global Pondéré (SGP)</p>
+      <p class="slbl">Score Global</p>
       <div class="sbig" id="sb">—<span class="sden">/25</span></div>
       <div class="squal" id="sq">—</div>
       <div class="scost" id="sc2">—</div>
     </div>
+
     <div class="ebox">
       <h3>Recevez votre rapport détaillé</h3>
-      <p>Vous recevrez par email un rapport complet : vos forces, vos points de friction, et des pistes concrètes pour avancer. Rien de théorique — que du concret.</p>
+      <p>Vos forces, vos points de friction, et des pistes concrètes pour avancer — le tout dans un rapport PDF envoyé par email. Rien de théorique, que du concret.</p>
+
       <div class="erow">
         <input class="einp" type="email" id="em" placeholder="votre@email.com" oninput="ce()">
-        <button class="ego" id="bgo" onclick="go(8)" disabled>Accéder →</button>
+        <button class="ego" id="bgo" onclick="go(8)" disabled>Recevoir →</button>
       </div>
+
       <div class="rgpd-row">
         <input type="checkbox" id="rgpd" onchange="ce()">
         <label for="rgpd">J'accepte que mes données soient traitées conformément à la <a href="politique-confidentialite.html" target="_blank">politique de confidentialité</a>. Aucun cookie, aucun tracker.</label>
       </div>
+
       <p class="enote" id="enote">Rapport envoyé immédiatement. Pas de spam, jamais.</p>
     </div>
   </div>
 </div>
 
-<!-- MERCI -->
+<!-- ═══════════════════════════════════════
+     ÉCRAN 8 — MERCI
+     ═══════════════════════════════════════ -->
 <div class="sc" id="s8">
   <div class="thankyou">
     <div class="thankyou-inner">
       <img src="assets/mark.svg" alt="" class="hero-mark" width="56" height="56">
       <h1>Bravo — et merci.</h1>
       <p class="hsub" id="thankyou-status">Votre rapport est en cours de préparation. Vous allez le recevoir par email dans quelques instants.</p>
+
       <div class="thankyou-next">
         <h2>Et maintenant ?</h2>
         <p class="lead">Prenez le temps de lire votre rapport. Il contient l'état de vos 5 dimensions, ce qui freine votre équipe, et par où commencer.</p>
@@ -121,208 +143,11 @@
   </div>
 </div>
 
-<div style="display:none">
-      <div class="dkpis">
-        <div class="dkc">
-          <p class="dkl">SCORE GLOBAL PONDÉRÉ</p>
-          <div class="dkv" id="rdkv">—</div>
-          <div class="dkb" id="rdkb">—</div>
-        </div>
-        <div class="dkc">
-          <p class="dkl">ROBUSTESSE ORGANISATIONNELLE / AN</p>
-          <div class="dkv" style="color:#7fbf7f" id="rdkc">—</div>
-          <p class="dks" id="rdkp">—</p>
-        </div>
-      </div>
-      <p class="rp" id="rex">—</p>
-      <details class="ref-box">
-        <summary>La dissipation énergétique dans les systèmes vivants</summary>
-        <div class="ref-body">
-          <p class="ref-who">Ilya Prigogine &amp; Isabelle Stengers — <em>La Nouvelle Alliance</em>, 1979 · Prix Nobel de Chimie 1977</p>
-          <p class="ref-txt">Les systèmes vivants maintiennent leur organisation en échangeant constamment de l'énergie avec leur environnement. Ce qui n'est pas activement canalisé se dissipe sous forme de friction ou d'entropie. Il n'y a pas de neutralité : un système qui ne progresse pas régresse.</p>
-          <p class="ref-dpe">→ Ce que révèle votre DPE : l'énergie dissipée par le désalignement de vos cadres n'est pas perdue par négligence — c'est un phénomène naturel et quantifiable. La reconnaître est la première étape pour la recanaliser.</p>
-        </div>
-      </details>
-    </div>
-
-    <div class="rsec">
-      <span class="rey">02 · Robustesse organisationnelle</span>
-      <h2 class="rh2">Le potentiel de robustesse</h2>
-      <p class="rp">Le désalignement entre cadres systémiques génère une dissipation d'énergie collective dont le potentiel de robustesse est rarement évalué dans les organisations.</p>
-      <details class="ref-box">
-        <summary>Pourquoi la robustesse, et pas l'optimisation</summary>
-        <div class="ref-body">
-          <p class="ref-who">Olivier Hamant — <em>La Troisième Voie du Vivant</em>, Odile Jacob, 2022 · biologiste, ENS Lyon</p>
-          <p class="ref-txt">Les systèmes vivants ne cherchent pas l'optimisation — ils cherchent la robustesse : la capacité à maintenir leurs fonctions malgré les perturbations. Elle n'est pas atteinte en éliminant les tensions, mais en maintenant des fluctuations productives. Un système trop optimisé devient fragile — il performe dans un contexte stable, mais s'effondre au premier choc. La robustesse suppose des redondances, des marges, des réserves d'adaptation.</p>
-          <p class="ref-dpe">→ Le potentiel mis en évidence par le DPE n'est pas ce qu'on récupère après une perte — c'est la robustesse que l'organisation peut construire. Réduire les tensions inter-cadres (σ) ne vise pas la performance maximale, mais la résilience durable.</p>
-        </div>
-      </details>
-      <div class="finh">
-        <span class="ftag">Robustesse organisationnelle — potentiel estimé</span>
-        <div class="famt" id="rfa">—</div>
-        <div class="frng" id="rfr">—</div>
-        <div class="fper" id="rfp">—</div>
-      </div>
-      <div class="krow">
-        <div class="kpi"><div class="kv" id="rk1" style="color:#c9a052">—</div><p class="kl">SGP / 25</p></div>
-        <div class="kpi"><div class="kv" id="rk2" style="color:#b8924a">—</div><p class="kl">Taux de dissipation</p></div>
-        <div class="kpi"><div class="kv" id="rk3" style="color:#7a8aaa">—</div><p class="kl">Écart-type σ</p></div>
-      </div>
-      <div class="bkgrid" id="rbk"></div>
-      <div class="callout" id="rcalc"><div class="ct">Calculs</div><div class="cb">—</div></div>
-      <details class="ref-box">
-        <summary>Interdépendances et effets en cascade entre cadres</summary>
-        <div class="ref-body">
-          <p class="ref-who">Peter Senge — <em>The Fifth Discipline</em>, Doubleday, 1990</p>
-          <p class="ref-txt">Dans un système complexe, les composantes sont reliées par des boucles de renforcement : une dynamique positive dans un domaine amplifie les dynamiques positives dans les autres. Symétriquement, un blocage dans un domaine freine l'ensemble du système — souvent de manière non linéaire et invisible jusqu'à ce qu'il soit trop tard.</p>
-          <p class="ref-dpe">→ C'est le fondement du Score Global Pondéré (SGP) : deux organisations avec la même moyenne peuvent avoir des robustesses radicalement différentes selon la dispersion de leurs scores. Un cadre faible ne nuit pas seulement à lui-même — il dissipe l'énergie des cadres plus solides.</p>
-        </div>
-      </details>
-      <div class="ref-grid">
-        <details class="ref-box">
-        <summary>Répondre au questionnaire amorce déjà le changement</summary>
-        <div class="ref-body">
-          <p class="ref-who">Morwitz, Johnson &amp; Schmittlein — <em>Journal of Consumer Research</em>, 1993</p>
-          <p class="ref-txt">Le simple fait de répondre à un questionnaire sur ses intentions augmente significativement la probabilité de passer à l'acte. L'acte de mesurer crée lui-même l'intention de changer.</p>
-          <p class="ref-dpe">→ Répondre à ce DPE n'est pas neutre : vous avez déjà amorcé le mouvement.</p>
-        </div>
-      </details>
-        <details class="ref-box">
-        <summary>L'écart visible déclenche automatiquement la correction</summary>
-        <div class="ref-body">
-          <p class="ref-who">Carver &amp; Scheier — <em>Attention and Self-Regulation</em>, Springer, 1981</p>
-          <p class="ref-txt">Confronter son état réel à un état désiré active automatiquement un mécanisme de comparaison interne. L'écart perçu crée une tension psychologique productive qui cherche naturellement à se résorber.</p>
-          <p class="ref-dpe">→ Voir son score DPE active ce comparateur : l'écart visible entre réel et souhaité devient moteur du mouvement.</p>
-        </div>
-      </details>
-        <details class="ref-box">
-        <summary>Nommer sa réalité réactive la capacité d'agir</summary>
-        <div class="ref-body">
-          <p class="ref-who">Albert Bandura — <em>Self-Efficacy: The Exercise of Control</em>, Freeman, 1997</p>
-          <p class="ref-txt">Les croyances en sa propre capacité d'agir conditionnent les choix, l'effort fourni et la persistance face aux obstacles. Nommer sa réalité dans un cadre constitue une expérience de maîtrise partielle qui réactive la capacité d'agir et enclenche un cycle de confiance croissante.</p>
-          <p class="ref-dpe">→ L'atelier DPE crée ces expériences de maîtrise collective : chaque prise de conscience partagée renforce la croyance collective en la capacité de changer.</p>
-        </div>
-      </details>
-        <details class="ref-box">
-        <summary>Trois facteurs amplifient la réactivité à la mesure</summary>
-        <div class="ref-body">
-          <p class="ref-who">Méta-analyse — <em>Journal of Medical Internet Research</em>, 2021</p>
-          <p class="ref-txt">La réactivité à la mesure est amplifiée par trois facteurs : la facilité à changer, la conscience d'être mesuré, et la résolution des écarts entre comportement réel et désiré par l'auto-régulation. Ces trois facteurs sont précisément ce que produit une journée DPE.</p>
-          <p class="ref-dpe">→ La prise de conscience collective lors de l'atelier crée les conditions pour qu'un gain de +1 point soit quasi-certain — assurant mécaniquement le ROI de la journée.</p>
-        </div>
-      </details>
-      </div>
-
-      <!-- ROI -->
-      <div class="roi">
-        <div class="roiin">
-          <div class="roibadge">Le ROI de la prise de conscience</div>
-          <div class="roihead">Et si votre SGP augmentait d'<span style="color:#c9a052">un seul point</span>&thinsp;?</div>
-          <p class="roitag">Cinq décennies de recherche convergent : prendre conscience de son état énergétique collectif <em>suffit</em> à déclencher une amélioration mesurable. L'atelier DPE crée ces conditions — le ROI est mécaniquement assuré.</p>
-          <details class="ref-dark">
-          <summary>La prise de conscience collective garantit un gain d'au moins +1 point</summary>
-          <div class="ref-body">
-            <p class="ref-who">Morwitz, Johnson &amp; Schmittlein (1993) · Carver &amp; Scheier (1981) · Bandura (1997) · Méta-analyse JMIR (2021) · Méta-analyse QoL Research (2025)</p>
-            <p class="ref-txt">Cinq corpus de recherche indépendants établissent le même mécanisme : (1) répondre à un questionnaire augmente significativement l'intention d'agir (Morwitz) ; (2) voir l'écart entre état réel et état souhaité déclenche un mécanisme automatique de correction (Carver &amp; Scheier) ; (3) nommer sa réalité réactive la capacité d'agir et enclenche un cycle de confiance croissante (Bandura) ; (4) la facilité à changer, la conscience d'être évalué et la résolution des écarts amplifient la réactivité comportementale (JMIR) ; (5) la mesure façonne l'identité et pousse le système à s'y conformer (QoL Research 2025).</p>
-            <p class="ref-dpe">→ Ces cinq mécanismes s'activent simultanément lors d'une journée DPE collective. Un gain de +1 point sur le SGP n'est pas une projection optimiste — c'est la conséquence naturelle et documentée de la prise de conscience partagée. Le ROI de 2 000 € est donc assuré avant même la fin de l'atelier.</p>
-          </div>
-        </details>
-          <div class="roig">
-            <div class="roic"><div class="roiv" style="color:#c9a052" id="roi1">—</div><p class="roisub">Robustesse supplémentaire<br>+1 pt · équipe de 12</p></div>
-            <div class="roic"><div class="roiv" style="color:#7fbf7f" id="roi2">—</div><p class="roisub">ROI atelier<br>journée · 2 000 €</p></div>
-          </div>
-          <p class="roidet" id="roidet">—</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="rsec">
-      <span class="rey">03 · Les 5 cadres</span>
-      <h2 class="rh2">L'état de vos présences énergétiques</h2>
-      <p class="rp">Les cinq cadres forment un système interdépendant. Le Relationnel est la fondation absolue — sans sécurité psychologique, aucune transformation ne tient.</p>
-      <details class="ref-box">
-        <summary>Les 5 cadres systémiques comme modèle d'analyse</summary>
-        <div class="ref-body">
-          <p class="ref-who">Le Point Zéro — Approche systémique des dynamiques organisationnelles</p>
-          <p class="ref-txt">Les cinq cadres — Relationnel, Sens, Gouvernance, Opérationnel, Apprenance — constituent un modèle d'analyse des dynamiques de présences énergétiques dans les organisations. Chaque cadre représente une dimension irréductible de la vitalité collective ; aucune ne peut être durablement activée sans tenir compte des quatre autres.</p>
-          <p class="ref-dpe">→ Le SGP traduit mathématiquement ce principe : la pénalisation par l'écart-type σ signifie que la robustesse du système est celle de son cadre le moins activé.</p>
-        </div>
-      </details>
-      <details class="ref-box">
-        <summary>La sécurité psychologique comme fondation systémique</summary>
-        <div class="ref-body">
-          <p class="ref-who">Amy Edmondson — <em>The Fearless Organization</em>, Wiley, 2018 · Projet Aristotle, Google (2016)</p>
-          <p class="ref-txt">Une étude menée par Google sur 180 équipes a identifié la sécurité psychologique comme le premier prédicteur de la performance collective — bien avant les compétences individuelles, les ressources ou les processus. Sans espace pour exprimer ses doutes et nommer les problèmes, aucune dynamique collective ne se déploie pleinement.</p>
-          <p class="ref-dpe">→ C'est pourquoi le cadre Relationnel est la fondation absolue du DPE. Un score faible sur ce cadre bloque l'activation de tous les autres, quelle que soit leur propre vitalité.</p>
-        </div>
-      </details>
-      <div class="radwrap"><svg id="rad" width="220" height="220" viewBox="0 0 220 220" style="overflow:visible"></svg></div>
-      <div class="ccgrid" id="rcc"></div>
-    </div>
-
-    <div class="rsec">
-      <span class="rey">04 · Priorités d'activation</span>
-      <h2 class="rh2">Par où commencer</h2>
-      <p class="rp">Les cadres les moins activés concentrent l'essentiel du potentiel. Les activer réduit l'écart-type σ, augmentant le SGP davantage que n'importe quel autre investissement.</p>
-      <details class="ref-box">
-        <summary>Travailler en priorité sur les freins pour un effet amplificateur</summary>
-        <div class="ref-body">
-          <p class="ref-who">Eliyahu Goldratt — <em>The Goal</em>, North River Press, 1984</p>
-          <p class="ref-txt">La performance d'un système est déterminée par son maillon le plus faible — la contrainte. Renforcer n'importe quel autre maillon en premier ne change pas la performance globale du système. Seul le travail sur la contrainte principale produit une amélioration réelle et mesurable.</p>
-          <p class="ref-dpe">→ Appliqué au DPE : activer en priorité le cadre le moins présent réduit mécaniquement l'écart-type σ, ce qui augmente le SGP davantage que n'importe quel autre investissement. Réduire la tension inter-cadres a un effet amplificateur sur l'ensemble du système.</p>
-        </div>
-      </details>
-      <ul class="plist" id="rprio"></ul>
-      <div class="upside" id="rups"></div>
-    </div>
-
-    <div class="rsec">
-      <span class="rey">05 · Passer à l'action</span>
-      <h2 class="rh2">Atelier DPE · 1 journée en équipe</h2>
-      <div class="wkbl"><p class="wkp">Ce diagnostic individuel révèle les cadres à activer. L'atelier collectif — CODIR ou management team — crée la conscience partagée et l'élan nécessaires à la transformation réelle.</p></div>
-      <details class="ref-dark">
-          <summary>L'atelier collectif amplifie ce que le diagnostic individuel initie</summary>
-          <div class="ref-body">
-            <p class="ref-who">Sigal Barsade — <em>The Ripple Effect</em>, Administrative Science Quarterly, 2002</p>
-            <p class="ref-txt">Les états émotionnels se transmettent entre individus dans un groupe de manière inconsciente et rapide — créant une dynamique collective qui influence directement la coopération, la qualité des décisions et la performance. Un groupe vivant collectivement une prise de conscience partagée crée une dynamique émotionnelle positive qui se diffuse à l'ensemble de ses membres.</p>
-            <p class="ref-dpe">→ C'est ce qui distingue l'atelier collectif du diagnostic individuel : les 12 participants ne vivent pas 12 fois la même expérience — ils vivent une expérience collective qualitativement différente, dont l'impact sur le SGP dépasse la somme des impacts individuels.</p>
-          </div>
-        </details>
-      <div class="wkgrid">
-        <div class="wkc"><p class="wkct">Conscience partagée</p><p class="wkcd">Toute l'équipe voit ses cadres simultanément.</p></div>
-        <div class="wkc"><p class="wkct">Langage commun</p><p class="wkcd">Les 5 cadres deviennent outils de dialogue.</p></div>
-        <div class="wkc"><p class="wkct">Plan co-construit</p><p class="wkcd">Priorités qui émergent du collectif.</p></div>
-        <div class="wkc"><p class="wkct">Ancrage durable</p><p class="wkcd">Engagement qui tient dans le temps.</p></div>
-      </div>
-      <p class="rp" style="margin-top:14px;color:#7a6a55;font-size:12px">→ Contactez votre <a href="facilitateurs.html" style="color:var(--g2)">facilitateur DPE</a> pour organiser un atelier avec votre équipe.</p>
-    </div>
-
-    <div class="rsec">
-      <span class="rey">06 · Sources</span>
-      <h2 class="rh2">Références et bases de calcul</h2>
-      <p class="rp">Évaluations indicatives — elles rendent visible le potentiel de l'invisible.</p>
-      <table class="stbl"><thead><tr><th>Source</th><th>Indicateur</th><th>Valeur</th><th>Usage</th></tr></thead>
-      <tbody>
-        <tr><td>Gallup 2023</td><td>Désengagement</td><td>9% PIB mondial</td><td>Calibration dissipation</td></tr>
-        <tr><td>McKinsey 2022</td><td>Perte productivité</td><td>20–25%</td><td>Validation modèle</td></tr>
-        <tr><td>Institut Sapiens 2023</td><td>Coût salarié désengagé</td><td>14 310€/an</td><td>Ancrage France</td></tr>
-        <tr><td>Microsoft WTI 2023</td><td>Réunions improductives</td><td>31h/mois</td><td>Surplus réunions</td></tr>
-        <tr><td>SHRM</td><td>Coût remplacement</td><td>50–200% salaire</td><td>Calcul turnover</td></tr>
-        <tr><td>DARES/INSEE 2023</td><td>Salaires référence</td><td>Par secteur</td><td>Masse salariale</td></tr>
-      </tbody></table>
-      <div class="callout" id="rmth"></div>
-    </div>
-
-    <p class="rfooter">DPE · Dynamiques de Présences Énergétiques<br>
-    <a href="mentions-legales.html" style="color:#7a6a55">Mentions légales</a> · <a href="politique-confidentialite.html" style="color:#7a6a55">Politique de confidentialité</a></p>
-  </div>
-</div>
-
 <footer class="site-footer">
   <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo" width="140" height="44">
   <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="engagements.html">Engagements</a></p>
 </footer>
 
-<script src="app.min.js?v=2"></script>
+<script src="app.min.js?v=4"></script>
 </body>
 </html>
