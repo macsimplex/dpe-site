@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:    #090805;
+  --gold:  #c9a052;
+  --gold2: #a07838;
+  --gold3: #e8c880;
+  --dim:   #2a2218;
+  --mu:    #7a6a50;
+  --light: #ede8e0;
+  --pale:  #a09070;
+  --cream: #f5f0e6;
+  --warm:  #ede6d8;
+  --ink:   #1a1510;
+  --ink2:  #3a3228;
+  --muted: #7a6a55;
+  --frame: #c8bba4;
+  --c1:#c4603a; --c2:#3d7040; --c3:#2a4a8b; --c4:#6b4a9b; --c5:#b8924a;
+}
+
+/* ── PAGE RESET ── */
+.page{
+  width:794px;
+  min-height:1123px;
+  position:relative;
+  overflow:hidden;
+  page-break-after:always;
+  font-family:'Jost',Arial,sans-serif;
+  font-weight:300;
+}
+
+/* ── DARK PAGES ── */
+.dark{background:var(--bg);color:var(--light);}
+.dark .eyebrow{color:var(--gold);}
+.dark .rule{background:rgba(201,160,82,0.2);}
+.dark .muted{color:var(--mu);}
+.dark .body-text{color:rgba(237,232,224,0.75);}
+
+/* ── LIGHT PAGES ── */
+.light{background:var(--cream);color:var(--ink);}
+.light .eyebrow{color:var(--gold2);}
+.light .rule{background:var(--frame);}
+.light .muted{color:var(--muted);}
+.light .body-text{color:var(--ink2);}
+
+/* ── SHARED TYPOGRAPHY ── */
+.display{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;
+  line-height:1.05;
+  letter-spacing:-0.01em;
+}
+.display-italic{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;
+  font-style:italic;
+}
+.eyebrow{
+  font-family:'Jost',sans-serif;
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:0.38em;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:16px;
+}
+.label{
+  font-family:'Jost',sans-serif;
+  font-size:7.5px;
+  font-weight:500;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+}
+.body-text{
+  font-family:'Jost',sans-serif;
+  font-size:11.5px;
+  font-weight:300;
+  line-height:1.78;
+}
+.rule{height:1px;width:100%;}
+
+/* ── ENTRELACS LOGO ── */
+.logo-wrap{display:flex;align-items:center;gap:11px;}
+.logo-text-block{}
+.logo-name{
+  font-family:'Jost',sans-serif;
+  font-size:8.5px;
+  font-weight:500;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  line-height:1.2;
+}
+.logo-sub{
+  font-family:'Jost',sans-serif;
+  font-size:7px;
+  font-weight:300;
+  letter-spacing:0.16em;
+  color:var(--mu);
+  display:block;
+  margin-top:2px;
+}
+
+/* ── HEADER BAR (light pages) ── */
+.page-header{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 56px;
+  border-bottom:1px solid var(--frame);
+}
+.page-header .logo-name{color:var(--gold2);}
+.page-header .logo-sub{color:var(--muted);}
+
+/* ── FOOTER BAR ── */
+.page-footer{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 56px;
+}
+.dark .page-footer{border-top:1px solid rgba(201,160,82,0.1);}
+.light .page-footer{border-top:1px solid var(--frame);}
+.footer-ref{
+  font-family:'Jost',sans-serif;
+  font-size:7.5px;
+  font-weight:300;
+  letter-spacing:0.12em;
+}
+.dark .footer-ref{color:var(--mu);}
+.light .footer-ref{color:var(--muted);}
+.page-num{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:11px;
+  font-weight:300;
+  font-style:italic;
+}
+.dark .page-num{color:var(--mu);}
+.light .page-num{color:var(--muted);}
+
+/* ── CONTENT AREA ── */
+.content{
+  position:absolute;
+  top:52px;bottom:44px;
+  left:56px;right:56px;
+}
+.cover-content{
+  position:absolute;
+  top:0;bottom:0;left:64px;right:64px;
+}
+
+/* ── GOLD LINE TOP ── */
+.topline{
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold) 25%,var(--gold3) 60%,transparent);
+  opacity:0.55;
+}
+
+/* ── SECTION TAG ── */
+.section-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+}
+.section-num{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:13px;
+  font-style:italic;
+}
+.dark .section-num{color:var(--mu);}
+.light .section-num{color:var(--muted);}
+.section-sep{width:28px;height:1px;}
+.dark .section-sep{background:rgba(201,160,82,0.35);}
+.light .section-sep{background:var(--frame);}
+
+/* ── KPI BLOCKS ── */
+.kpi-row{display:flex;gap:0;margin:28px 0;}
+.kpi{
+  flex:1;
+  padding:20px 22px;
+  border-left:1px solid rgba(201,160,82,0.15);
+}
+.kpi:first-child{padding-left:0;border-left:none;}
+.kpi-label{
+  font-family:'Jost',sans-serif;
+  font-size:7px;
+  font-weight:500;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+.dark .kpi-label{color:var(--mu);}
+.light .kpi-label{color:var(--muted);}
+.kpi-value{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;
+  font-size:38px;
+  line-height:1;
+  color:var(--gold);
+  margin-bottom:4px;
+}
+.kpi-value sup{font-size:0.38em;color:var(--mu);}
+.kpi-sub{
+  font-family:'Jost',sans-serif;
+  font-size:8px;
+  font-weight:300;
+  letter-spacing:0.08em;
+}
+.dark .kpi-sub{color:var(--mu);}
+.light .kpi-sub{color:var(--muted);}
+
+/* ── QUOTE BLOCK ── */
+.quote-block{
+  padding:20px 22px;
+  border-left:3px solid var(--gold);
+  margin:24px 0;
+}
+.dark .quote-block{background:rgba(201,160,82,0.04);}
+.light .quote-block{background:rgba(201,160,82,0.06);}
+.quote-text{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:16px;
+  font-style:italic;
+  font-weight:300;
+  line-height:1.55;
+}
+.dark .quote-text{color:var(--pale);}
+.light .quote-text{color:var(--ink2);}
+.quote-source{
+  font-family:'Jost',sans-serif;
+  font-size:8px;
+  font-weight:300;
+  letter-spacing:0.1em;
+  margin-top:8px;
+}
+.dark .quote-source{color:var(--mu);}
+.light .quote-source{color:var(--muted);}
+
+/* ── CADRE CARD (cartographie) ── */
+.cadre-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.cadre-card{
+  background:var(--warm);
+  border:1px solid var(--frame);
+  padding:16px 16px;
+  position:relative;
+  overflow:hidden;
+}
+.cadre-card::before{
+  content:'';position:absolute;
+  top:0;left:0;width:3px;height:100%;
+}
+.cadre-name{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:15px;
+  font-weight:400;
+  margin-bottom:4px;
+}
+.cadre-desc{
+  font-family:'Jost',sans-serif;
+  font-size:8.5px;
+  font-weight:300;
+  color:var(--muted);
+  margin-bottom:10px;
+  line-height:1.5;
+}
+.cadre-bar-bg{height:2px;background:rgba(0,0,0,0.08);margin-bottom:9px;}
+.cadre-bar{height:100%;transition:width .3s;}
+.cadre-score-row{display:flex;align-items:baseline;gap:4px;}
+.cadre-score{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;line-height:1;}
+.cadre-max{font-family:'Jost',sans-serif;font-size:8px;color:var(--muted);}
+.cadre-pct{
+  font-family:'Jost',sans-serif;
+  font-size:7.5px;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  margin-left:auto;
+  padding:2px 7px;
+  color:#fff;
+}
+.cadre-insight{
+  font-family:'Jost',sans-serif;
+  font-size:9px;
+  font-weight:300;
+  line-height:1.68;
+  color:var(--muted);
+  border-top:1px solid var(--frame);
+  padding-top:9px;
+  margin-top:10px;
+}
+
+/* ── FINANCE BLOCK ── */
+.finance-block{
+  background:var(--bg);
+  color:var(--light);
+  padding:24px 22px;
+  margin:20px 0;
+  position:relative;
+  overflow:hidden;
+}
+.finance-block::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 0%,rgba(201,160,82,0.12),transparent 60%);
+}
+.finance-block>*{position:relative;}
+.finance-label{
+  font-family:'Jost',sans-serif;
+  font-size:7px;
+  font-weight:500;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+.finance-amount{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:48px;
+  font-weight:300;
+  color:#7fbf7f;
+  line-height:1;
+  margin-bottom:4px;
+}
+.finance-range{
+  font-family:'Jost',sans-serif;
+  font-size:9px;
+  font-weight:300;
+  color:rgba(237,232,224,0.35);
+  margin-bottom:12px;
+}
+.finance-breakdown{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:rgba(201,160,82,0.12);
+  margin-top:16px;
+}
+.finance-item{
+  background:#141008;
+  padding:12px 10px;
+  text-align:center;
+}
+.finance-item-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  font-weight:300;
+  color:var(--gold);
+  line-height:1;
+  margin-bottom:4px;
+}
+.finance-item-label{
+  font-family:'Jost',sans-serif;
+  font-size:7px;
+  font-weight:300;
+  letter-spacing:0.1em;
+  color:rgba(237,232,224,0.4);
+  text-transform:uppercase;
+}
+
+/* ── ROI BLOCK ── */
+.roi-block{
+  background:var(--bg);
+  color:var(--light);
+  padding:22px 22px;
+  margin:16px 0;
+  border-left:3px solid var(--gold);
+}
+.roi-title{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:18px;
+  font-style:italic;
+  font-weight:300;
+  margin-bottom:10px;
+  color:var(--gold);
+}
+.roi-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:rgba(201,160,82,0.15);
+  margin:12px 0;
+}
+.roi-cell{
+  background:#141008;
+  padding:14px 12px;
+  text-align:center;
+}
+.roi-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;
+  font-weight:300;
+  color:var(--gold);
+  line-height:1;
+  margin-bottom:4px;
+}
+.roi-sub{
+  font-family:'Jost',sans-serif;
+  font-size:7.5px;
+  font-weight:300;
+  letter-spacing:0.1em;
+  color:rgba(237,232,224,0.4);
+  text-transform:uppercase;
+  line-height:1.4;
+}
+
+/* ── PRIORITY LIST ── */
+.priority-item{
+  display:flex;
+  gap:16px;
+  padding:14px 0;
+  border-bottom:1px solid var(--frame);
+}
+.priority-item:last-child{border-bottom:none;}
+.priority-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;
+  font-weight:300;
+  line-height:1;
+  width:22px;
+  flex-shrink:0;
+}
+.priority-body{}
+.priority-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;
+  font-weight:400;
+  margin-bottom:3px;
+}
+.priority-action{
+  font-family:'Jost',sans-serif;
+  font-size:9px;
+  font-weight:300;
+  line-height:1.6;
+  color:var(--muted);
+}
+
+/* ── WORKSHOP BLOCK ── */
+.workshop-block{
+  background:var(--bg);
+  color:var(--light);
+  padding:28px 28px;
+  margin:20px 0;
+}
+.workshop-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:18px;
+}
+.workshop-item{
+  border:1px solid rgba(201,160,82,0.15);
+  padding:14px 14px;
+}
+.workshop-item-title{
+  font-family:'Jost',sans-serif;
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:5px;
+}
+.workshop-item-desc{
+  font-family:'Jost',sans-serif;
+  font-size:9.5px;
+  font-weight:300;
+  line-height:1.6;
+  color:rgba(237,232,224,0.55);
+}
+
+/* ── JOURNEY STEPS ── */
+.journey-steps{margin:20px 0;}
+.journey-step{
+  display:flex;
+  gap:18px;
+  padding:14px 0;
+  border-bottom:1px solid rgba(201,160,82,0.1);
+}
+.journey-step:last-child{border-bottom:none;}
+.journey-icon{
+  width:32px;height:32px;
+  border:1px solid rgba(201,160,82,0.3);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;
+  color:var(--gold);
+  font-style:italic;
+}
+.journey-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;
+  font-weight:400;
+  margin-bottom:3px;
+}
+.dark .journey-title{color:var(--light);}
+.light .journey-title{color:var(--ink);}
+.journey-desc{
+  font-family:'Jost',sans-serif;
+  font-size:9px;
+  font-weight:300;
+  line-height:1.6;
+}
+.dark .journey-desc{color:rgba(237,232,224,0.5);}
+.light .journey-desc{color:var(--muted);}
+
+/* ── THEORIE ANNEXE ── */
+.theorie-block{
+  background:var(--warm);
+  border:1px solid var(--frame);
+  border-left:4px solid var(--gold2);
+  padding:16px 16px;
+  margin:12px 0;
+}
+.theorie-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;
+  font-weight:400;
+  color:var(--gold2);
+  margin-bottom:8px;
+}
+.theorie-row{
+  display:grid;
+  grid-template-columns:100px 1fr;
+  gap:8px 14px;
+  font-family:'Jost',sans-serif;
+  font-size:9px;
+  font-weight:300;
+  line-height:1.65;
+  margin-bottom:4px;
+}
+.theorie-key{
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding-top:1px;
+}
+.theorie-val{color:var(--ink2);}
+.theorie-dpe{
+  color:var(--gold2);
+  font-style:italic;
+}
+
+/* ── RETOUR POETIC BLOCK ── */
+.retour-block{
+  text-align:center;
+  padding:32px 40px;
+  margin:24px 0;
+  border:1px solid rgba(201,160,82,0.2);
+  position:relative;
+}
+.dark .retour-block{background:rgba(201,160,82,0.03);}
+.light .retour-block{background:rgba(201,160,82,0.05);}
+.retour-diamond{
+  position:absolute;
+  top:-6px;left:50%;transform:translateX(-50%);
+  width:11px;height:11px;
+  background:var(--gold);
+  transform:translateX(-50%) rotate(45deg);
+}
+.retour-text{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:16px;
+  font-style:italic;
+  font-weight:300;
+  line-height:1.7;
+}
+.dark .retour-text{color:var(--pale);}
+.light .retour-text{color:var(--ink2);}
+
+/* ── CIRCULAR ECONOMY ── */
+.circular-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:16px 0;
+}
+.circular-item{
+  background:var(--warm);
+  border:1px solid var(--frame);
+  border-top:3px solid var(--gold);
+  padding:14px 12px;
+  text-align:center;
+}
+.circular-icon{
+  font-size:18px;
+  margin-bottom:7px;
+  display:block;
+}
+.circular-label{
+  font-family:'Jost',sans-serif;
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--gold2);
+  margin-bottom:5px;
+}
+.circular-desc{
+  font-family:'Jost',sans-serif;
+  font-size:8.5px;
+  font-weight:300;
+  line-height:1.55;
+  color:var(--muted);
+}
+
+/* ── GLOW ── */
+.glow-tl{
+  position:absolute;top:-80px;left:-80px;
+  width:400px;height:400px;
+  background:radial-gradient(ellipse,rgba(201,160,82,0.06),transparent 65%);
+  pointer-events:none;
+}
+.glow-br{
+  position:absolute;bottom:-80px;right:-80px;
+  width:350px;height:350px;
+  background:radial-gradient(ellipse,rgba(201,160,82,0.04),transparent 65%);
+  pointer-events:none;
+}
+
+/* ── PRINT / SCREEN ── */
+body{background:#e8e0d5;}
+.page{margin:0 auto 40px;box-shadow:0 8px 48px rgba(0,0,0,0.3);}
+@media print{
+  body{background:white;}
+  .page{margin:0;box-shadow:none;page-break-after:always;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     COUVERTURE
+══════════════════════════════════ -->
+<div class="page dark" id="cover">
+  <div class="topline"></div>
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  {{RADAR_SVG}}
+
+
+  <div class="cover-content">
+
+    <!-- Logo -->
+    <div style="padding-top:52px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="logo-wrap">
+        <svg width="44" height="44" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+</svg>
+        <div class="logo-text-block">
+          <span class="logo-name">DPE</span>
+          
+        </div>
+      </div>
+      <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.14em;color:var(--mu);text-align:right;line-height:1.8;">
+        Rapport diagnostique<br>Document confidentiel
+      </div>
+    </div>
+
+    <!-- Main title -->
+    <div style="position:absolute;top:240px;left:0;right:100px;">
+      <span class="eyebrow" style="margin-bottom:24px;">Dynamiques de Présences Énergétiques</span>
+      <div class="display" style="font-size:82px;color:var(--light);margin-bottom:6px;">Rapport</div>
+      <div class="display-italic" style="font-size:82px;color:var(--gold);">DPE</div>
+      <div style="width:48px;height:1px;background:var(--gold);opacity:0.4;margin:20px 0;"></div>
+      <div class="display-italic" style="font-size:17px;color:var(--pale);letter-spacing:0.04em;">
+        Pour voir ce que les indicateurs habituels<br>ne montrent pas encore
+      </div>
+    </div>
+
+    <!-- Score block -->
+    <div style="position:absolute;top:598px;left:0;right:0;">
+      <div class="kpi-row" style="border-top:1px solid rgba(201,160,82,0.15);padding-top:24px;">
+        <div class="kpi">
+          <div class="kpi-label">Score global pondéré</div>
+          <div class="kpi-value">{{SGP}}<sup>/25</sup></div>
+          <div class="kpi-sub">{{PCT}}% du potentiel activé</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Robustesse estimée</div>
+          <div class="kpi-value">{{POTENTIEL}}<sup></sup></div>
+          <div class="kpi-sub">par an · {{EFFECTIF}}</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Niveau d'activation</div>
+          <div class="display-italic" style="font-size:20px;color:var(--gold);margin:6px 0 4px;">{{NIVEAU_LABEL}}</div>
+          <div class="kpi-sub" style="color:#7a8a6a;">σ = {{SIGMA}} · Δ = {{DELTA}} pts</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipient -->
+    <div style="position:absolute;top:800px;left:0;">
+      <div style="padding:18px 20px;border:1px solid rgba(201,160,82,0.12);background:rgba(201,160,82,0.03);display:inline-block;">
+        <div class="label" style="color:var(--mu);margin-bottom:7px;">Préparé pour</div>
+        <div class="display" style="font-size:20px;color:var(--light);margin-bottom:2px;">{{ROLE}} · {{SECTEUR_LABEL}}</div>
+        <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--pale);">{{EFFECTIF}} · Auto-évaluation individuelle</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Notice écran -->
+  <div style="position:absolute;bottom:44px;left:0;right:0;padding:7px 64px;background:rgba(201,160,82,0.06);border-top:1px solid rgba(201,160,82,0.12);border-bottom:1px solid rgba(201,160,82,0.08);display:flex;align-items:center;justify-content:center;gap:10px;">
+    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style="flex-shrink:0;opacity:0.6;">
+      <circle cx="5.5" cy="5.5" r="5" stroke="#c9a052" stroke-width="0.8"/>
+      <line x1="5.5" y1="3" x2="5.5" y2="6.2" stroke="#c9a052" stroke-width="0.9" stroke-linecap="round"/>
+      <circle cx="5.5" cy="8" r="0.6" fill="#c9a052"/>
+    </svg>
+    <span style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.1em;color:var(--mu);text-align:center;">Ce document est conçu pour une lecture sur écran. Son impression n'est pas recommandée — les fonds sombres consomment une quantité importante d'encre et dégraderaient significativement le rendu.</span>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;letter-spacing:0.1em;color:var(--mu);">
+      energetics.systems
+    </div>
+    <div class="display-italic" style="font-size:11px;color:var(--mu);">{{DATE}}</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PRÉAMBULE — Le monde ordinaire
+══════════════════════════════════ -->
+<div class="page dark">
+  <div class="topline"></div>
+  <div class="glow-tl"></div>
+
+  <div class="page-header" style="border-bottom:1px solid rgba(201,160,82,0.1);">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+</svg>
+      <span class="logo-name" style="font-size:7.5px;">Dynamiques de Présences Énergétiques</span>
+    </div>
+    <div class="footer-ref">DPE · {{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-ref">Préambule</div>
+    <div class="page-num">01</div>
+  </div>
+
+  <div class="content" style="bottom:136px;">
+
+    <div class="section-tag">
+      <span class="section-num">Préambule</span>
+      <div class="section-sep"></div>
+      <span class="eyebrow" style="margin-bottom:0;">Ce que ce rapport cherche à faire</span>
+    </div>
+
+    <div class="display" style="font-size:46px;color:var(--light);margin-bottom:20px;line-height:1.08;">
+      Une organisation :<br>un groupe de personnes<br><span style="color:var(--gold);font-style:italic;">qui se font confiance.</span>
+    </div>
+
+    <div class="rule" style="margin-bottom:22px;"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:20px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="body-text" style="color:rgba(237,232,224,0.75);font-size:12.5px;">
+Ce rapport n'est pas un audit. C'est un miroir. Il ne vous dit pas ce que vous devriez faire — il met des mots sur ce que vous observez déjà au quotidien : ce qui fonctionne, ce qui coince, ce qui pourrait être différent. Une grande partie de ce que vous y lirez, vous le sentez déjà. Nous lui donnons simplement un nom.
+        </div>
+        <div class="body-text" style="color:rgba(237,232,224,0.75);font-size:12.5px;">
+Une organisation ne se pilote pas comme une machine. Quand quelque chose coince — une tension qui dure, une équipe qui peine, une décision qui n'avance pas — ce n'est pas une défaillance. C'est un signal. Ce rapport apprend à lire ces signaux : pas pour les juger, mais pour comprendre ce qu'ils disent.
+        </div>
+        <div class="body-text" style="color:rgba(237,232,224,0.75);font-size:12.5px;">
+Cette auto-évaluation ne vous compare pas à une norme extérieure. Elle s'appuie sur votre vécu, votre ressenti, votre lecture concrète du quotidien. C'est précisément pour ça qu'elle est juste : personne ne connaît mieux votre organisation que ceux qui y travaillent. Ce que vous avez répondu est vrai parce que c'est le vôtre.
+        </div>
+        <div class="body-text" style="color:rgba(237,232,224,0.75);font-size:12.5px;">
+Ce que produit une équipe soudée ne ressemble à rien de ce que chacun de ses membres aurait pu accomplir seul. La confiance, l'élan collectif, la capacité à tenir dans les moments difficiles — aucun tableau de bord ne les mesure. C'est précisément ce que ce rapport cherche à rendre visible.
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;">Éléments de preuve</div>
+
+        <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background:rgba(201,160,82,0.04);">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:500;color:var(--gold);margin-bottom:4px;letter-spacing:0.06em;">Le tout est plus grand que la somme des parties</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Une équipe soudée accomplit des choses qu'aucun de ses membres n'aurait pu faire seul. Ce n'est pas une question de compétences — c'est une question de dynamique. Et cette dynamique se travaille.</div>
+        </div>
+
+        <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background:rgba(201,160,82,0.04);">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:500;color:var(--gold);margin-bottom:4px;letter-spacing:0.06em;">Rien ne se maintient seul</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Une équipe qui "tourne bien" sans qu'on y fasse attention n'est pas stable — elle s'érode lentement. Ce qui ne progresse pas recule. Pas brutalement, mais sûrement.</div>
+        </div>
+
+        <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background:rgba(201,160,82,0.04);">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:500;color:var(--gold);margin-bottom:4px;letter-spacing:0.06em;">Les règles informelles s'imposent d'elles-mêmes</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Dans toute équipe, des habitudes et des codes non écrits s'installent avec le temps. Ce qui n'est pas consciemment orienté, les gens le remplissent à leur façon — pas toujours dans le sens voulu.</div>
+        </div>
+
+        <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background:rgba(201,160,82,0.04);">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:500;color:var(--gold);margin-bottom:4px;letter-spacing:0.06em;">Les tensions sont des messages</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Quand quelqu'un part, quand les réunions deviennent silencieuses, quand les conflits s'accumulent — ce ne sont pas des problèmes individuels. Ce sont des signaux que quelque chose dans le collectif demande à être ajusté.</div>
+        </div>
+
+        <div style="padding:11px 13px;border-left:2px solid rgba(201,160,82,0.3);background:rgba(201,160,82,0.04);">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:500;color:var(--gold);margin-bottom:4px;letter-spacing:0.06em;">Tout se tient</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.6);line-height:1.65;">Dans une équipe, rien n'est vraiment isolé. Une tension entre deux personnes affecte les réunions. Un flou sur qui décide quoi ralentit tout le monde. Une bonne dynamique à un endroit rayonne sur le reste.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Économie régénérative — pleine largeur sous les deux colonnes -->
+    <div style="margin-top:12px;padding:12px 16px;border-left:2px solid rgba(201,160,82,0.45);background:rgba(201,160,82,0.06);">
+      <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;">Économie régénérative</div>
+      <div class="body-text" style="color:rgba(237,232,224,0.75);font-size:11px;">Le DPE s'inscrit dans une vision plus large. Une organisation qui fonctionne bien pour ses équipes ne se contente pas de mieux performer — elle devient plus solide face aux coups durs, attire et garde les talents, et rayonne au-delà de ses propres murs. Ce n'est pas un idéal inaccessible. C'est ce qui arrive naturellement quand les gens travaillent dans un environnement où ils se sentent bien.</div>
+    </div>
+
+  </div>
+
+  <!-- Citation pleine largeur — sibling du content -->
+  <div style="position:absolute;bottom:44px;left:0;right:0;height:78px;background:var(--gold);display:flex;align-items:center;padding:0 56px;gap:28px;">
+    <div style="flex-shrink:0;">
+      <svg width="26" height="26" viewBox="-52 -52 104 104" fill="none">
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(0)" opacity="0.35"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(36)" opacity="0.35"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(72)" opacity="0.35"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(108)" opacity="0.35"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#090805" stroke-width="1.25" transform="rotate(144)" opacity="0.35"/>
+        <circle cx="0" cy="0" r="3.8" fill="#090805" opacity="0.4"/>
+      </svg>
+    </div>
+    <div style="flex:1;">
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:17px;font-style:italic;font-weight:300;color:#090805;line-height:1.4;">"Un système qui ne progresse pas régresse. Il n'y a pas de neutralité."</div>
+    </div>
+    <div style="flex-shrink:0;text-align:right;">
+      <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:rgba(9,8,5,0.6);letter-spacing:0.1em;line-height:1.7;">Ilya Prigogine & Isabelle Stengers<br>La Nouvelle Alliance, 1979<br>Prix Nobel de Chimie 1977</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     I · PHOTOGRAPHIE — Executive summary
+══════════════════════════════════ -->
+<div class="page light">
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#a07838"/>
+</svg>
+      <span class="logo-name" style="color:var(--gold2);font-size:7.5px;">energetics.systems</span>
+    </div>
+    <div class="footer-ref" style="color:var(--muted);">{{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-ref">I · Photographie</div>
+    <div class="page-num">02</div>
+  </div>
+
+  <div class="content">
+    <div class="section-tag" style="margin-top:12px;">
+      <span class="section-num" style="color:var(--muted);">I</span>
+      <div class="section-sep" style="background:var(--frame);"></div>
+      <span class="eyebrow" style="color:var(--gold2);margin-bottom:0;">Photographie</span>
+    </div>
+
+    <div class="display" style="font-size:40px;color:var(--ink);margin-bottom:10px;line-height:1.1;">
+Ce que votre organisation<br>révèle d'elle-même
+    </div>
+    <div class="rule" style="margin-bottom:16px;"></div>
+
+    <!-- KPIs -->
+    <div class="kpi-row" style="border:1px solid var(--frame);padding:0;margin:14px 0;">
+      <div class="kpi" style="padding:14px 18px;border-left:none;">
+        <div class="kpi-label">Score global pondéré</div>
+        <div class="kpi-value">{{SGP}}<sup style="color:var(--muted);">/25</sup></div>
+        <div class="kpi-sub">{{PCT}}% du potentiel activé</div>
+      </div>
+      <div class="kpi" style="padding:14px 18px;border-left:1px solid var(--frame);">
+        <div class="kpi-label">Tension inter-cadres</div>
+        <div class="kpi-value" style="font-size:28px;padding-top:6px;">σ = {{SIGMA}}</div>
+        <div class="kpi-sub">Écart-type · Δ = {{DELTA}} pts</div>
+      </div>
+      <div class="kpi" style="padding:14px 18px;border-left:1px solid var(--frame);">
+        <div class="kpi-label">Robustesse estimée</div>
+        <div class="kpi-value" style="color:#3d7040;">{{POTENTIEL}}<sup style="color:var(--muted);"></sup></div>
+        <div class="kpi-sub">potentiel annuel</div>
+      </div>
+    </div>
+
+    <!-- Niveau badge -->
+    <div style="margin:12px 0;padding:12px 16px;background:rgba(184,146,74,0.08);border:1px solid rgba(184,146,74,0.2);display:inline-block;">
+      <span class="label" style="color:var(--gold2);">Niveau · {{NIVEAU_LABEL}}</span>
+      <p style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--muted);margin-top:5px;line-height:1.6;">{{NIVEAU_DESC}}</p>
+    </div>
+
+    <!-- Synthèse -->
+    <div class="body-text" style="margin-top:10px;font-size:11px;color:var(--ink2);">
+{{SYNTHESE}}
+    </div>
+
+    <!-- Tension inter-cadres -->
+    <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+      <div style="padding:12px 14px;background:var(--warm);border:1px solid var(--frame);border-top:3px solid #8b5a3a;">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#8b5a3a;margin-bottom:6px;">Ce que mesure σ = {{SIGMA}}</div>
+        <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Ce chiffre mesure l'<strong style="font-weight:500;">écart entre vos dimensions les plus fortes et les plus fragiles</strong>. Plus l'écart est grand, plus les domaines solides gaspillent leur énergie à compenser les domaines en difficulté. Ce n'est pas une question de bonne volonté — c'est mécanique.</div>
+      </div>
+
+      <div style="padding:12px 14px;background:var(--warm);border:1px solid var(--frame);border-top:3px solid var(--gold2);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">Tout est lié</div>
+        <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Les cinq dimensions ne fonctionnent pas indépendamment. Quand l'une est fragile, elle pèse sur toutes les autres — comme le maillon le plus faible d'une chaîne. Votre {{PRIO_1_NOM}} à {{PRIO_1_SCORE}}/15 ne souffre pas seule : le flou sur qui décide quoi génère des frictions qui épuisent la confiance et ralentissent tout le reste, même quand ces dimensions-là sont solides.</div>
+      </div>
+
+    </div>
+
+    <!-- Explication visuelle SGP -->
+    <div style="margin-top:8px;padding:10px 14px;background:rgba(201,160,82,0.06);border:1px solid rgba(201,160,82,0.18);">
+      <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">Pourquoi ce score tient compte des déséquilibres</div>
+      <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.7;">Deux organisations avec les mêmes moyennes peuvent être dans des situations très différentes. C'est pourquoi le SGP intègre les écarts entre dimensions : <em>SGP = moyenne − écart entre dimensions</em>. Plus vos points forts et vos points faibles sont éloignés, plus le score est impacté. À l'inverse, rapprocher vos dimensions fait monter le score plus vite que d'améliorer une seule d'entre elles.</div>
+    </div>
+
+    <!-- Mini radar placeholder -->
+    <div style="display:flex;gap:20px;margin-top:10px;align-items:flex-start;">
+      {{RADAR_SVG_MINI}}
+      <div style="flex:1;padding-top:8px;">
+        <div class="label" style="color:var(--muted);margin-bottom:10px;">Scores par cadre</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:9px;font-weight:300;">
+            <span style="width:70px;color:{{CADRE_0_COLOR}};font-weight:500;letter-spacing:0.06em;">{{CADRE_0_NOM}}</span>
+            <div style="flex:1;height:2px;background:#f0e8dc;"><div style="width:{{CADRE_0_BAR_WIDTH}};height:100%;background:{{CADRE_0_COLOR}};opacity:0.6;"></div></div>
+            <span style="color:var(--muted);">{{CADRE_0_SCORE}}/15</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:9px;font-weight:300;">
+            <span style="width:70px;color:{{CADRE_1_COLOR}};font-weight:500;letter-spacing:0.06em;">{{CADRE_1_NOM}}</span>
+            <div style="flex:1;height:2px;background:#f0e8dc;"><div style="width:{{CADRE_1_BAR_WIDTH}};height:100%;background:{{CADRE_1_COLOR}};opacity:0.6;"></div></div>
+            <span style="color:var(--muted);">{{CADRE_1_SCORE}}/15</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:9px;font-weight:300;">
+            <span style="width:70px;color:{{CADRE_2_COLOR}};font-weight:500;letter-spacing:0.06em;">{{CADRE_2_NOM}}</span>
+            <div style="flex:1;height:2px;background:#f0e8dc;"><div style="width:{{CADRE_2_BAR_WIDTH}};height:100%;background:{{CADRE_2_COLOR}};opacity:0.6;"></div></div>
+            <span style="color:var(--muted);">{{CADRE_2_SCORE}}/15</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:9px;font-weight:300;">
+            <span style="width:70px;color:{{CADRE_3_COLOR}};font-weight:500;letter-spacing:0.06em;">{{CADRE_3_NOM}}</span>
+            <div style="flex:1;height:2px;background:#f0e8dc;"><div style="width:{{CADRE_3_BAR_WIDTH}};height:100%;background:{{CADRE_3_COLOR}};opacity:0.6;"></div></div>
+            <span style="color:var(--muted);">{{CADRE_3_SCORE}}/15</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:9px;font-weight:300;">
+            <span style="width:70px;color:{{CADRE_4_COLOR}};font-weight:500;letter-spacing:0.06em;">{{CADRE_4_NOM}}</span>
+            <div style="flex:1;height:2px;background:#f0e8dc;"><div style="width:{{CADRE_4_BAR_WIDTH}};height:100%;background:{{CADRE_4_COLOR}};opacity:0.6;"></div></div>
+            <span style="color:var(--muted);">{{CADRE_4_SCORE}}/15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Niveau de tension compact -->
+    <div style="margin-top:10px;display:flex;gap:14px;align-items:flex-start;">
+
+      <!-- Barre de tension réduite -->
+      <div style="flex:0 0 190px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;">Tension inter-cadres</div>
+        <div style="height:6px;background:linear-gradient(90deg,#3d7040 0%,#b8924a 45%,#8b5a3a 75%,#c4603a 100%);position:relative;margin-bottom:18px;">
+          <div style="position:absolute;top:-4px;left:48%;width:2px;height:14px;background:var(--ink2);"></div>
+          <div style="position:absolute;top:14px;left:48%;transform:translateX(-50%);font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;color:var(--ink2);white-space:nowrap;">σ = {{SIGMA}}</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-family:'Jost',sans-serif;font-size:7px;font-weight:300;color:var(--muted);">
+          <span>σ = 0</span><span>σ ≥ 4</span>
+        </div>
+        <div style="margin-top:8px;font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:#8b5a3a;">Tensions modérées</div>
+      </div>
+
+      <!-- Interprétation Lewin condensée -->
+      <div style="flex:1;padding:12px 14px;background:var(--warm);border:1px solid var(--frame);border-left:3px solid var(--gold2);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">Par où commencer ? Enlever ce qui bloque, pas ajouter ce qui manque</div>
+        <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.7;">
+          Votre {{FORCE_1_NOM}} ({{FORCE_1_SCORE}}) et votre {{FORCE_2_NOM}} ({{FORCE_2_SCORE}}) sont de vraies forces. Votre {{PRIO_1_NOM}} ({{PRIO_1_SCORE}}) et votre {{PRIO_2_NOM}} ({{PRIO_2_SCORE}}) freinent le reste — ils empêchent vos forces de se déployer pleinement. La stratégie la plus efficace : <strong style="font-weight:500;">s'attaquer d'abord à ce qui freine</strong>. Débloquer la {{PRIO_1_NOM}} libère immédiatement l'énergie déjà présente dans vos autres dimensions.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     II · CADRE — Le Point Zéro 2050
+══════════════════════════════════ -->
+<div class="page light">
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#a07838"/>
+</svg>
+      <span class="logo-name" style="color:var(--gold2);font-size:7.5px;">energetics.systems</span>
+    </div>
+    <div class="footer-ref" style="color:var(--muted);">{{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-ref">II · Cadre</div>
+    <div class="page-num">03</div>
+  </div>
+
+  <div class="content" style="bottom:130px;">
+    <div class="section-tag" style="margin-top:12px;">
+      <span class="section-num" style="color:var(--muted);">II</span>
+      <div class="section-sep" style="background:var(--frame);"></div>
+      <span class="eyebrow" style="color:var(--gold2);margin-bottom:0;">Cadre</span>
+    </div>
+
+    <div class="display" style="font-size:40px;color:var(--ink);margin-bottom:10px;line-height:1.1;">
+      L'approche<br><span style="color:var(--gold2);font-style:italic;">Le Point Zéro 2050</span>
+    </div>
+    <div class="rule" style="margin-bottom:14px;background:var(--frame);"></div>
+    <div style="font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:var(--muted);line-height:1.75;margin-bottom:16px;font-style:italic;">Ces cinq dimensions ne sont pas une grille abstraite. Ce sont cinq façons de regarder ce qui se passe dans votre équipe — des choses que vous vivez chaque jour mais que vos indicateurs habituels ne mesurent pas. Vous allez les reconnaître.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:20px;">
+
+      <!-- Colonne gauche : philosophie -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <div>
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;">L'enquête</div>
+          <div style="font-family:'Jost',sans-serif;font-size:10.5px;font-weight:300;color:var(--ink2);line-height:1.75;">
+            Le Point Zéro 2050 est le fruit d'une enquête de trente ans menée par Boris Sirbey pour comprendre pourquoi tant d'organisations — petites ou grandes — n'arrivent pas à libérer leur vrai potentiel humain. Son constat : ce ne sont pas des problèmes de compétences ou d'outils. Ce sont des problèmes de dynamiques collectives — et ça, ça se travaille autrement.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;">Le logiciel invisible de l'équipe</div>
+          <div style="font-family:'Jost',sans-serif;font-size:10.5px;font-weight:300;color:var(--ink2);line-height:1.75;">
+            Derrière les comportements visibles de chaque équipe, il y a un ensemble de croyances et d'habitudes collectives inconscientes — une sorte de logiciel invisible qui programme ce qu'on dit, ce qu'on tait, comment on décide, comment on réagit sous pression. Ce logiciel peut être libérateur ou limitant. Ce rapport commence à le rendre visible.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;">Comment ça fonctionne</div>
+          <div style="font-family:'Jost',sans-serif;font-size:10.5px;font-weight:300;color:var(--ink2);line-height:1.75;">
+            Ce qu'une équipe croit possible détermine ce qu'elle fait. Ce qu'elle fait détermine ses résultats. Agir directement sur les comportements — sans toucher aux croyances collectives qui les produisent — ne change rien durablement. C'est pourquoi cette approche travaille d'abord sur les dynamiques, pas sur les individus.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;">Un impact qui dépasse votre organisation</div>
+          <div style="font-family:'Jost',sans-serif;font-size:10.5px;font-weight:300;color:var(--ink2);line-height:1.75;">
+            Une organisation qui fonctionne bien pour ses gens ne s'arrête pas à ses murs. Elle attire, elle inspire, elle montre que performance et bien-être ne s'opposent pas. Pour le Point Zéro 2050, chaque équipe qui avance dans cette direction contribue, à sa mesure, à changer la façon dont le travail est vécu collectivement.
+          </div>
+        </div>
+
+        <div style="padding:11px 13px;background:rgba(201,160,82,0.07);border:1px solid rgba(201,160,82,0.2);">
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">Le DPE dans cette approche</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Cette auto-évaluation est le premier regard sur ce qui se passe vraiment dans votre équipe. C'est le point de départ d'un travail plus profond — celui qui transforme durablement les dynamiques collectives.</div>
+        </div>
+
+      </div>
+
+      <!-- Colonne droite : les 5 cadres introduits -->
+      <div style="display:flex;flex-direction:column;gap:9px;">
+
+        <div>
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;">Les cinq présences énergétiques</div>
+          <div style="font-family:'Jost',sans-serif;font-size:10.5px;font-weight:300;color:var(--ink2);line-height:1.75;margin-bottom:12px;">
+            Après trente ans de recherche sur les organisations, cinq dimensions ont été identifiées comme essentielles — et elles sont liées. Chacune conditionne les suivantes. Ensemble, elles déterminent si une équipe tourne à plein régime ou à mi-régime.
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:7px;">
+
+          <div style="display:flex;gap:0;border:1px solid var(--frame);overflow:hidden;">
+            <div style="width:4px;background:#c4603a;flex-shrink:0;"></div>
+            <div style="flex:1;padding:11px 13px;background:var(--warm);">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;color:#c4603a;margin-bottom:4px;">① Relationnel</div>
+              <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">La base de tout. Quand les gens peuvent dire ce qu'ils pensent sans craindre les conséquences, tout le reste devient possible. Quand cette confiance manque, les problèmes se règlent en coulisses — et s'aggravent.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0;border:1px solid var(--frame);overflow:hidden;">
+            <div style="width:4px;background:#3d7040;flex-shrink:0;"></div>
+            <div style="flex:1;padding:11px 13px;background:var(--warm);">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;color:#3d7040;margin-bottom:4px;">② Sens</div>
+              <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Comprendre pourquoi on fait ce qu'on fait — et y croire vraiment. Quand chacun voit le sens de son travail et le partage avec les autres, l'engagement ne se gère plus. Il se vit.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0;border:1px solid var(--frame);overflow:hidden;">
+            <div style="width:4px;background:#2a4a8b;flex-shrink:0;"></div>
+            <div style="flex:1;padding:11px 13px;background:var(--warm);">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;color:#2a4a8b;margin-bottom:4px;">③ Gouvernance</div>
+              <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Savoir qui décide quoi, comment, avec qui. Quand les règles du jeu sont claires, les gens agissent avec confiance. Quand elles sont floues, chacun hésite, négocie, attend — et l'énergie se perd.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0;border:1px solid var(--frame);overflow:hidden;">
+            <div style="width:4px;background:#6b4a9b;flex-shrink:0;"></div>
+            <div style="flex:1;padding:11px 13px;background:var(--warm);">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;color:#6b4a9b;margin-bottom:4px;">④ Opérationnel</div>
+              <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Passer du discours aux actes, simplement et efficacement. Les réunions aboutissent, les rôles sont clairs, l'équipe s'adapte vite quand quelque chose change. Ce cadre est le reflet direct des trois précédents.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0;border:1px solid var(--frame);overflow:hidden;">
+            <div style="width:4px;background:#b8924a;flex-shrink:0;"></div>
+            <div style="flex:1;padding:11px 13px;background:var(--warm);">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;color:#b8924a;margin-bottom:4px;">⑤ Apprenance</div>
+              <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Apprendre vraiment de ce qu'on vit — ensemble. Pas juste corriger les erreurs, mais changer la façon de fonctionner. Les équipes qui y arrivent s'améliorent en continu, naturellement, sans qu'on ait besoin de les pousser.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:2px;padding:9px 12px;background:rgba(201,160,82,0.07);border:1px solid rgba(201,160,82,0.2);">
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:300;color:var(--ink2);line-height:1.65;font-style:italic;">L'état détaillé de ces cinq dimensions dans votre organisation est présenté dans la section suivante — Cartographie.</div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Citation pleine largeur — sibling du content -->
+  <div style="position:absolute;bottom:44px;left:0;right:0;height:72px;background:var(--ink);display:flex;align-items:center;padding:0 56px;gap:32px;">
+    <div style="flex-shrink:0;opacity:0.3;">
+      <svg width="22" height="22" viewBox="-52 -52 104 104" fill="none">
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+        <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+        <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+      </svg>
+    </div>
+    <div style="flex:1;">
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:15px;font-style:italic;font-weight:300;color:var(--gold);line-height:1.4;">"Les organisations ne souffrent pas d'un manque de compétences. Elles souffrent d'un désalignement entre leurs cadres — et ignorent souvent lesquels."</div>
+    </div>
+    <div style="flex-shrink:0;text-align:right;border-left:1px solid rgba(201,160,82,0.15);padding-left:24px;">
+      <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--mu);letter-spacing:0.1em;line-height:1.8;">Boris Sirbey<br>Le Point Zéro, 2025</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     III · CARTOGRAPHIE
+══════════════════════════════════ -->
+<div class="page light">
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#a07838"/>
+</svg>
+      <span class="logo-name" style="color:var(--gold2);font-size:7.5px;">energetics.systems</span>
+    </div>
+    <div class="footer-ref" style="color:var(--muted);">{{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-ref">III · Cartographie</div>
+    <div class="page-num">04</div>
+  </div>
+
+  <!-- Point saillant — centré dans le gap entre content et footer -->
+  <div style="position:absolute;bottom:65px;left:0;right:0;height:66px;display:flex;align-items:center;z-index:2;">
+  <div style="width:100%;background:var(--ink);padding:13px 56px;display:flex;align-items:center;gap:28px;">
+    <div style="flex-shrink:0;">
+      <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;">Point saillant</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--gold);line-height:1;">σ = {{SIGMA}}</div>
+      <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--mu);margin-top:2px;">{{CADRE_0_INTERP}}</div>
+    </div>
+    <div style="width:1px;height:50px;background:rgba(201,160,82,0.15);flex-shrink:0;"></div>
+    <div style="flex:1;">
+      <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.75);line-height:1.7;">{{POINT_SAILLANT}}</div>
+    </div>
+    <div style="flex-shrink:0;text-align:center;padding:10px 16px;border:1px solid rgba(201,160,82,0.2);background:rgba(201,160,82,0.05);">
+      <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;">Priorité</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:{{PRIO_1_COLOR}};font-style:italic;">{{PRIO_1_NOM}}</div>
+      <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--mu);margin-top:2px;">{{PRIO_1_SCORE}}/15 · {{PRIO_1_PCT}} activé</div>
+    </div>
+  </div>
+  </div>
+
+  <div class="content" style="bottom:155px;">
+    <div class="section-tag" style="margin-top:8px;">
+      <span class="section-num" style="color:var(--muted);">III</span>
+      <div class="section-sep" style="background:var(--frame);"></div>
+      <span class="eyebrow" style="color:var(--gold2);margin-bottom:0;">Cartographie</span>
+    </div>
+
+    <div class="display" style="font-size:38px;color:var(--ink);margin-bottom:6px;line-height:1.1;">
+      L'état de vos<br>cinq dimensions
+    </div>
+    <div class="rule" style="margin-bottom:10px;"></div>
+
+    <div class="body-text" style="color:var(--ink2);margin-bottom:10px;">
+Ce qui suit décrit chacune de vos cinq dimensions en détail. Vous reconnaîtrez probablement des situations concrètes de votre quotidien. Quand une dimension est fragile, elle ne souffre pas seule — elle pèse sur toutes les autres. C'est précisément ce que mesure l'écart (σ) entre vos scores.
+    </div>
+
+    <!-- Cadre cards -->
+    <div class="cadre-grid">
+      <div class="cadre-card" style="border-left-color:{{CADRE_0_COLOR}};">
+        <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:{{CADRE_0_COLOR}};"></div>
+        <div class="cadre-name" style="color:{{CADRE_0_COLOR}};padding-left:8px;">{{CADRE_0_NOM}}</div>
+        <div class="cadre-desc" style="padding-left:8px;">{{CADRE_0_DESC}}</div>
+        <div class="cadre-bar-bg"><div class="cadre-bar" style="width:{{CADRE_0_BAR_WIDTH}};background:{{CADRE_0_COLOR}};opacity:0.5;"></div></div>
+        <div class="cadre-score-row">
+          <span class="cadre-score" style="color:{{CADRE_0_COLOR}};">{{CADRE_0_SCORE}}</span>
+          <span class="cadre-max">/15</span>
+          <span class="cadre-pct" style="background:{{CADRE_0_BADGE}};">{{CADRE_0_PCT}}</span>
+        </div>
+        <div class="cadre-insight">{{CADRE_0_INSIGHT}}</div>
+      </div>
+
+      <div class="cadre-card">
+        <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:{{CADRE_1_COLOR}};"></div>
+        <div class="cadre-name" style="color:{{CADRE_1_COLOR}};padding-left:8px;">{{CADRE_1_NOM}}</div>
+        <div class="cadre-desc" style="padding-left:8px;">{{CADRE_1_DESC}}</div>
+        <div class="cadre-bar-bg"><div class="cadre-bar" style="width:{{CADRE_1_BAR_WIDTH}};background:{{CADRE_1_COLOR}};opacity:0.5;"></div></div>
+        <div class="cadre-score-row">
+          <span class="cadre-score" style="color:{{CADRE_1_COLOR}};">{{CADRE_1_SCORE}}</span>
+          <span class="cadre-max">/15</span>
+          <span class="cadre-pct" style="background:{{CADRE_1_BADGE}};">{{CADRE_1_PCT}}</span>
+        </div>
+        <div class="cadre-insight">{{CADRE_1_INSIGHT}}</div>
+      </div>
+
+      <div class="cadre-card">
+        <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:{{CADRE_2_COLOR}};"></div>
+        <div class="cadre-name" style="color:{{CADRE_2_COLOR}};padding-left:8px;">{{CADRE_2_NOM}}</div>
+        <div class="cadre-desc" style="padding-left:8px;">{{CADRE_2_DESC}}</div>
+        <div class="cadre-bar-bg"><div class="cadre-bar" style="width:{{CADRE_2_BAR_WIDTH}};background:{{CADRE_2_COLOR}};opacity:0.5;"></div></div>
+        <div class="cadre-score-row">
+          <span class="cadre-score" style="color:{{CADRE_2_COLOR}};">{{CADRE_2_SCORE}}</span>
+          <span class="cadre-max">/15</span>
+          <span class="cadre-pct" style="background:{{CADRE_2_BADGE}};">{{CADRE_2_PCT}}</span>
+        </div>
+        <div class="cadre-insight">{{CADRE_2_INSIGHT}}</div>
+      </div>
+
+      <div class="cadre-card">
+        <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:{{CADRE_3_COLOR}};"></div>
+        <div class="cadre-name" style="color:{{CADRE_3_COLOR}};padding-left:8px;">{{CADRE_3_NOM}}</div>
+        <div class="cadre-desc" style="padding-left:8px;">{{CADRE_3_DESC}}</div>
+        <div class="cadre-bar-bg"><div class="cadre-bar" style="width:{{CADRE_3_BAR_WIDTH}};background:{{CADRE_3_COLOR}};opacity:0.5;"></div></div>
+        <div class="cadre-score-row">
+          <span class="cadre-score" style="color:{{CADRE_3_COLOR}};">{{CADRE_3_SCORE}}</span>
+          <span class="cadre-max">/15</span>
+          <span class="cadre-pct" style="background:{{CADRE_3_BADGE}};">{{CADRE_3_PCT}}</span>
+        </div>
+        <div class="cadre-insight">{{CADRE_3_INSIGHT}}</div>
+      </div>
+    </div>
+
+    <!-- 5th cadre full width -->
+    <div class="cadre-card" style="margin-top:8px;">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:{{CADRE_4_COLOR}};"></div>
+      <div style="display:flex;align-items:flex-start;gap:16px;padding-left:8px;">
+        <div style="flex:1;">
+          <div class="cadre-name" style="color:{{CADRE_4_COLOR}};">{{CADRE_4_NOM}}</div>
+          <div class="cadre-desc">{{CADRE_4_DESC}}</div>
+          <div class="cadre-bar-bg" style="max-width:280px;"><div class="cadre-bar" style="width:{{CADRE_4_BAR_WIDTH}};background:{{CADRE_4_COLOR}};opacity:0.5;"></div></div>
+          <div class="cadre-score-row">
+            <span class="cadre-score" style="color:{{CADRE_4_COLOR}};">{{CADRE_4_SCORE}}</span>
+            <span class="cadre-max">/15</span>
+            <span class="cadre-pct" style="background:{{CADRE_4_BADGE}};">{{CADRE_4_PCT}}</span>
+          </div>
+        </div>
+        <div class="cadre-insight" style="flex:1;border-top:none;padding-top:0;margin-top:14px;">{{CADRE_4_INSIGHT}}</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     IV · DÉFI — Dissipation et économie circulaire
+══════════════════════════════════ -->
+<div class="page light">
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#a07838"/>
+</svg>
+      <span class="logo-name" style="color:var(--gold2);font-size:7.5px;">energetics.systems</span>
+    </div>
+    <div class="footer-ref" style="color:var(--muted);">{{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-ref">IV · Défi</div>
+    <div class="page-num">05</div>
+  </div>
+
+  <div class="content" style="bottom:140px;">
+    <div class="section-tag" style="margin-top:12px;">
+      <span class="section-num" style="color:var(--muted);">IV</span>
+      <div class="section-sep"></div>
+      <span class="eyebrow" style="color:var(--gold2);margin-bottom:0;">Défi</span>
+    </div>
+
+    <div class="display" style="font-size:38px;color:var(--ink);margin-bottom:8px;line-height:1.1;">
+      Ce que ces frictions<br>coûtent réellement
+    </div>
+    <div class="rule" style="margin-bottom:10px;"></div>
+    <div style="font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:var(--muted);line-height:1.75;margin-bottom:12px;font-style:italic;">Ce n'est pas parce que votre organisation fonctionne mal. C'est parce qu'une partie de son énergie part ailleurs — dans des tensions, des flous, des frictions du quotidien — au lieu d'aller là où elle serait vraiment utile. Le premier pas, c'est de le voir.</div>
+
+    <!-- Finance block -->
+    <div class="finance-block">
+      <div class="finance-label">Robustesse organisationnelle — potentiel estimé</div>
+      <div class="finance-amount">{{POTENTIEL}}</div>
+      <div class="finance-range">Fourchette : {{FOURCHETTE_BAS}} — {{FOURCHETTE_HAUT}} · par an</div>
+      <div class="finance-breakdown">
+        <div class="finance-item">
+          <div class="finance-item-val">{{PROD}}</div>
+          <div class="finance-item-label">Productivité</div>
+        </div>
+        <div class="finance-item">
+          <div class="finance-item-val">{{TURNOVER}}</div>
+          <div class="finance-item-label">Turnover</div>
+        </div>
+        <div class="finance-item">
+          <div class="finance-item-val">{{REUNIONS}}</div>
+          <div class="finance-item-label">Réunions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Robustesse explication -->
+    <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.72;padding:12px 14px;background:rgba(201,160,82,0.05);border-left:3px solid var(--gold2);">
+        Ce chiffre ne mesure pas ce que vous perdez — il mesure ce que votre équipe <strong style="font-weight:500;">pourrait générer</strong> si l'énergie qui s'échappe dans les frictions était réinvestie dans ce qui compte. Pas le maximum absolu, mais la régularité dans la durée : tenir ses résultats même quand les circonstances se compliquent.
+      </div>
+      <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.72;padding:12px 14px;background:rgba(201,160,82,0.05);border-left:3px solid var(--gold2);">
+        Ces {{POTENTIEL}} ne sont pas une perte future — ils disparaissent <strong style="font-weight:500;">aujourd'hui</strong>, silencieusement : dans les non-dits qui s'accumulent, les décisions repassées trois fois en réunion, les talents qui partent sans vraiment dire pourquoi. Ce potentiel est déjà là. Il ne demande pas d'être créé — il demande à ne plus être gaspillé.
+      </div>
+    </div>
+
+    <!-- Economie circulaire -->
+    <div style="margin-top:14px;">
+      <div class="label" style="color:var(--gold2);margin-bottom:6px;">Ce que ça change concrètement</div>
+      <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.7;margin-bottom:10px;">La question n'est pas de travailler plus, ni de dépenser davantage. C'est de récupérer ce qui se perd — et de le réinvestir là où ça crée vraiment de la valeur. Une équipe robuste ne s'épuise pas à compenser ses frictions internes. Elle consacre son énergie à ce pour quoi elle est là.</div>
+
+      <div class="circular-grid">
+        <div class="circular-item">
+          <span class="circular-icon">↓</span>
+          <div class="circular-label">Moins de friction</div>
+          <div class="circular-desc">Moins de départs non voulus, moins de tensions qui s'étirent, moins d'énergie dépensée à compenser les flous et les non-dits. Ce que vous ne voyez pas sur un bilan, vous le vivez dans vos journées.</div>
+        </div>
+        <div class="circular-item">
+          <span class="circular-icon">↔</span>
+          <div class="circular-label">Plus de fluidité</div>
+          <div class="circular-desc">Des décisions qui tiennent, des gens qui coopèrent sans qu'on ait besoin de les pousser, une équipe qui rebondit vite quand quelque chose change. Ce n'est pas l'absence de problèmes — c'est la capacité à les traverser sans s'y enliser.</div>
+        </div>
+        <div class="circular-item">
+          <span class="circular-icon">↑</span>
+          <div class="circular-label">Rentabilité durable</div>
+          <div class="circular-desc">Pas plus d'effort — moins de gaspillage. Une rentabilité qui vient du bon fonctionnement de l'équipe est plus solide que celle qui vient de la pression : elle dure. Et elle ne demande pas d'injecter constamment de nouvelles ressources pour se maintenir.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Détail par source de dissipation -->
+    <div style="margin-top:14px;">
+      <div class="label" style="color:var(--gold2);margin-bottom:9px;">D'où viennent ces chiffres</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--frame);">
+
+        <div style="background:var(--cream);padding:11px 12px;">
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:5px;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--gold2);line-height:1;">{{PROD}}</span>
+            <span style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Productivité</span>
+          </div>
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:300;color:var(--ink2);line-height:1.65;">La part de ce que vous payez qui part dans les frictions du quotidien — réunions sans décision, malentendus, énergie dépensée à compenser des flous dans l'organisation. Pas un problème de compétences : un problème de dynamique d'équipe.</div>
+        </div>
+
+        <div style="background:var(--cream);padding:11px 12px;">
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:5px;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--gold2);line-height:1;">{{TURNOVER}}</span>
+            <span style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Turnover</span>
+          </div>
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Remplacer quelqu'un coûte entre 50 et 200% de son salaire annuel (SHRM). Une bonne partie des départs est évitable : ils traduisent souvent un problème de confiance ou de sens — deux choses que ce rapport rend lisibles avant qu'elles ne deviennent des démissions.</div>
+        </div>
+
+        <div style="background:var(--cream);padding:11px 12px;">
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:5px;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--gold2);line-height:1;">{{REUNIONS}}</span>
+            <span style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Réunions</span>
+          </div>
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:300;color:var(--ink2);line-height:1.65;">31 heures de réunions par mois jugées inutiles par ceux qui y participent (Microsoft, 2023). Ce n'est pas un problème d'agenda : c'est le symptôme d'un flou dans qui décide quoi, comment et pour quoi — ce que mesure précisément la Gouvernance.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Point essentiel — sibling du content, ancré dans la page -->
+  <div style="position:absolute;bottom:54px;left:0;right:0;height:74px;display:flex;align-items:center;z-index:2;">
+    <div style="width:100%;background:var(--ink);padding:0 56px;height:100%;display:flex;align-items:center;gap:32px;">
+      <div style="flex-shrink:0;">
+        <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--mu);margin-bottom:5px;">À retenir</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:300;font-style:italic;color:var(--gold);line-height:1.3;max-width:130px;">L'énergie dissipée<br>ne disparaît pas.</div>
+      </div>
+      <div style="width:1px;height:44px;background:rgba(201,160,82,0.15);flex-shrink:0;"></div>
+      <div style="flex:1;font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:rgba(237,232,224,0.72);line-height:1.7;">
+        Elle se retrouve ailleurs — dans les départs, les absences, les décisions qui n'avancent pas, les réunions qui tournent en rond. Ce rapport la rend visible et mesurable. <strong style="font-weight:500;color:var(--gold);">Réduire les tensions internes, c'est convertir du gaspillage en élan</strong> — sans ajouter de ressources, sans augmenter la pression.
+      </div>
+      <div style="flex-shrink:0;font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--mu);line-height:1.7;text-align:right;border-left:1px solid rgba(201,160,82,0.12);padding-left:24px;">
+        Prigogine & Stengers<br><em>La Nouvelle Alliance</em>, 1979<br>Prix Nobel Chimie 1977
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     V · POTENTIEL — ROI et priorités
+══════════════════════════════════ -->
+<div class="page light">
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#a07838"/>
+</svg>
+      <span class="logo-name" style="color:var(--gold2);font-size:7.5px;">energetics.systems</span>
+    </div>
+    <div class="footer-ref" style="color:var(--muted);">{{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-ref">V · Potentiel</div>
+    <div class="page-num">06</div>
+  </div>
+
+  <div class="content" style="bottom:120px;">
+    <div class="section-tag" style="margin-top:6px;margin-bottom:14px;">
+      <span class="section-num" style="color:var(--muted);">V</span>
+      <div class="section-sep"></div>
+      <span class="eyebrow" style="color:var(--gold2);margin-bottom:0;">Potentiel</span>
+    </div>
+
+    <div class="display" style="font-size:38px;color:var(--ink);margin-bottom:8px;line-height:1.1;">
+      Ce qui est déjà<br>disponible
+    </div>
+    <div class="rule" style="margin-bottom:16px;"></div>
+
+    <div class="body-text" style="color:var(--ink2);margin-bottom:10px;">
+      Ce potentiel n'est pas à créer de toutes pièces. Il est déjà là, dans votre organisation — dans les cadres qui fonctionnent à moitié parce que quelque chose les bloque. L'activer ne demande pas de travailler davantage. Il demande de lever ce qui freine.
+    </div>
+
+    <!-- ROI block -->
+    <div class="roi-block" style="margin:10px 0;padding:16px 22px;">
+      <div class="roi-title">Et si votre SGP augmentait d'un seul point ?</div>
+      <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.55);margin-bottom:8px;line-height:1.65;border-left:2px solid rgba(201,160,82,0.3);padding-left:12px;font-style:italic;">
+        Une journée passée à voir ensemble ce qui se passe vraiment suffit à déclencher des changements concrets sur toute l'année. Des décennies de recherche le confirment : mettre un miroir collectif devant une équipe amorce le changement — naturellement.
+      </div>
+      <div class="roi-grid" style="margin:8px 0;">
+        <div class="roi-cell">
+          <div class="roi-val">{{GAIN_UN_PT}}</div>
+          <div class="roi-sub">Robustesse supplémentaire<br>+1 pt · sur 1 an</div>
+        </div>
+        <div class="roi-cell">
+          <div class="roi-val" style="color:#7fbf7f;">{{ROI_X}}</div>
+          <div class="roi-sub">ROI atelier<br>{{GAIN_UN_PT}} de gain · 2 000 € investis</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forces -->
+    <div style="margin-top:10px;">
+      <div class="label" style="color:var(--gold2);margin-bottom:10px;">Forces identifiées · sur quoi capitaliser</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+
+        <div style="padding:11px 13px;background:rgba(61,112,64,0.07);border:1px solid rgba(61,112,64,0.2);border-left:3px solid {{FORCE_1_COLOR}};">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:{{FORCE_1_COLOR}};margin-bottom:4px;">{{FORCE_1_NOM}} · {{FORCE_1_SCORE}}</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.65;">{{FORCE_1_TEXTE}}</div>
+        </div>
+
+        <div style="padding:11px 13px;background:rgba(196,96,58,0.06);border:1px solid rgba(196,96,58,0.18);border-left:3px solid {{FORCE_2_COLOR}};">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:{{FORCE_2_COLOR}};margin-bottom:4px;">{{FORCE_2_NOM}} · {{FORCE_2_SCORE}}</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.65;">{{FORCE_2_TEXTE}}</div>
+        </div>
+
+        <div style="padding:11px 13px;background:rgba(107,74,155,0.06);border:1px solid rgba(107,74,155,0.18);border-left:3px solid {{PRIO_MAINTIEN_COLOR}};grid-column:1/-1;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:{{PRIO_MAINTIEN_COLOR}};margin-bottom:4px;">{{PRIO_MAINTIEN}}</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.65;">{{PRIO_MAINTIEN_TEXTE}}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Priorités -->
+    <div style="margin-top:0;">
+      <div class="label" style="color:var(--gold2);margin-bottom:6px;">Par où commencer</div>
+
+      <div class="priority-item" style="padding:10px 0;">
+        <div class="priority-num" style="color:{{PRIO_1_COLOR}};">1</div>
+        <div class="priority-body">
+          <div class="priority-title" style="color:{{PRIO_1_COLOR}};">{{PRIO_1_NOM}} · {{PRIO_1_SCORE}}/15 · {{PRIO_1_PCT}} activé</div>
+          <div class="priority-action">{{PRIO_1_ACTION}}</div>
+        </div>
+      </div>
+
+      <div class="priority-item" style="padding:10px 0;">
+        <div class="priority-num" style="color:{{PRIO_2_COLOR}};">2</div>
+        <div class="priority-body">
+          <div class="priority-title" style="color:{{PRIO_2_COLOR}};">{{PRIO_2_NOM}} · {{PRIO_2_SCORE}}/15 · {{PRIO_2_PCT}} activé</div>
+          <div class="priority-action">{{PRIO_2_ACTION}}</div>
+        </div>
+      </div>
+
+      <div class="priority-item" style="border-bottom:none;padding:10px 0;">
+        <div class="priority-num" style="color:{{FORCE_1_COLOR}};">→</div>
+        <div class="priority-body">
+          <div class="priority-title" style="color:var(--muted);font-size:9px;">{{PRIO_MAINTIEN}}</div>
+          <div class="priority-action">Ces trois points forts sont ce qui fait tenir votre équipe. Ils ne demandent pas d'effort particulier en ce moment, mais une attention continue : protégez les habitudes qui les nourrissent. Chaque décision cohérente avec vos valeurs renforce ce qui est déjà là.</div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Upside — sibling du content -->
+  <div style="position:absolute;bottom:54px;left:0;right:0;height:62px;background:var(--bg);display:flex;align-items:center;padding:0 56px;gap:20px;border-top:1px solid rgba(201,160,82,0.12);">
+    <div>
+      <div class="label" style="color:var(--mu);margin-bottom:4px;">Horizon 12–24 mois</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:#7fbf7f;line-height:1;">{{HORIZON}}</div>
+    </div>
+    <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:300;color:rgba(237,232,224,0.45);line-height:1.6;border-left:1px solid rgba(201,160,82,0.15);padding-left:16px;">
+      En activant {{PRIO_1_NOM}}, {{PRIO_2_NOM}} et {{FORCE_2_NOM}} · {{EFFECTIF}} · {{SECTEUR_LABEL}}
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     VI · PREMIER PAS — Le seuil
+══════════════════════════════════ -->
+<div class="page dark">
+  <div class="topline"></div>
+  <div class="glow-tl"></div>
+
+  <div class="page-header" style="border-bottom:1px solid rgba(201,160,82,0.1);">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+</svg>
+      <span class="logo-name" style="font-size:7.5px;">Dynamiques de Présences Énergétiques</span>
+    </div>
+    <div class="footer-ref">DPE · {{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-ref">VI · Premier pas</div>
+    <div class="page-num">07</div>
+  </div>
+
+  <div class="content">
+    <div class="section-tag">
+      <span class="section-num">VI</span>
+      <div class="section-sep"></div>
+      <span class="eyebrow" style="margin-bottom:0;">Premier pas</span>
+    </div>
+
+    <div class="display" style="font-size:42px;color:var(--light);margin-bottom:8px;line-height:1.1;">
+      Ce que vous venez<br>de faire est un<br><span style="color:var(--gold);font-style:italic;">premier aperçu.</span>
+    </div>
+    <div class="rule" style="margin-bottom:20px;"></div>
+
+    <div class="body-text" style="color:rgba(237,232,224,0.7);max-width:580px;margin-bottom:18px;">
+      Cette auto-évaluation vous a donné une première lecture de votre organisation — rapide, mais ancrée dans votre vécu réel. Si quelque chose dans ce rapport a soulevé une question que vous ne vous posiez pas, ou mis des mots sur quelque chose que vous ressentiez confusément, c'est exactement l'effet recherché. La suite commence là.
+    </div>
+
+    <!-- Comparaison teaser / DPE approfondi -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(201,160,82,0.15);margin-bottom:22px;">
+      <div style="background:#141008;padding:18px 16px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--mu);margin-bottom:10px;">Cette auto-évaluation</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.45);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--mu);flex-shrink:0;">·</span>Auto-évaluation en 10 minutes</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.45);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--mu);flex-shrink:0;">·</span>3 questions par cadre</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.45);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--mu);flex-shrink:0;">·</span>Rapport illustratif du potentiel</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.45);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--mu);flex-shrink:0;">·</span>Estimation financière indicative</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.45);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--mu);flex-shrink:0;">·</span>Point d'entrée dans l'approche DPE</div>
+        </div>
+      </div>
+      <div style="background:#0f0c07;padding:18px 16px;border-left:2px solid var(--gold);">
+        <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Le DPE approfondi</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.7);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--gold);flex-shrink:0;">→</span>Exploration de votre écologie interne</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.7);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--gold);flex-shrink:0;">→</span>Comment vous fonctionnez dans l'équipe</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.7);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--gold);flex-shrink:0;">→</span>Rapport individuel fin · anonyme</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.7);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--gold);flex-shrink:0;">→</span>Pistes de mise en action personnalisées</div>
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(237,232,224,0.7);display:flex;align-items:flex-start;gap:7px;"><span style="color:var(--gold);flex-shrink:0;">→</span>Inclus dans l'atelier d'équipe</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parcours complet — 4 étapes détaillées -->
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;color:var(--mu);margin-bottom:14px;">Le parcours complet</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,160,82,0.15);">
+
+        <!-- Étape 1 — Auto-évaluation (ici) -->
+        <div style="background:#1c1408;padding:16px 13px;position:relative;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);"></div>
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">① Vous êtes ici</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:var(--light);margin-bottom:10px;">Auto-évaluation</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous arrivez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.5);line-height:1.55;">Votre vécu de manager, 10 minutes, 15 questions ancrées dans le réel.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous traversez</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.5);line-height:1.55;">Une lecture des 5 dimensions de votre organisation et une estimation de ce qui pourrait être libéré.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous repartez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.5);line-height:1.55;">Ce rapport. Un premier miroir, illustratif. L'envie d'aller plus loin.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 2 — DPE approfondi -->
+        <div style="background:#141008;padding:16px 13px;">
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,160,82,0.45);margin-bottom:6px;">② Étape suivante</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:rgba(237,232,224,0.7);margin-bottom:10px;">DPE approfondi</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous arrivez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Un lien d'accès fourni par votre facilitateur. Anonyme — aucun email, aucun identifiant.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous traversez</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Un questionnaire approfondi sur comment vous vivez chaque dimension — et votre place dans le collectif. Questions plus fines, réponses plus riches.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous repartez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Un rapport individuel fin, téléchargeable. Strictement privé. Des pistes de mise en action personnalisées.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 3 — Rapport collectif -->
+        <div style="background:#141008;padding:16px 13px;">
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,160,82,0.45);margin-bottom:6px;">③ Pour l'équipe</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:rgba(237,232,224,0.7);margin-bottom:10px;">Rapport collectif</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous arrivez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Chaque membre dépose volontairement son rapport dans un espace partagé. Le dépôt est un acte de confiance.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous traversez</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Agrégation anonymisée des DPE individuels. Les zones de consensus, de divergence et les angles morts collectifs deviennent visibles.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous repartez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Un portrait du système — lu par le facilitateur pour préparer l'atelier. Les rapports manquants sont aussi une information.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 4 — Atelier -->
+        <div style="background:#141008;padding:16px 13px;">
+          <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,160,82,0.45);margin-bottom:6px;">④ Le seuil</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:rgba(237,232,224,0.7);margin-bottom:10px;">Atelier · 1 journée</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous arrivez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">12 personnes maximum, chacune ayant lu son rapport individuel. Un facilitateur certifié. Le rapport collectif en main.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous traversez</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Le facilitateur révèle ce que les données seules ne montrent pas — l'identité et le potentiel intrinsèque du système comme tout.</div>
+            </div>
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:6.5px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;">Vous repartez avec</div>
+              <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.38);line-height:1.55;">Un plan co-construit, ancré dans le vécu de l'équipe. Un langage partagé. Le début du parcours — pas sa fin.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA facilitateur -->
+    <div style="padding:22px 24px;background:var(--gold);position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(255,255,255,0.08),transparent 60%);pointer-events:none;"></div>
+      <div style="position:relative;">
+        <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:rgba(9,8,5,0.55);margin-bottom:8px;">Pour aller plus loin</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;font-weight:300;color:var(--bg);line-height:1.4;margin-bottom:14px;">Demandez à un facilitateur certifié de vous proposer le DPE approfondi — pour vous, et pour votre équipe.</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:12px;border-top:1px solid rgba(9,8,5,0.15);">
+          <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:rgba(9,8,5,0.6);line-height:1.65;">Trouvez un facilitateur certifié ou renseignez-vous<br>sur la formation à la certification DPE.</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;color:var(--bg);letter-spacing:0.1em;font-style:italic;">energetics.systems/facilitateurs →</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     VII · LE PARCOURS — Le chemin du retour
+══════════════════════════════════ -->
+<div class="page dark">
+  <div class="topline"></div>
+  <div class="glow-br"></div>
+
+  <div class="page-header" style="border-bottom:1px solid rgba(201,160,82,0.1);">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+</svg>
+      <span class="logo-name" style="font-size:7.5px;">Dynamiques de Présences Énergétiques</span>
+    </div>
+    <div class="footer-ref">DPE · {{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-ref">VII · Le parcours</div>
+    <div class="page-num">08</div>
+  </div>
+
+  <div class="content">
+    <div class="section-tag">
+      <span class="section-num">VII</span>
+      <div class="section-sep"></div>
+      <span class="eyebrow" style="margin-bottom:0;">Le parcours</span>
+    </div>
+
+    <div class="display" style="font-size:42px;color:var(--light);margin-bottom:8px;line-height:1.1;">
+      C'est le premier pas<br>d'un <span style="color:var(--gold);font-style:italic;">long voyage.</span>
+    </div>
+    <div class="rule" style="margin-bottom:18px;"></div>
+
+    <div class="body-text" style="color:rgba(237,232,224,0.7);max-width:600px;margin-bottom:24px;">
+      L'atelier est le moment où l'on bascule — d'une prise de conscience individuelle à une décision collective. Ce qui vient après, c'est le travail réel : avec ses avancées, ses rechutes, ses surprises. Changer la dynamique d'une équipe ne ressemble pas à un projet qu'on planifie et qu'on exécute. Ça ressemble davantage à un apprentissage.
+    </div>
+
+    <!-- Journey steps enrichis -->
+    <div class="journey-steps">
+      <div class="journey-step">
+        <div class="journey-icon">I</div>
+        <div>
+          <div class="journey-title">L'auto-évaluation collective</div>
+          <div class="journey-desc">Chaque membre de l'équipe réalise son DPE individuel, depuis son vécu propre. La cartographie collective révèle ensuite ce que chaque auto-évaluation individuelle ne peut montrer seule : les zones d'ombre partagées, les forces invisibles, les tensions systémiques qui ne sont pas encore nommées. Ce premier acte — accepter de se regarder ensemble honnêtement — est déjà un geste de courage. Il dit que l'équipe peut faire confiance à ce qu'elle vit réellement, sans le minimiser.</div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-icon">II</div>
+        <div>
+          <div class="journey-title">L'atelier de conscience partagée · 1 journée</div>
+          <div class="journey-desc">Une journée pour voir ensemble, nommer ensemble, décider ensemble. Le facilitateur ne vient pas avec les réponses — il crée l'espace pour que l'équipe les trouve elle-même. Ce qui émerge de cette journée tient dans le temps, parce que c'est le collectif qui l'a construit. Ce ne sont pas des solutions importées — ce sont les vôtres.</div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-icon">III</div>
+        <div>
+          <div class="journey-title">Les épreuves du chemin</div>
+          <div class="journey-desc">Des résistances surgiront — c'est inévitable, et c'est bon signe. Des cadres qui retombent dans leurs anciens schémas, des habitudes qui reprennent le dessus sous la pression, des contextes qui changent et redistribuent les cartes. Ces moments ne sont pas des échecs : ils sont la preuve que quelque chose change vraiment. Un changement trop facile ne dure pas. La solidité d'une équipe se construit précisément dans ces épreuves — pas malgré elles.</div>
+        </div>
+      </div>
+      <div class="journey-step" style="border-bottom:none;">
+        <div class="journey-icon">IV</div>
+        <div>
+          <div class="journey-title">L'accompagnement dans la durée</div>
+          <div class="journey-desc">Un facilitateur certifié vous accompagne à chaque étape — pas pour décider à votre place, mais pour maintenir le cap quand les anciennes habitudes reprennent le dessus, relire ce qui se passe avec un regard extérieur formé, et réajuster quand la réalité diffère de ce qu'on avait anticipé. Il se souvient de ce qui a été dit et voulu au départ, et aide l'équipe à rester fidèle à ce qu'elle a décidé pour elle-même.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Le retour — bloc poétique enrichi -->
+    <div class="retour-block" style="background:rgba(201,160,82,0.04);border-color:rgba(201,160,82,0.2);margin-top:20px;">
+      <div class="retour-diamond"></div>
+      <div class="retour-text" style="color:var(--pale);font-size:14px;line-height:1.7;">
+        "Au bout du parcours, l'organisation ne revient pas à son état initial.<br>
+        Elle revient à elle-même — mais avec moins de frottement, plus de fluidité, et une capacité à traverser les prochaines épreuves.<br>
+        Elle n'a pas changé de nature. Elle a retrouvé sa propre puissance."
+      </div>
+      <div style="margin-top:14px;font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;letter-spacing:0.2em;text-transform:uppercase;color:var(--mu);">Le retour · Le Point Zéro 2050</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     FONDEMENTS — Annexes théoriques
+══════════════════════════════════ -->
+<div class="page light">
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none">
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/>
+  <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/>
+  <circle cx="0" cy="0" r="3.8" fill="#a07838"/>
+</svg>
+      <span class="logo-name" style="color:var(--gold2);font-size:7.5px;">energetics.systems</span>
+    </div>
+    <div class="footer-ref" style="color:var(--muted);">{{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-ref">Fondements</div>
+    <div class="page-num">09</div>
+  </div>
+
+  <div class="content">
+    <div class="section-tag" style="margin-top:6px;">
+      <span class="section-num" style="color:var(--muted);">—</span>
+      <div class="section-sep" style="background:var(--frame);"></div>
+      <span class="eyebrow" style="color:var(--gold2);margin-bottom:0;">Fondements</span>
+    </div>
+    <div class="display" style="font-size:22px;color:var(--ink);margin-bottom:8px;line-height:1.1;">Ce qui fonde chaque notion de ce rapport</div>
+
+    <!-- En-têtes du tableau -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--ink);margin-bottom:1px;">
+      <div style="padding:5px 8px;font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Notion</div>
+      <div style="padding:5px 8px;font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Idée reçue → Ce que la recherche montre</div>
+      <div style="padding:5px 8px;font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Application DPE</div>
+      <div style="padding:5px 8px;font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Référence</div>
+    </div>
+
+    <!-- Ligne 1 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">L'auto-évaluation comme miroir légitime</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">Une évaluation objective nécessite un regard externe normalisé.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">Un système vivant est organisationnellement fermé : toute description externe projette la réalité de l'observateur — pas celle du système. Le champ phénoménal vécu est la seule réalité valide.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Le DPE n'impose aucune norme externe. Vos réponses sont vraies parce qu'elles viennent de l'intérieur du système.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Maturana & Varela, 1980<br>Von Foerster, 1973<br>Carl Rogers, 1951</div>
+      </div>
+    </div>
+
+    <!-- Ligne 2 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">La robustesse plutôt que l'optimisation</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">L'objectif est d'optimiser la performance.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">Les systèmes vivants cherchent la robustesse — la capacité à maintenir leurs fonctions malgré les perturbations. Un système trop optimisé performe en contexte stable mais s'effondre au premier choc.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Le potentiel DPE n'est pas ce qu'on récupère — c'est la robustesse que l'organisation peut construire en réduisant ses tensions.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Olivier Hamant<br><em>La Troisième Voie du Vivant</em><br>Odile Jacob, 2022</div>
+      </div>
+    </div>
+
+    <!-- Ligne 3 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">La sécurité psychologique comme fondation</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">La performance collective dépend des compétences.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">Projet Aristotle (Google, 180 équipes, 2016) : la sécurité psychologique est le premier prédicteur de la performance collective — loin devant les compétences individuelles, les ressources ou les processus.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Le Relationnel est la fondation absolue. Un score faible ici bloque l'activation de tous les autres cadres, quelle que soit leur vitalité.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Amy Edmondson<br><em>The Fearless Organization</em><br>Wiley, 2018</div>
+      </div>
+    </div>
+
+    <!-- Ligne 4 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">La mesure déclenche le changement</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">Une évaluation constate — l'action vient après.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">Répondre à un questionnaire sur ses intentions augmente significativement la probabilité de passer à l'acte. L'acte de mesurer crée lui-même l'intention de changer — avant toute intervention.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Répondre à cette auto-évaluation n'est pas neutre. Vous avez déjà amorcé le mouvement.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Morwitz, Johnson & Schmittlein<br><em>Journal of Consumer Research</em>, 1993</div>
+      </div>
+    </div>
+
+    <!-- Ligne 5 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">L'interdépendance des cadres systémiques</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">Améliorer un domaine améliore la performance globale.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">La performance d'un système est déterminée par son maillon le plus faible. Renforcer n'importe quel autre maillon d'abord ne change pas la performance globale — seul le travail sur la contrainte principale produit un effet réel.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Le SGP pénalise les déséquilibres via σ. Activer le cadre le moins présent augmente le SGP davantage que tout autre investissement.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Eliyahu Goldratt<br><em>The Goal</em><br>North River Press, 1984</div>
+      </div>
+    </div>
+
+    <!-- Ligne 6 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">Champs de force · lever les freins d'abord</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">Pour progresser, renforcer les moteurs.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">Tout système est maintenu en équilibre par des forces motrices et des forces de résistance. Renforcer les moteurs sans lever les résistances crée plus de tension — pas plus de mouvement. La stratégie gagnante : réduire les freins en premier.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Le cadre le moins activé est le frein principal. L'activer libère l'énergie captive et réduit σ plus efficacement que tout autre action.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Kurt Lewin<br><em>Field Theory in Social Science</em><br>Harper & Row, 1951</div>
+      </div>
+    </div>
+
+    <!-- Ligne 7 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">Le sens comme construction collective</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">Le sens est donné par la direction ou la stratégie — il se communique de haut en bas.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">Le sens n'est pas transmis : il est construit collectivement à travers l'action et l'interprétation rétrospective. Les organisations ne sont pas des machines à exécuter des stratégies — ce sont des systèmes de production de sens. Quand le sensemaking collectif se grippe, les membres agissent dans des réalités divergentes, même s'ils partagent les mêmes objectifs sur papier.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Le cadre Sens du DPE évalue précisément la cohérence de cette construction collective : est-ce que chacun comprend le pourquoi de son action — et est-ce que ces interprétations convergent suffisamment pour créer un élan commun ?</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Karl Weick<br><em>Sensemaking in Organizations</em><br>Sage Publications, 1995</div>
+      </div>
+    </div>
+
+    <!-- Ligne 8 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);margin-bottom:1px;">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">L'apprentissage en double boucle</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">Apprendre, c'est corriger les erreurs et améliorer les méthodes.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">L'apprentissage en simple boucle corrige les actions sans questionner les valeurs et hypothèses qui les ont produites. L'apprentissage en double boucle remet en cause les modèles mentaux sous-jacents. Sans cette boucle profonde, les organisations reproduisent indéfiniment les mêmes schémas — même en changeant leurs processus ou leurs outils.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ Le cadre Apprenance évalue la capacité à apprendre en double boucle : est-ce que le collectif questionne ses propres hypothèses, ou se contente-t-il d'optimiser ses réponses habituelles ? C'est la différence entre régénération et répétition.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Chris Argyris & Donald Schön<br><em>Organizational Learning</em><br>Addison-Wesley, 1978</div>
+      </div>
+    </div>
+
+    <!-- Ligne 9 -->
+    <div style="display:grid;grid-template-columns:150px 1fr 1fr 130px;gap:0;background:var(--frame);">
+      <div style="background:var(--warm);padding:7px 8px;border-left:3px solid var(--gold2);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;color:var(--gold2);line-height:1.25;">L'énergie dissipée comme phénomène mesurable</div>
+      </div>
+      <div style="background:var(--cream);padding:7px 8px;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);margin-bottom:3px;font-style:italic;">La dissipation d'énergie est une perte — négligeable, inévitable, sans valeur informationnelle.</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.55;">Les systèmes vivants maintiennent leur organisation en échangeant constamment de l'énergie avec leur environnement. Ce qui n'est pas activement canalisé se dissipe sous forme de friction et d'entropie. Cette dissipation est quantifiable — et surtout, réversible : l'énergie dissipée n'est pas perdue, elle est disponible pour être recirculée.</div>
+      </div>
+      <div style="background:rgba(201,160,82,0.05);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--gold2);line-height:1.55;font-style:italic;">→ C'est le fondement thermodynamique du DPE : l'énergie collective dissipée par le désalignement des cadres est évaluable et recirculable. Le potentiel de robustesse estimé n'est pas une projection — c'est la description de ce qui fuit déjà.</div>
+      </div>
+      <div style="background:var(--warm);padding:7px 8px;border-left:1px solid var(--frame);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:300;color:var(--muted);line-height:1.55;">Ilya Prigogine & Isabelle Stengers<br><em>La Nouvelle Alliance</em><br>Gallimard, 1979<br>Prix Nobel Chimie 1977</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- ══════════════════════════════════
+     RÉFÉRENCES & CALCULS
+══════════════════════════════════ -->
+<div class="page light">
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg width="20" height="20" viewBox="-52 -52 104 104" fill="none"><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(0)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(36)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(72)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(108)"/><ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#a07838" stroke-width="1.25" transform="rotate(144)"/><circle cx="0" cy="0" r="3.8" fill="#a07838"/></svg>
+      <span class="logo-name" style="color:var(--gold2);font-size:7.5px;">energetics.systems</span>
+    </div>
+    <div class="footer-ref" style="color:var(--muted);">{{ROLE}} · {{SECTEUR_LABEL}} · {{EFFECTIF}}</div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-ref">Références & Calculs</div>
+    <div class="page-num">10</div>
+  </div>
+
+  <div class="content">
+    <div class="section-tag" style="margin-top:6px;">
+      <span class="section-num" style="color:var(--muted);">—</span>
+      <div class="section-sep" style="background:var(--frame);"></div>
+      <span class="eyebrow" style="color:var(--gold2);margin-bottom:0;">Références & Calculs</span>
+    </div>
+
+    <div class="display" style="font-size:26px;color:var(--ink);margin-bottom:8px;line-height:1.15;">
+      Une approche ancrée<br>dans <span style="color:var(--gold2);font-style:italic;">de nombreuses sciences</span>
+    </div>
+    <div class="rule" style="margin-bottom:12px;background:var(--frame);"></div>
+
+    <!-- Positionnement épistémologique -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+      <div style="padding:12px 14px;background:rgba(201,160,82,0.06);border-left:3px solid var(--gold2);">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:7px;">Une approche multi-référentielle</div>
+        <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.7;">Ce rapport ne s'appuie pas sur une seule théorie. Il croise des décennies de recherche en psychologie, en sociologie des organisations, en biologie des systèmes et en sciences du management. Aucune discipline ne détient la vérité seule — chacune éclaire une facette de ce qui se passe dans une équipe. C'est leur croisement qui donne sa solidité à l'approche.</div>
+      </div>
+      <div style="padding:12px 14px;background:rgba(42,74,139,0.05);border-left:3px solid #2a4a8b;">
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#2a4a8b;margin-bottom:7px;">L'ancrage structurant · Le Point Zéro 2050</div>
+        <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.7;">Un seul ancrage est fixe dans ce rapport : les <strong style="font-weight:500;">cinq dimensions établies par le Point Zéro 2050</strong>. Elles servent de grille de lecture pour interpréter ce qu'une équipe vit réellement — non comme un diagnostic mécanique, mais comme une lecture sensible et informée, conduite par un facilitateur formé à mobiliser l'ensemble de ce corpus au service d'un collectif singulier.</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+
+      <!-- Colonne gauche : Sources -->
+      <div>
+        <div class="label" style="color:var(--gold2);margin-bottom:10px;">Données de référence · six sources croisées</div>
+
+        <table class="stbl" style="width:100%;border-collapse:collapse;font-family:'Jost',sans-serif;font-size:9px;margin-bottom:14px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--frame);background:var(--warm);">
+              <th style="text-align:left;padding:5px 7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-size:7.5px;">Source</th>
+              <th style="text-align:left;padding:5px 7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-size:7.5px;">Indicateur</th>
+              <th style="text-align:left;padding:5px 7px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-size:7.5px;">Valeur</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--frame);">
+              <td style="padding:5px 7px;color:var(--gold2);font-weight:500;font-size:8.5px;vertical-align:top;">Gallup, State of the Global Workplace 2023<br><a href="https://www.gallup.com/workplace/349484/state-of-the-global-workplace.aspx" style="color:var(--gold2);font-size:7.5px;opacity:0.7;">gallup.com/workplace</a></td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">Coût du désengagement</td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">9% du PIB mondial · 14 310€/an par salarié désengagé</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--frame);">
+              <td style="padding:5px 7px;color:var(--gold2);font-weight:500;font-size:8.5px;vertical-align:top;">McKinsey Global Institute, 2022<br><a href="https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights" style="color:var(--gold2);font-size:7.5px;opacity:0.7;">mckinsey.com</a></td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">Perte de productivité liée au désengagement</td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">20–25% de la masse salariale</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--frame);">
+              <td style="padding:5px 7px;color:var(--gold2);font-weight:500;font-size:8.5px;vertical-align:top;">SHRM (Society for Human Resource Management)<br><a href="https://www.shrm.org/topics-tools/tools/toolkits/retaining-talent" style="color:var(--gold2);font-size:7.5px;opacity:0.7;">shrm.org</a></td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">Coût de remplacement d'un salarié</td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">50–200% du salaire annuel brut</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--frame);">
+              <td style="padding:5px 7px;color:var(--gold2);font-weight:500;font-size:8.5px;vertical-align:top;">Microsoft Work Trend Index 2023<br><a href="https://www.microsoft.com/en-us/worklab/work-trend-index" style="color:var(--gold2);font-size:7.5px;opacity:0.7;">microsoft.com/worklab</a></td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">Réunions improductives</td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">31h/mois par cadre · 68% jugées improductives</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 7px;color:var(--gold2);font-weight:500;font-size:8.5px;vertical-align:top;">DARES / INSEE 2023<br><a href="https://dares.travail-emploi.gouv.fr" style="color:var(--gold2);font-size:7.5px;opacity:0.7;">dares.travail-emploi.gouv.fr</a></td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">Salaires de référence par secteur</td>
+              <td style="padding:5px 7px;color:var(--ink2);vertical-align:top;">Tech 54 000€ · Conseil 56 000€ · Industrie 40 000€ · Santé 34 000€ · Finance 54 000€ · Commerce 30 000€ · Public 33 000€</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Note méthodologique -->
+        <div style="padding:10px 13px;background:rgba(201,160,82,0.06);border-left:3px solid var(--gold2);margin-top:4px;">
+          <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:5px;">Ces chiffres — une illustration de la complexité</div>
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Ces estimations sont des indicateurs de potentiel, non des certitudes comptables. Elles rendent visible ce qui est ordinairement invisible — la valeur de l'énergie collective non mobilisée. Elles illustrent, par leur diversité de sources (RH, productivité, comportemental, sectoriel), la nature même du DPE : une lecture systémique qui croise plusieurs disciplines pour approcher une réalité que nul indicateur isolé ne peut saisir seul.</div>
+        </div>
+      </div>
+
+      <!-- Colonne droite : Calculs détaillés -->
+      <div>
+        <div class="label" style="color:var(--gold2);margin-bottom:10px;">Transparence des calculs · six étapes</div>
+
+        <!-- SGP -->
+        <div style="background:var(--warm);border:1px solid var(--frame);padding:9px 11px;margin-bottom:5px;">
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:0.04em;">① Score Global Pondéré (SGP)</div>
+          <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.75;font-style:italic;">
+            Moyenne des 5 cadres (sur 15) → SGP brut = moyenne − écart-type σ → SGP normalisé /25<br>
+            <span style="color:var(--muted);">Exemple : cadres = {{CSC_STR}} → moyenne = {{MEAN}} → σ = {{SIGMA}} → SGP brut = {{SGP_RAW}}/15 → SGP = {{SGP}}/25</span><br>
+            La pénalisation par σ traduit le principe systémique : la robustesse du système est celle de son maillon le plus faible.
+          </div>
+        </div>
+
+        <!-- Masse salariale -->
+        <div style="background:var(--warm);border:1px solid var(--frame);padding:9px 11px;margin-bottom:5px;">
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:0.04em;">② Masse salariale chargée</div>
+          <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.75;font-style:italic;">
+            MS = effectif × salaire sectoriel de référence × 1,45 (charges patronales)<br>
+            <span style="color:var(--muted);">Exemple : {{EFFECTIF_NUM}} × {{SAL_REF}}€ × 1,45 = {{MASSE_SAL}}€</span>
+          </div>
+        </div>
+
+        <!-- Taux de dissipation -->
+        <div style="background:var(--warm);border:1px solid var(--frame);padding:9px 11px;margin-bottom:5px;">
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:0.04em;">③ Taux de dissipation par productivité</div>
+          <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.75;font-style:italic;">
+            w = 38% − 34% × (SGP − 5) / 20 &nbsp;·&nbsp; calibré sur Gallup 2023 et McKinsey 2022<br>
+            Impact = MS × w &nbsp;·&nbsp; ne compte que le <em>surplus</em> de dissipation lié au désalignement<br>
+            <span style="color:var(--muted);">Exemple : SGP={{SGP}} → w = {{DISSIP_PCT}} → {{MASSE_SAL}} × {{DISSIP_PCT}} = {{PROD}}</span>
+          </div>
+        </div>
+
+        <!-- Turnover -->
+        <div style="background:var(--warm);border:1px solid var(--frame);padding:9px 11px;margin-bottom:5px;">
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:0.04em;">④ Surplus de turnover lié au désalignement</div>
+          <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.75;font-style:italic;">
+            Taux surplus = (1 − SGP/25) × 10% &nbsp;·&nbsp; coût remplacement = 85% du salaire annuel (SHRM)<br>
+            Impact = effectif × taux surplus × salaire × 85%<br>
+            <span style="color:var(--muted);">Exemple : (1−{{SGP}}/25)×10% = {{TURNOVER_PCT}} → {{EFFECTIF_NUM}} × {{TURNOVER_PCT}} × {{SAL_REF}}€ × 85% = {{TURNOVER}}</span>
+          </div>
+        </div>
+
+        <!-- Réunions -->
+        <div style="background:var(--warm);border:1px solid var(--frame);padding:9px 11px;margin-bottom:5px;">
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:0.04em;">⑤ Surplus de réunions improductives</div>
+          <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:var(--ink2);line-height:1.75;font-style:italic;">
+            Taux surplus = 15% × (1 − SGP/25) × 32% &nbsp;·&nbsp; calibré sur Microsoft WTI 2023<br>
+            Impact = MS × taux surplus<br>
+            <span style="color:var(--muted);">Exemple : {{REUNIONS_PCT}} → {{MASSE_SAL}} × {{REUNIONS_PCT}} = {{REUNIONS}}</span>
+          </div>
+        </div>
+
+        <!-- ROI -->
+        <div style="background:var(--bg);color:var(--light);padding:11px 13px;border-left:3px solid var(--gold);">
+          <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:var(--gold);margin-bottom:7px;letter-spacing:0.04em;">⑥ ROI atelier (+1 point SGP · sur 1 an)</div>
+          <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.65);line-height:1.75;font-style:italic;">
+            Gain annuel = Potentiel(SGP) − Potentiel(SGP+1)<br>
+            ROI = Gain annuel / Coût atelier (2 000€)<br>
+            <span style="color:rgba(237,232,224,0.4);">Exemple : gain +1pt ≈ {{GAIN_UN_PT}}/an → ROI = {{GAIN_UN_PT}} / 2 000 = {{ROI_X}}</span><br>
+            L'atelier est investi en 1 journée. Son impact se déploie sur les 12 mois suivants.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE DE CLÔTURE
+══════════════════════════════════ -->
+<div class="page dark">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(201,160,82,0.07),transparent 65%);pointer-events:none;"></div>
+
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:64px 72px 52px;">
+
+    <!-- Haut : Logo + tag -->
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="logo-wrap">
+        <svg width="32" height="32" viewBox="-52 -52 104 104" fill="none">
+          <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(0)"/>
+          <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(36)"/>
+          <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(72)"/>
+          <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(108)"/>
+          <ellipse cx="0" cy="0" rx="11" ry="46" fill="none" stroke="#c9a052" stroke-width="1.25" transform="rotate(144)"/>
+          <circle cx="0" cy="0" r="3.8" fill="#c9a052"/>
+        </svg>
+        <div class="logo-text-block">
+          <span class="logo-name" style="font-size:13px;">DPE</span>
+          
+        </div>
+      </div>
+      <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:var(--mu);">Clôture · Rapport diagnostique</div>
+    </div>
+
+    <!-- Centre : Message principal -->
+    <div style="max-width:560px;">
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:11px;font-weight:300;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0.8;">Ce que vous venez de faire</div>
+
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:38px;font-weight:300;color:var(--light);line-height:1.18;margin-bottom:32px;">
+        Vous avez observé<br>une facette de<br>votre réalité.<br>
+        <span style="color:var(--gold);font-style:italic;">C'est déjà un acte.</span>
+      </div>
+
+      <div style="width:40px;height:1px;background:rgba(201,160,82,0.4);margin-bottom:32px;"></div>
+
+      <div style="font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;margin-bottom:22px;">
+Ce rapport était fait pour ça : mettre des mots sur ce que vous vivez, ouvrir des angles que vous n'aviez peut-être pas encore regardés, rendre visible ce qui restait flou. Pas pour vous dire quoi faire — mais pour que vous puissiez voir plus clairement ce qui est déjà là.
+      </div>
+
+      <div style="font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;margin-bottom:22px;">
+        Ce rapport vous appartient. Il ne vise pas à vous convaincre ni à vous vendre une prochaine étape. Nos équipes ne reviendront pas vers vous. Ce n'est pas notre rôle — et ce n'est pas notre façon d'être.
+      </div>
+
+      <div style="font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;margin-bottom:22px;">
+        Ce rapport est gratuit. Non pas comme un teaser tronqué, mais comme une lecture complète — construite sur des décennies de recherche croisée, offerte sans condition. Parce que nous pensons que voir clairement est déjà un acte de transformation. Et que ce qui a de la valeur n'a pas besoin de se vendre.
+      </div>
+
+      <div style="font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:rgba(237,232,224,0.7);line-height:1.85;">
+La suite appartient à celui ou celle qui choisit de franchir le prochain seuil — librement, au bon moment, pour les bonnes raisons. Pas parce qu'on l'y a poussé. Mais parce que quelque chose, en lisant ces pages, s'est mis en mouvement.
+      </div>
+    </div>
+
+    <!-- Citation centrale -->
+    <div style="border-left:2px solid rgba(201,160,82,0.35);padding-left:24px;max-width:480px;">
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-style:italic;font-weight:300;color:var(--gold);line-height:1.45;margin-bottom:10px;">"Le héros n'est pas celui qui n'a pas peur. C'est celui qui, ayant peur, choisit quand même de partir."</div>
+      <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;letter-spacing:0.14em;color:var(--mu);">Joseph Campbell · Le Héros aux mille et un visages, 1949</div>
+    </div>
+
+    <!-- Bas : invitation + contact -->
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+      <div>
+        <div style="font-family:'Jost',sans-serif;font-size:8.5px;font-weight:300;color:rgba(237,232,224,0.45);line-height:1.8;">Si et quand vous choisissez de continuer —</div>
+        <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:300;color:var(--gold);letter-spacing:0.04em;">energetics.systems</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:300;color:rgba(237,232,224,0.35);line-height:1.7;">Accompagnement · Conscience · Responsabilité</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</body>
+</html>

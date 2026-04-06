@@ -51,7 +51,7 @@ try {
 }
 
 /* ── Injection dans le template HTML original ── */
-$templatePath = __DIR__ . '/../inputs/dpe-rapport-complet.html';
+$templatePath = __DIR__ . '/templates/rapport.html';
 $html = file_get_contents($templatePath);
 
 if (!$html) {
