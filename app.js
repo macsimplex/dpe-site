@@ -281,10 +281,11 @@ function buildReport(){
     /* Afficher l'aperçu HTML dans l'iframe */
     var preview=document.getElementById('report-preview');
     var frame=document.getElementById('report-frame');
-    if(preview&&frame){
-      preview.style.display='block';
-      var doc=frame.contentDocument||frame.contentWindow.document;
-      doc.open();doc.write(res.html);doc.close();
+    var dbg=document.getElementById('report-debug');
+    if(dbg)dbg.textContent='HTML re\u00e7u : '+res.html.length+' caract\u00e8res';
+    if(frame){
+      var fdoc=frame.contentDocument||frame.contentWindow.document;
+      fdoc.open();fdoc.write(res.html);fdoc.close();
     }
 
     if(st)st.textContent='G\u00e9n\u00e9ration du PDF en cours\u2026';
