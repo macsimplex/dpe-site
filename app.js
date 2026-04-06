@@ -277,6 +277,16 @@ function buildReport(){
       if(st){st.innerHTML='Erreur lors de la pr\u00e9paration du rapport.';st.className='hsub thankyou-err';}
       return;
     }
+
+    /* Afficher l'aperçu HTML dans l'iframe */
+    var preview=document.getElementById('report-preview');
+    var frame=document.getElementById('report-frame');
+    if(preview&&frame){
+      preview.style.display='block';
+      var doc=frame.contentDocument||frame.contentWindow.document;
+      doc.open();doc.write(res.html);doc.close();
+    }
+
     if(st)st.textContent='G\u00e9n\u00e9ration du PDF en cours\u2026';
 
     /* 2. Rendre le HTML dans un conteneur caché */
