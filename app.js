@@ -281,12 +281,20 @@ function buildReport(){
     /* Afficher l'aperçu HTML dans l'iframe */
     var preview=document.getElementById('report-preview');
     var frame=document.getElementById('report-frame');
-    var dbg=document.getElementById('report-debug');
-    if(dbg)dbg.textContent='HTML re\u00e7u : '+res.html.length+' caract\u00e8res';
     if(frame){
       var fdoc=frame.contentDocument||frame.contentWindow.document;
       fdoc.open();fdoc.write(res.html);fdoc.close();
+      /* Redimensionner l'iframe pour s'adapter au conteneur */
+      var scaleFrame=function(){
+        var containerW=frame.parentElement.offsetWidth;
+        var scale=Math.min(1,containerW/794);
+        frame.style.transform='scale('+scale+')';
+        frame.parentElement.style.height=Math.round(1123*scale)+'px';
+      };
+      scaleFrame();
+      window.addEventListener('resize',scaleFrame);
     }
+    if(preview)preview.style.display='block';
 
     if(st)st.textContent='G\u00e9n\u00e9ration du PDF en cours\u2026';
 
