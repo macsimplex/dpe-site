@@ -287,6 +287,17 @@ function buildReport(){
       fdoc.open();
       fdoc.write(res.html);
       fdoc.close();
+      /* Adapter l'iframe à la largeur disponible */
+      var scaleIframe=function(){
+        var vp=document.querySelector('.report-viewport');
+        if(!vp)return;
+        var availW=vp.offsetWidth;
+        var scale=Math.min(1,availW/794);
+        frame.style.transform='scale('+scale+')';
+        frame.style.height=(vp.offsetHeight/scale)+'px';
+      };
+      setTimeout(scaleIframe,100);
+      window.addEventListener('resize',scaleIframe);
     }
     if(reportSection)reportSection.classList.add('visible');
     if(btnVoir)btnVoir.style.display='inline-block';
