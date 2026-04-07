@@ -35,7 +35,7 @@
       <li>Aucun outil d'analyse tiers (pas de Google Analytics, pas de pixels de suivi)</li>
       <li>Les données du diagnostic sont transmises via une connexion chiffrée (TLS)</li>
       <li>Les données stockées sont chiffrées au repos</li>
-      <li>Nos deux seuls sous-traitants sont européens : Infomaniak (Suisse) et Brevo (France)</li>
+      <li>Nos sous-traitants sont exclusivement européens : Infomaniak (Suisse) pour l'hébergement et l'IA, Brevo (France) pour l'envoi d'emails</li>
     </ul>
 
     <h2>Sécurité</h2>
@@ -82,14 +82,14 @@
 
     <p>Ce site est conçu selon les principes de l'écoconception web, visant à minimiser son empreinte environnementale à chaque étape :</p>
     <ul>
-      <li><strong>Zéro framework JavaScript</strong> — HTML, CSS et JS natifs uniquement, pas de React, Vue ou Angular (économie de centaines de Ko)</li>
-      <li><strong>Polices système</strong> — Aucun chargement de webfont externe (Georgia, Arial), zéro requête réseau supplémentaire</li>
+      <li><strong>Zéro framework JavaScript</strong> — HTML, CSS et JS natifs uniquement, pas de React, Vue ou Angular</li>
+      <li><strong>Polices locales</strong> — Les polices (Cormorant Garamond, Jost) sont hébergées localement, aucun appel vers Google Fonts</li>
       <li><strong>Aucun tracker ni analytics</strong> — Pas de Google Analytics, pas de pixels de suivi, pas de cookies</li>
       <li><strong>Images optimisées</strong> — SVG privilégiés, PNG compressés, poids total des assets minimal</li>
-      <li><strong>Chargement différé</strong> — La librairie PDF (356 Ko) n'est chargée qu'au moment de la génération du rapport</li>
       <li><strong>Cache navigateur</strong> — Les ressources statiques sont mises en cache pour éviter les téléchargements répétés</li>
       <li><strong>Compression Gzip</strong> — Toutes les ressources textuelles sont compressées à la volée</li>
-      <li><strong>Traitement côté client</strong> — Le diagnostic et le rapport PDF sont générés dans le navigateur, réduisant la charge serveur</li>
+      <li><strong>IA souveraine et sobre</strong> — L'intelligence artificielle est hébergée en Suisse (Infomaniak Euria), sollicitée uniquement à la demande explicite de l'utilisateur, avec une modale de sensibilisation au coût énergétique</li>
+      <li><strong>Protection anti-abus</strong> — Limitation du nombre de rapports par email et par heure pour éviter les sollicitations inutiles de l'IA</li>
     </ul>
 
     <h2>Accessibilité</h2>
@@ -102,8 +102,18 @@
       <li>Structure sémantique (balises main, nav, footer, section)</li>
     </ul>
 
+    <h2>Intelligence artificielle responsable</h2>
+    <p>Nous utilisons l'IA pour personnaliser les textes de votre rapport — pas pour collecter, profiler ou cibler. Nos principes :</p>
+    <ul>
+      <li><strong>IA souveraine</strong> — Le modèle est hébergé en Suisse par Infomaniak (Euria). Aucune donnée ne transite par des serveurs américains ou non européens</li>
+      <li><strong>Données minimales</strong> — Seuls les scores agrégés, le rôle, le secteur et l'effectif sont transmis à l'IA. Aucune donnée directement identifiante (email, nom)</li>
+      <li><strong>Consentement explicite</strong> — Chaque génération est précédée d'une modale informant l'utilisateur du coût énergétique de l'IA</li>
+      <li><strong>Sobriété</strong> — L'IA n'est sollicitée qu'une fois par rapport, et le nombre de rapports est limité pour éviter les abus</li>
+      <li><strong>Transparence</strong> — 85% du rapport est du calcul pur (formules documentées, sources citées). L'IA ne génère que 3 passages narratifs personnalisés</li>
+    </ul>
+
     <h2>Transparence</h2>
-    <p>La confiance ne se décrète pas — elle se construit par la lisibilité. Nous faisons le choix d'une architecture simple et compréhensible, sans boîte noire. Chaque calcul du diagnostic repose sur des formules documentées, chaque source est citée, et le rapport que vous recevez est généré localement dans votre navigateur avant même d'atteindre nos serveurs.</p>
+    <p>La confiance ne se décrète pas — elle se construit par la lisibilité. Nous faisons le choix d'une architecture simple et compréhensible, sans boîte noire. Chaque calcul du diagnostic repose sur des formules documentées, chaque source est citée. Le rapport est consultable directement dans le navigateur via un lien personnel sécurisé.</p>
   </div>
 </div>
 
