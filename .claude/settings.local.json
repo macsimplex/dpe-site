@@ -63,7 +63,13 @@
       "Bash(rm -f *.zip .DS_Store)",
       "Bash(ls -la *.woff2)",
       "Bash(ssh 4u4zkz_admin@4u4zkz.ftp.infomaniak.com \"mysql -h 4u4zkz.myd.infomaniak.com -u 4u4zkz_admindb -p'Raphaeloise13!' 4u4zkz_dpe < ~/sites/energetics.systems/api/migrate.sql\")",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(sed -i '' 's/<!-- Niveau badge -->/<!-- Niveau badge -->/' api/templates/rapport.html)",
+      "Bash(sed -i '' '/<!-- Niveau badge -->/,/<!-- Synthèse -->/{s/margin:12px 0/margin:6px 0/;}' api/templates/rapport.html)",
+      "Bash(sed -i '' '/<!-- Synthèse -->/,/<!-- Tension inter-cadres -->/{s/margin-top:10px/margin-top:5px/;}' api/templates/rapport.html)",
+      "Bash(ls -1 /Users/maxime/Documents/dpe-site/*.html)",
+      "Bash(grep -r \"api/\" /Users/maxime/Documents/dpe-site/*.js /Users/maxime/Documents/dpe-site/*.html)",
+      "Bash(grep -E \"\\\\.\\(html|php|json|sql|md\\)$\")"
     ]
   }
 }
