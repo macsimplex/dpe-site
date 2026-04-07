@@ -652,9 +652,6 @@ body{background:#e8e0d5;}
   <div class="glow-tl"></div>
   <div class="glow-br"></div>
 
-  {{RADAR_SVG}}
-
-
   <div class="cover-content">
 
     <!-- Logo -->
@@ -678,14 +675,19 @@ body{background:#e8e0d5;}
       </div>
     </div>
 
-    <!-- Main title -->
-    <div style="position:absolute;top:240px;left:0;right:100px;">
-      <span class="eyebrow" style="margin-bottom:24px;">Dynamiques de Présences Énergétiques</span>
-      <div class="display" style="font-size:82px;color:var(--light);margin-bottom:6px;">Rapport</div>
-      <div class="display-italic" style="font-size:82px;color:var(--gold);">DPE</div>
-      <div style="width:48px;height:1px;background:var(--gold);opacity:0.4;margin:20px 0;"></div>
-      <div class="display-italic" style="font-size:17px;color:var(--pale);letter-spacing:0.04em;">
-        Pour voir ce que les indicateurs habituels<br>ne montrent pas encore
+    <!-- Main title + radar -->
+    <div style="position:absolute;top:240px;left:0;right:0;display:flex;align-items:flex-start;justify-content:space-between;">
+      <div style="flex:1;max-width:380px;">
+        <span class="eyebrow" style="margin-bottom:24px;">Dynamiques de Présences Énergétiques</span>
+        <div class="display" style="font-size:82px;color:var(--light);margin-bottom:6px;">Rapport</div>
+        <div class="display-italic" style="font-size:82px;color:var(--gold);">DPE</div>
+        <div style="width:48px;height:1px;background:var(--gold);opacity:0.4;margin:20px 0;"></div>
+        <div class="display-italic" style="font-size:17px;color:var(--pale);letter-spacing:0.04em;">
+          Pour voir ce que les indicateurs habituels<br>ne montrent pas encore
+        </div>
+      </div>
+      <div style="flex-shrink:0;padding-top:20px;">
+        {{RADAR_SVG}}
       </div>
     </div>
 
