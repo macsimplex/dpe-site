@@ -69,7 +69,7 @@ $brevoPayload = [
         'email' => SENDER_EMAIL
     ],
     'to' => [
-        ['email' => 'maxime@simplex.coach', 'name' => 'Maxime Bui']
+        ['email' => 'contact@energetics.systems', 'name' => 'DPE']
     ],
     'replyTo' => [
         'email' => $email,
