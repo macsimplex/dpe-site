@@ -104,7 +104,7 @@
           </div>
           <div style="margin-bottom:20px">
             <label class="s-check" style="margin-bottom:0">
-              <input type="checkbox" id="s-bsoc" onchange="document.getElementById('s-soc-fields').style.display=this.checked?'block':'none'">
+              <input type="checkbox" id="s-bsoc" onchange="toggleSocFields(this.checked)">
               <span>Au nom de ma société</span>
             </label>
           </div>
@@ -114,7 +114,7 @@
               <input type="text" id="s-soc" placeholder="Nom de votre organisation">
             </div>
             <div class="s-field">
-              <label>SIRET <span class="s-fn">(optionnel)</span></label>
+              <label>SIRET</label>
               <input type="text" id="s-siret" placeholder="123 456 789 00012" maxlength="17">
             </div>
             <label class="s-check">
@@ -138,7 +138,7 @@
             <label>Message <span class="s-fn">(optionnel)</span></label>
             <textarea id="s-msg" placeholder="Ce que vous avez reçu, ce que vous souhaitez voir advenir…"></textarea>
           </div>
-          <button class="s-submit" type="submit">Envoyer ma participation →</button>
+          <button class="s-submit" type="submit">Soutenir →</button>
           <p class="s-submit-note">Vous recevrez un devis ou une facture sous 48h,<br>avec lien de paiement intégré.<br>Aucune relance. Aucun engagement récurrent.</p>
         </form>
         <div class="s-success" id="s-ok">
@@ -253,11 +253,18 @@
 })();
 /* Formulaire */
 function setSAmt(btn,val){document.querySelectorAll('.s-amt').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');document.getElementById('s-montant').value=val;}
+function toggleSocFields(on){
+  document.getElementById('s-soc-fields').style.display=on?'block':'none';
+  document.getElementById('s-soc').required=on;
+  document.getElementById('s-siret').required=on;
+}
 function openSModal(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
 function closeSModal(id){document.getElementById(id).classList.remove('on');document.body.style.overflow='';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.s-overlay.on').forEach(function(o){o.classList.remove('on')});document.body.style.overflow='';}});
 function sendSoutien(e){
   e.preventDefault();
+  var btn=document.querySelector('.s-submit');
+  btn.disabled=true;btn.textContent='Envoi en cours\u2026';
   var nom=document.getElementById('s-nom').value.trim();
   var email=document.getElementById('s-email').value.trim();
   var mont=document.getElementById('s-montant').value;
@@ -266,10 +273,31 @@ function sendSoutien(e){
   var soc=socOn?document.getElementById('s-soc').value.trim():'';
   var siret=socOn?document.getElementById('s-siret').value.trim():'';
   var devis=socOn?document.getElementById('s-devis').checked:false;
-  var sujet=encodeURIComponent('Participation DPE — '+(soc||nom));
-  var corps=encodeURIComponent('Nom : '+nom+'\nEmail : '+email+'\n'+(soc?'Société : '+soc+'\n':'')+(siret?'SIRET : '+siret+'\n':'')+'Montant : '+mont+' €\n'+(devis?'Devis requis : Oui\n':'')+(msg?'\nMessage :\n'+msg:''));
-  window.location.href='mailto:contact@energetics.systems?subject='+sujet+'&body='+corps;
-  setTimeout(function(){document.getElementById('s-frm').style.display='none';document.getElementById('s-ok').style.display='block';},800);
+  var message='Nom : '+nom+'\nEmail : '+email+'\n'
+    +(soc?'Société : '+soc+'\n':'')
+    +(siret?'SIRET : '+siret+'\n':'')
+    +'Montant : '+mont+' \u20ac\n'
+    +(devis?'Devis requis : Oui\n':'')
+    +(msg?'\nMessage :\n'+msg:'');
+  fetch('api/contact.php',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({nom:'Participation DPE \u2014 '+(soc||nom),email:email,activite:'Soutien '+mont+' \u20ac',message:message})
+  })
+  .then(function(r){return r.json();})
+  .then(function(res){
+    if(res.success){
+      document.getElementById('s-frm').style.display='none';
+      document.getElementById('s-ok').style.display='block';
+    }else{
+      btn.disabled=false;btn.textContent='Soutenir \u2192';
+      alert('Erreur lors de l\u2019envoi. Veuillez réessayer.');
+    }
+  })
+  .catch(function(){
+    btn.disabled=false;btn.textContent='Soutenir \u2192';
+    alert('Erreur de connexion. Veuillez réessayer.');
+  });
 }
 </script>
 </body>
