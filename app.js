@@ -288,14 +288,14 @@ function buildReport(){
       fdoc.write(res.html);
       fdoc.close();
     }
-    if(reportSection)reportSection.style.display='flex';
+    if(reportSection)reportSection.classList.add('visible');
     if(btnVoir)btnVoir.style.display='inline-block';
     if(st){
-      st.innerHTML='\u2713 Votre rapport est pr\u00eat. Consultez-le ci-dessous ou dans votre bo\u00eete mail.';
+      st.innerHTML='\u2713 Votre rapport est pr\u00eat ci-dessous.';
       st.className='hsub thankyou-ok';
     }
 
-    /* Envoyer le HTML au serveur pour g\u00e9n\u00e9ration PDF + email (c\u00f4t\u00e9 serveur via MPDF) */
+    /* Envoyer au serveur pour stockage + email PDF */
     fetch('api/submit.php',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -304,7 +304,7 @@ function buildReport(){
     .then(function(r){return r.json();})
     .then(function(sendRes){
       if(st&&sendRes.success){
-        st.innerHTML='\u2713 Votre rapport a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+email+'</strong>. Consultez-le ci-dessous ou dans votre bo\u00eete mail.';
+        st.innerHTML='\u2713 Votre rapport est pr\u00eat ci-dessous et a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+email+'</strong>.';
       }
     })
     .catch(function(){});
