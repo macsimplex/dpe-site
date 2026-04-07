@@ -10,12 +10,7 @@
 <link rel="stylesheet" href="style.min.css?v=4">
 <style>
 .soutenir-page{padding-top:48px}
-.soutenir-inner{max-width:1100px;margin:0 auto;padding:40px 24px 60px}
-.s-hero{padding:40px 0 36px;border-bottom:1px solid var(--brd);margin-bottom:42px}
-.s-hero .htag{margin-bottom:16px}
-.s-hero h1{font-size:clamp(26px,4vw,44px);font-weight:normal;line-height:1.18;margin-bottom:18px}
-.s-hero h1 em{color:var(--g);font-style:normal}
-.s-hero .hsub{max-width:560px}
+.soutenir-inner{max-width:1100px;margin:0 auto;padding:20px 24px 60px}
 .s-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
 @media(max-width:780px){.s-grid{grid-template-columns:1fr}}
 .s-form{position:sticky;top:80px}
@@ -85,14 +80,14 @@
 </nav>
 
 <div class="soutenir-page">
+
+  <div class="fac-header" style="padding-top:60px;">
+    <span class="ey">Soutenir le projet</span>
+    <h1>Vous avez reçu de l'énergie.<br><span class="gg">Quelle valeur lui donnez-vous ?</span></h1>
+    <p class="lead">L'auto-évaluation est gratuite, toujours. Ce que vous en faites vous appartient.</p>
+  </div>
+
   <div class="soutenir-inner">
-
-    <div class="s-hero">
-      <span class="htag">Dynamiques de Présences Énergétiques</span>
-      <h1>Vous avez reçu de l'énergie.<br><em>Quelle valeur lui donnez-vous ?</em></h1>
-      <p class="hsub">L'auto-évaluation est gratuite, toujours. Ce que vous en faites vous appartient.</p>
-    </div>
-
     <div class="s-grid">
 
       <!-- FORMULAIRE -->
@@ -133,7 +128,8 @@
               <button type="button" class="s-amt" onclick="setSAmt(this,'5')">☕ Un café</button>
               <button type="button" class="s-amt" onclick="setSAmt(this,'20')">📖 Un livre</button>
               <button type="button" class="s-amt" onclick="setSAmt(this,'80')">🍽 Un bon repas</button>
-              <button type="button" class="s-amt" onclick="setSAmt(this,'250')">✈️ Un week-end</button>
+              <button type="button" class="s-amt" onclick="setSAmt(this,'250')">🌿 Un ressourcement</button>
+              <button type="button" class="s-amt" onclick="setSAmt(this,'')">✦ Libre</button>
             </div>
             <input type="number" id="s-montant" placeholder="Ou saisissez le montant de votre choix (€)" min="1" oninput="document.querySelectorAll('.s-amt').forEach(function(b){b.classList.remove('on')})" required>
             <p class="s-amt-note">Aucun montant minimum. Aucun montant conseillé.</p>
