@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Soutenir · DPE</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="style.min.css?v=4">
+<style>
+.soutenir-page{padding-top:48px}
+.soutenir-inner{max-width:1100px;margin:0 auto;padding:40px 24px 60px}
+.s-hero{padding:40px 0 36px;border-bottom:1px solid var(--brd);margin-bottom:42px}
+.s-hero .htag{margin-bottom:16px}
+.s-hero h1{font-size:clamp(26px,4vw,44px);font-weight:normal;line-height:1.18;margin-bottom:18px}
+.s-hero h1 em{color:var(--g);font-style:normal}
+.s-hero .hsub{max-width:560px}
+.s-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+@media(max-width:780px){.s-grid{grid-template-columns:1fr}}
+.s-form{position:sticky;top:80px}
+.s-form-head{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--g);margin-bottom:22px}
+.s-field{margin-bottom:16px}
+.s-field label{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);display:block;margin-bottom:6px}
+.s-fn{font-style:italic;letter-spacing:0;text-transform:none;color:var(--dim)}
+.s-field input,.s-field textarea{width:100%;background:var(--surf);border:1px solid var(--brd);padding:12px 14px;font-family:Georgia,serif;font-size:15px;color:#ede8e0;outline:none;resize:none}
+.s-field input:focus,.s-field textarea:focus{border-color:var(--g)}
+.s-field textarea{min-height:80px;font-size:14px;font-family:Arial,sans-serif;line-height:1.6}
+.s-field input::placeholder,.s-field textarea::placeholder{color:var(--dim)}
+.s-amounts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.s-amt{font-family:Arial,sans-serif;font-size:13px;padding:8px 14px;border:1px solid var(--brd);background:transparent;color:var(--mu);cursor:pointer;transition:all .15s}
+.s-amt:hover,.s-amt.on{border-color:var(--g);background:#1e1508;color:var(--g)}
+.s-amt-note{font-family:Arial,sans-serif;font-size:11px;color:var(--dim);font-style:italic;margin-bottom:14px}
+.s-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:22px;cursor:pointer}
+.s-check input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--g);cursor:pointer}
+.s-check span{font-family:Arial,sans-serif;font-size:13px;color:var(--mu);line-height:1.55}
+.s-submit{width:100%;padding:14px 24px;background:var(--g);border:none;font-family:Arial,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);cursor:pointer;margin-bottom:14px}
+.s-submit:hover{opacity:.85}
+.s-submit-note{font-family:Arial,sans-serif;font-size:11px;color:var(--dim);line-height:1.8;text-align:center}
+.s-manifeste p{font-size:clamp(15px,1.6vw,18px);line-height:1.85;margin-bottom:1.2em;color:var(--mu)}
+.s-manifeste p:last-child{margin-bottom:0}
+.s-q{color:#ede8e0;font-style:italic}
+.s-trust{color:var(--g);font-style:italic}
+.s-mlink{color:inherit;text-decoration:none;border-bottom:1px solid var(--g2);padding-bottom:1px;cursor:pointer;transition:color .15s}
+.s-mlink:hover{color:var(--g);border-bottom-color:var(--g)}
+.s-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:24px}
+.s-overlay.on{display:flex}
+.s-modal{background:var(--surf);border:1px solid var(--brd);max-width:560px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+.s-modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--mu);font-size:18px;cursor:pointer;padding:4px}
+.s-modal-close:hover{color:#ede8e0}
+.s-mi{padding:32px 28px 36px}
+.s-mtag{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:12px}
+.s-mh{font-size:clamp(17px,2vw,22px);font-weight:normal;color:#ede8e0;margin-bottom:16px;line-height:1.25}
+.s-mb{font-family:Arial,sans-serif;font-size:14px;color:var(--mu);line-height:1.72}
+.s-mb p{margin-bottom:10px}
+.s-mb p:last-child{margin-bottom:0}
+.s-mb strong{color:#ede8e0;font-weight:normal}
+.s-cafe-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--brd);margin:14px 0}
+.s-cafe-item{background:#100e08;padding:14px 8px;text-align:center}
+.s-cafe-price{font-size:20px;color:var(--g);line-height:1;margin-bottom:3px}
+.s-cafe-loc{font-family:Arial,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);margin-bottom:5px}
+.s-cafe-detail{font-family:Arial,sans-serif;font-size:11px;color:var(--dim);line-height:1.4}
+.s-qblock{border-left:2px solid var(--g2);padding:12px 14px;margin:14px 0;background:rgba(201,160,82,.04)}
+.s-qt{font-size:14px;color:var(--mu);line-height:1.7;font-style:italic;margin-bottom:6px}
+.s-qs{font-family:Arial,sans-serif;font-size:11px;color:var(--dim)}
+.s-mlink-ext{display:inline-block;margin-top:14px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--g);text-decoration:none;border-bottom:1px solid var(--g2);padding-bottom:2px}
+.s-mlink-ext:hover{color:#ede8e0;border-bottom-color:#ede8e0}
+.s-success{display:none;text-align:center;padding:48px 20px}
+.s-success-icon{font-size:28px;margin-bottom:16px;color:var(--g)}
+.s-success h2{font-size:20px;font-weight:normal;margin-bottom:10px}
+.s-success p{font-family:Arial,sans-serif;font-size:14px;color:var(--mu);line-height:1.75}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-logo"><a href="index.html"><img src="assets/mark.svg" alt="DPE" class="nav-mark" width="22" height="22">DPE</a></div>
+  <button class="nav-burger" aria-label="Menu">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="auto-evaluation.html">Auto-évaluation</a>
+    <a href="facilitateurs.html">Facilitateurs</a>
+    <a href="soutenir.html" class="active">Soutenir</a>
+  </div>
+</nav>
+
+<div class="soutenir-page">
+  <div class="soutenir-inner">
+
+    <div class="s-hero">
+      <span class="htag">Dynamiques de Présences Énergétiques</span>
+      <h1>Vous avez reçu de l'énergie.<br><em>Quelle valeur lui donnez-vous ?</em></h1>
+      <p class="hsub">L'auto-évaluation est gratuite, toujours. Ce que vous en faites vous appartient.</p>
+    </div>
+
+    <div class="s-grid">
+
+      <!-- FORMULAIRE -->
+      <div class="s-form">
+        <p class="s-form-head">Votre participation</p>
+        <form id="s-frm" onsubmit="sendSoutien(event)">
+          <div class="s-field">
+            <label>Prénom &amp; Nom</label>
+            <input type="text" id="s-nom" placeholder="Marie Dupont" required>
+          </div>
+          <div class="s-field">
+            <label>Email</label>
+            <input type="email" id="s-email" placeholder="votre@email.com" required>
+          </div>
+          <div style="margin-bottom:20px">
+            <label class="s-check" style="margin-bottom:0">
+              <input type="checkbox" id="s-bsoc" onchange="document.getElementById('s-soc-fields').style.display=this.checked?'block':'none'">
+              <span>Au nom de ma société</span>
+            </label>
+          </div>
+          <div id="s-soc-fields" style="display:none;margin-bottom:4px">
+            <div class="s-field">
+              <label>Société</label>
+              <input type="text" id="s-soc" placeholder="Nom de votre organisation">
+            </div>
+            <div class="s-field">
+              <label>SIRET <span class="s-fn">(optionnel)</span></label>
+              <input type="text" id="s-siret" placeholder="123 456 789 00012" maxlength="17">
+            </div>
+            <label class="s-check">
+              <input type="checkbox" id="s-devis">
+              <span>Ma structure requiert un devis préalable avant facturation</span>
+            </label>
+          </div>
+          <div class="s-field">
+            <label>Ce que vous mettez en circulation</label>
+            <div class="s-amounts">
+              <button type="button" class="s-amt" onclick="setSAmt(this,'5')">☕ Un café</button>
+              <button type="button" class="s-amt" onclick="setSAmt(this,'20')">📖 Un livre</button>
+              <button type="button" class="s-amt" onclick="setSAmt(this,'80')">🍽 Un bon repas</button>
+              <button type="button" class="s-amt" onclick="setSAmt(this,'250')">✈️ Un week-end</button>
+            </div>
+            <input type="number" id="s-montant" placeholder="Ou saisissez le montant de votre choix (€)" min="1" oninput="document.querySelectorAll('.s-amt').forEach(function(b){b.classList.remove('on')})" required>
+            <p class="s-amt-note">Aucun montant minimum. Aucun montant conseillé.</p>
+          </div>
+          <div class="s-field">
+            <label>Message <span class="s-fn">(optionnel)</span></label>
+            <textarea id="s-msg" placeholder="Ce que vous avez reçu, ce que vous souhaitez voir advenir…"></textarea>
+          </div>
+          <button class="s-submit" type="submit">Envoyer ma participation →</button>
+          <p class="s-submit-note">Vous recevrez un devis ou une facture sous 48h,<br>avec lien de paiement intégré.<br>Aucune relance. Aucun engagement récurrent.</p>
+        </form>
+        <div class="s-success" id="s-ok">
+          <div class="s-success-icon">✦</div>
+          <h2>Message reçu.</h2>
+          <p>Vous recevrez un devis ou une facture sous 48h.<br>Ce que vous avez choisi de mettre en mouvement<br>est déjà en circulation.</p>
+        </div>
+      </div>
+
+      <!-- MANIFESTE -->
+      <div class="s-manifeste">
+        <p>Quelqu'un décide toujours du prix à votre place. Le supermarché. La plateforme. L'abonnement. Le catalogue.</p>
+        <p>Ici, personne ne décide à votre place.</p>
+        <p>Ce que vous avez reçu vaut ce que vous en avez tiré. Car <a class="s-mlink" onclick="openSModal('sm-valeur')">le prix n'est pas la valeur</a> : le premier se facture, la seconde vous appartient.</p>
+        <p>Choisir ce que vous remettez en circulation, c'est à la fois un acte de rébellion contre la logique du prix imposé, et un retour à quelque chose de plus vieux et de plus simple. Ce que <a class="s-mlink" onclick="openSModal('sm-pc')">la participation consciente</a> nomme depuis des années : l'échange libre entre des gens qui se font confiance. Ce que le Point Zéro 2050 appelle <a class="s-mlink" onclick="openSModal('sm-energie')">l'énergie qui circule</a> — ou se dissipe.</p>
+        <p class="s-trust">Car oui, qui que vous soyez — je vous fais confiance.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODALES -->
+<div class="s-overlay" id="sm-valeur" onclick="if(event.target===this)closeSModal('sm-valeur')">
+  <div class="s-modal">
+    <button class="s-modal-close" onclick="closeSModal('sm-valeur')">✕</button>
+    <div class="s-mi">
+      <h2 class="s-mh">Le prix n'est pas la valeur</h2>
+      <div class="s-mb">
+        <p>Trois cafés. Même grain, même extraction, même caféine.</p>
+        <div class="s-cafe-grid">
+          <div class="s-cafe-item"><div class="s-cafe-price">1 €</div><div class="s-cafe-loc">Machine à café</div><div class="s-cafe-detail">10 cl · énergie brute · aucun contexte</div></div>
+          <div class="s-cafe-item"><div class="s-cafe-price">2 €</div><div class="s-cafe-loc">Bar de quartier</div><div class="s-cafe-detail">5 cl · relation · service · lieu</div></div>
+          <div class="s-cafe-item"><div class="s-cafe-price">12 €</div><div class="s-cafe-loc">Place Saint-Marc</div><div class="s-cafe-detail">3 cl · histoire · beauté · présence totale</div></div>
+        </div>
+        <p>Le prix est l'énergie extraite pour produire. La valeur est ce que le système qui reçoit en fait — elle lui appartient entièrement.</p>
+        <p>Celui qui donne 12 € sur la place Saint-Marc ne paie pas plus cher un café. Il reconnaît l'ensemble de ce qui a rendu ce moment possible. <strong>Sa valeur, nous ne pouvons pas la connaître.</strong> Seul le système qui s'est auto-évalué peut la mesurer.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="s-overlay" id="sm-pc" onclick="if(event.target===this)closeSModal('sm-pc')">
+  <div class="s-modal">
+    <button class="s-modal-close" onclick="closeSModal('sm-pc')">✕</button>
+    <div class="s-mi">
+      <h2 class="s-mh">La participation consciente</h2>
+      <div class="s-mb">
+        <p>Un modèle formalisé par l'Université du Nous depuis 2011, aujourd'hui adopté par plus d'une centaine d'organisations.</p>
+        <div class="s-qblock">
+          <p class="s-qt">« C'est la somme en euros que vous donnez en conscience pour ce que vous avez vécu et en fonction du soutien que vous souhaitez apporter à l'organisation pour son développement. »</p>
+          <p class="s-qs">Laurent Van Ditzhuyzen, co-fondateur de l'Université du Nous</p>
+        </div>
+        <p>Il qualifie ce modèle de <strong>modèle économique de la confiance</strong> : je travaille sans savoir ce que je vais gagner. Tu donnes en parfaite responsabilité du montant que tu choisis, sans avoir à le justifier. Je reçois en confiance que ton choix est juste et conscient.</p>
+        <p>Ce n'est pas de la générosité. C'est de l'intelligence systémique.</p>
+        <a class="s-mlink-ext" href="https://www.participation-consciente.info" target="_blank">participation-consciente.info ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="s-overlay" id="sm-energie" onclick="if(event.target===this)closeSModal('sm-energie')">
+  <div class="s-modal">
+    <button class="s-modal-close" onclick="closeSModal('sm-energie')">✕</button>
+    <div class="s-mi">
+      <h2 class="s-mh">L'énergie qui circule<br>ou se dissipe</h2>
+      <div class="s-mb">
+        <p>Dans le cadre du Point Zéro 2050, Boris Sirbey rappelle que dans les paradigmes les plus anciens, la dette n'est pas un instrument de domination.</p>
+        <div class="s-qblock">
+          <p class="s-qt">« Dans le paradigme animiste, la dette est la traduction de l'interdépendance énergétique qui relie tout ce qui existe. À travers le don et le contre-don, elle maintient l'ouverture de conscience. »</p>
+          <p class="s-qs">Boris Sirbey — Le Point Zéro, Livre I, 2025</p>
+        </div>
+        <p>L'entropie est <strong>le degré d'énergie gâchée à l'intérieur d'un système</strong>. Un outil qui s'épuise faute de retour d'énergie, c'est de l'entropie. Remettre quelque chose en circulation — librement, consciemment — c'est un acte néguentropique.</p>
+        <p>Boris Sirbey distingue trois profils : les preneurs, les échangeurs, et <strong>les donneurs conscients</strong> — ceux qui donnent sans se sacrifier, qui comprennent que s'ils s'épuisent, ils affaiblissent le collectif dont ils font partie.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo" width="140" height="44">
+  <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="engagements.html">Engagements</a></p>
+</footer>
+
+<script>
+/* Nav mobile */
+(function(){
+  var burger=document.querySelector('.nav-burger');
+  var links=document.querySelector('.nav-links');
+  if(burger&&links){
+    burger.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+  }
+  /* Token propagation */
+  var params=new URLSearchParams(window.location.search);
+  var token=params.get('t');
+  if(token&&links){
+    var facLink=links.querySelector('a[href*="facilitateurs"]');
+    if(facLink){
+      var rapportLink=document.createElement('a');
+      rapportLink.href='rapport.html?t='+token;
+      rapportLink.textContent='Rapport';
+      links.insertBefore(rapportLink,facLink);
+    }
+    links.querySelectorAll('a').forEach(function(a){
+      var href=a.getAttribute('href');
+      if(href&&href.indexOf('?t=')===-1&&href.indexOf('&t=')===-1&&href.indexOf('#')!==0){
+        a.href=href+(href.indexOf('?')!==-1?'&':'?')+'t='+token;
+      }
+    });
+  }
+})();
+/* Formulaire */
+function setSAmt(btn,val){document.querySelectorAll('.s-amt').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');document.getElementById('s-montant').value=val;}
+function openSModal(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden';}
+function closeSModal(id){document.getElementById(id).classList.remove('on');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.s-overlay.on').forEach(function(o){o.classList.remove('on')});document.body.style.overflow='';}});
+function sendSoutien(e){
+  e.preventDefault();
+  var nom=document.getElementById('s-nom').value.trim();
+  var email=document.getElementById('s-email').value.trim();
+  var mont=document.getElementById('s-montant').value;
+  var msg=document.getElementById('s-msg').value.trim();
+  var socOn=document.getElementById('s-bsoc').checked;
+  var soc=socOn?document.getElementById('s-soc').value.trim():'';
+  var siret=socOn?document.getElementById('s-siret').value.trim():'';
+  var devis=socOn?document.getElementById('s-devis').checked:false;
+  var sujet=encodeURIComponent('Participation DPE — '+(soc||nom));
+  var corps=encodeURIComponent('Nom : '+nom+'\nEmail : '+email+'\n'+(soc?'Société : '+soc+'\n':'')+(siret?'SIRET : '+siret+'\n':'')+'Montant : '+mont+' €\n'+(devis?'Devis requis : Oui\n':'')+(msg?'\nMessage :\n'+msg:''));
+  window.location.href='mailto:contact@energetics.systems?subject='+sujet+'&body='+corps;
+  setTimeout(function(){document.getElementById('s-frm').style.display='none';document.getElementById('s-ok').style.display='block';},800);
+}
+</script>
+</body>
+</html>
