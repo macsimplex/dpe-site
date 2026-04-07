@@ -69,7 +69,14 @@
       "Bash(sed -i '' '/<!-- Synthèse -->/,/<!-- Tension inter-cadres -->/{s/margin-top:10px/margin-top:5px/;}' api/templates/rapport.html)",
       "Bash(ls -1 /Users/maxime/Documents/dpe-site/*.html)",
       "Bash(grep -r \"api/\" /Users/maxime/Documents/dpe-site/*.js /Users/maxime/Documents/dpe-site/*.html)",
-      "Bash(grep -E \"\\\\.\\(html|php|json|sql|md\\)$\")"
+      "Bash(grep -E \"\\\\.\\(html|php|json|sql|md\\)$\")",
+      "Bash(ssh 4u4zkz_admin@4u4zkz.ftp.infomaniak.com \"rm -rf ~/sites/energetics.systems/vendor ~/sites/energetics.systems/composer.lock && echo done\")",
+      "WebFetch(domain:developer.infomaniak.com)",
+      "Bash(curl -sL \"https://developer.infomaniak.com\")",
+      "Bash(curl -sL \"https://www.infomaniak.com/fr\")",
+      "Bash(curl -s \"https://api.infomaniak.com/1/ai/models\" -H \"Authorization: Bearer ue3UaXRsiId1C1W8m9gc-h-Bje8Qnvy1kEE1-2igTXE10tKbpU8mCdoGXWywv05x5XT5veIB3dK8ZGde\")",
+      "Bash(curl -s -X POST https://api.infomaniak.com/2/ai/107942/openai/v1/chat/completions -H 'Authorization: Bearer ue3UaXRsiId1C1W8m9gc-h-Bje8Qnvy1kEE1-2igTXE10tKbpU8mCdoGXWywv05x5XT5veIB3dK8ZGde' -H 'Content-Type: application/json' -d '{\"model\":\"qwen3\",\"stream\":false,\"max_completion_tokens\":100,\"messages\":[{\"role\":\"user\",\"content\":\"Dis bonjour en une phrase.\"}]}')",
+      "Bash(ssh 4u4zkz_admin@4u4zkz.ftp.infomaniak.com \"rm -rf ~/sites/energetics.systems/libs ~/sites/energetics.systems/api/fonts ~/sites/energetics.systems/auto-evaluation-old.html ~/sites/energetics.systems/dpe-autoeval.html ~/sites/energetics.systems/api/PdfGenerator.php ~/sites/energetics.systems/api/send.php ~/sites/energetics.systems/api/report.php ~/sites/energetics.systems/api/templates/rapport-mpdf.html ~/sites/energetics.systems/api/init.sql ~/sites/energetics.systems/api/migrate.sql ~/sites/energetics.systems/composer.json ~/sites/energetics.systems/composer.lock ~/sites/energetics.systems/vendor 2>/dev/null; echo done\")"
     ]
   }
 }
