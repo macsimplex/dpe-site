@@ -114,6 +114,7 @@ $htmlBody = '
 <body style="margin:0;padding:0;background:#f4efe6;font-family:Georgia,serif">
 <div style="max-width:560px;margin:0 auto;padding:40px 24px">
     <div style="text-align:center;margin-bottom:32px">
+        <img src="https://energetics.systems/assets/logo-512.png" alt="DPE" width="48" height="48" style="display:block;margin:0 auto 14px;opacity:0.7;">
         <p style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:#c9a052;margin:0">DYNAMIQUES DE PRÉSENCES ÉNERGÉTIQUES</p>
     </div>
     <div style="background:#0d0b08;border-radius:8px;padding:40px 32px;color:#ede8e0">
