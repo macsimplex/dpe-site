@@ -194,7 +194,7 @@ class DpeCalculator
             $h .= '<text x="' . $lx . '" y="' . round($ly + 4, 1) . '" text-anchor="' . $anc . '" font-size="9" font-family="Georgia,serif" fill="' . $col . '">' . $name . '</text>';
         }
 
-        return '<svg viewBox="0 0 220 220" width="220" height="220" xmlns="http://www.w3.org/2000/svg">' . $h . '</svg>';
+        return '<svg viewBox="-40 -30 300 280" width="300" height="280" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">' . $h . '</svg>';
     }
 
     /* ── Synthèse fallback ── */
