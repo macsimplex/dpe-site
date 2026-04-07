@@ -25,6 +25,39 @@ $scores   = $input['scores'] ?? [];
 if (!$email) { http_response_code(400); echo json_encode(['error' => 'Email invalide']); exit; }
 if (count($scores) !== 5) { http_response_code(400); echo json_encode(['error' => 'Scores incomplets']); exit; }
 
+/* ── Honeypot ── */
+if (!empty($input['website'])) { http_response_code(403); echo json_encode(['error' => 'Accès refusé']); exit; }
+
+/* ── Rate limiting ── */
+try {
+    $pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4', DB_USER, DB_PASS, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
+    // Max 3 rapports par email par 24h
+    $stmt = $pdo->prepare('SELECT COUNT(*) FROM evaluations WHERE email = ? AND created_at > DATE_SUB(NOW(), INTERVAL 24 HOUR)');
+    $stmt->execute([$email]);
+    if ($stmt->fetchColumn() >= 3) {
+        http_response_code(429);
+        echo json_encode(['error' => 'Vous avez déjà généré 3 rapports aujourd\'hui. Réessayez demain.']);
+        exit;
+    }
+
+    // Max 10 rapports par IP par heure
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    if ($ip) {
+        $stmt = $pdo->prepare('SELECT COUNT(*) FROM evaluations WHERE created_at > DATE_SUB(NOW(), INTERVAL 1 HOUR)');
+        $stmt->execute();
+        $recentTotal = $stmt->fetchColumn();
+        // Fallback simple : limiter le total global par heure (pas de colonne IP en base)
+        if ($recentTotal >= 30) {
+            http_response_code(429);
+            echo json_encode(['error' => 'Trop de demandes. Veuillez patienter quelques minutes.']);
+            exit;
+        }
+    }
+} catch (PDOException $e) {
+    // Ne pas bloquer si la vérification échoue
+}
+
 $csc = array_map('intval', $scores);
 $sgp = DpeCalculator::sgpCalc($csc);
 

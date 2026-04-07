@@ -110,7 +110,7 @@
 
       <div class="erow">
         <input class="einp" type="email" id="em" placeholder="votre@email.com" oninput="ce()">
-        <button class="ego" id="bgo" onclick="go(8)" disabled>Recevoir →</button>
+        <button class="ego" id="bgo" onclick="showModal()" disabled>Recevoir →</button>
       </div>
 
       <div class="rgpd-row">
@@ -144,6 +144,22 @@
     </div>
   </div>
 </div>
+
+<!-- MODALE CONFIRMATION -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal-box">
+    <img src="assets/mark.svg" alt="" width="32" height="32" style="opacity:.5;margin-bottom:16px;">
+    <h3>Votre rapport va être généré</h3>
+    <p>Ce rapport est personnalisé grâce à une intelligence artificielle hébergée en Suisse. Chaque génération consomme de l'énergie — c'est pourquoi nous vous demandons de confirmer.</p>
+    <div class="modal-buttons">
+      <button class="modal-cancel" onclick="closeModal()">Annuler</button>
+      <button class="modal-confirm" onclick="confirmReport()">Générer mon rapport →</button>
+    </div>
+  </div>
+</div>
+
+<!-- HONEYPOT -->
+<input type="text" id="hp-field" name="website" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
 
 <script src="app.min.js?v=4"></script>
 </body>

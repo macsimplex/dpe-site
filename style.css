@@ -122,6 +122,18 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .thankyou-next h2{margin-bottom:14px;font-size:18px}
 .thankyou-next .lead{font-size:14px;line-height:1.75;margin-bottom:16px}
 .thankyou-next .hcta{margin-top:0;display:inline-block}
+
+/* ── Modale confirmation ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--surf);border:1px solid var(--brd);padding:32px;max-width:440px;margin:24px;text-align:center}
+.modal-box h3{font-size:18px;font-weight:normal;margin-bottom:12px;color:#ede8e0}
+.modal-box p{font-family:Arial,sans-serif;font-size:14px;color:var(--mu);line-height:1.7;margin-bottom:24px}
+.modal-buttons{display:flex;gap:12px;justify-content:center}
+.modal-cancel{font-family:Arial,sans-serif;font-size:13px;padding:10px 20px;background:transparent;border:1px solid var(--dim);color:var(--mu);cursor:pointer}
+.modal-cancel:hover{border-color:var(--mu);color:#ede8e0}
+.modal-confirm{font-family:Arial,sans-serif;font-size:13px;letter-spacing:.1em;padding:10px 24px;background:var(--g);border:1px solid var(--g);color:var(--bg);cursor:pointer}
+.modal-confirm:hover{background:#d4aa5c}
 .thankyou-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
 .hcta-outline{background:transparent;border:1px solid var(--g);color:var(--g)}
 .hcta-outline:hover{background:var(--g);color:var(--bg)}

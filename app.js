@@ -278,6 +278,20 @@ function buildEmail(){
   document.getElementById('sc2').innerHTML='Robustesse \u00e9valu\u00e9e\u202f: <strong>'+fmt(t)+'</strong>\u202f/\u202fan';
 }
 
+/* ── Modale de confirmation ── */
+function showModal(){
+  var hp=document.getElementById('hp-field');
+  if(hp&&hp.value){return;} /* honeypot rempli = bot */
+  document.getElementById('modal-confirm').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modal-confirm').classList.remove('open');
+}
+function confirmReport(){
+  closeModal();
+  go(8);
+}
+
 function buildReport(){
   var csc=getCsc();
   var email=document.getElementById('em').value.trim();
