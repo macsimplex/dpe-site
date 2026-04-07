@@ -295,9 +295,11 @@ function buildReport(){
       st.className='hsub thankyou-ok';
     }
 
-    /* G\u00e9n\u00e9rer le PDF depuis l'int\u00e9rieur de l'iframe */
+    /* G\u00e9n\u00e9rer le PDF une fois les fonts charg\u00e9es dans l'iframe */
     if(st)st.innerHTML='\u2713 Votre rapport est pr\u00eat ci-dessous. Envoi par email en cours\u2026';
-    setTimeout(function(){
+    var fwin=frame.contentWindow;
+    var fontsReady=fwin&&fwin.document&&fwin.document.fonts?fwin.document.fonts.ready:Promise.resolve();
+    fontsReady.then(function(){
       generatePdfFromIframe(frame,function(pdfB64){
         if(pdfB64){
           fetch('api/send.php',{
@@ -333,7 +335,7 @@ function buildReport(){
           .catch(function(){});
         }
       });
-    },3000);
+    });
   })
   .catch(function(){
     if(st){st.innerHTML='Erreur de connexion. Veuillez r\u00e9essayer.';st.className='hsub thankyou-err';}
