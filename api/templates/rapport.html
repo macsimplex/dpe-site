@@ -932,29 +932,8 @@ Ce que votre organisation<br>révèle d'elle-même
 {{SYNTHESE}}
     </div>
 
-    <!-- Tension inter-cadres -->
-    <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-
-      <div style="padding:12px 14px;background:var(--warm);border:1px solid var(--frame);border-top:3px solid #8b5a3a;">
-        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#8b5a3a;margin-bottom:6px;">Ce que mesure σ = {{SIGMA}}</div>
-        <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Ce chiffre mesure l'<strong style="font-weight:500;">écart entre vos dimensions les plus fortes et les plus fragiles</strong>. Plus l'écart est grand, plus les domaines solides gaspillent leur énergie à compenser les domaines en difficulté. Ce n'est pas une question de bonne volonté — c'est mécanique.</div>
-      </div>
-
-      <div style="padding:12px 14px;background:var(--warm);border:1px solid var(--frame);border-top:3px solid var(--gold2);">
-        <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">Tout est lié</div>
-        <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.65;">Les cinq dimensions ne fonctionnent pas indépendamment. Quand l'une est fragile, elle pèse sur toutes les autres — comme le maillon le plus faible d'une chaîne. Votre {{PRIO_1_NOM}} à {{PRIO_1_SCORE}}/15 ne souffre pas seule : le flou sur qui décide quoi génère des frictions qui épuisent la confiance et ralentissent tout le reste, même quand ces dimensions-là sont solides.</div>
-      </div>
-
-    </div>
-
-    <!-- Explication visuelle SGP -->
-    <div style="margin-top:8px;padding:10px 14px;background:rgba(201,160,82,0.06);border:1px solid rgba(201,160,82,0.18);">
-      <div style="font-family:'Jost',sans-serif;font-size:8px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">Pourquoi ce score tient compte des déséquilibres</div>
-      <div style="font-family:'Jost',sans-serif;font-size:9.5px;font-weight:300;color:var(--ink2);line-height:1.7;">Deux organisations avec les mêmes moyennes peuvent être dans des situations très différentes. C'est pourquoi le SGP intègre les écarts entre dimensions : <em>SGP = moyenne − écart entre dimensions</em>. Plus vos points forts et vos points faibles sont éloignés, plus le score est impacté. À l'inverse, rapprocher vos dimensions fait monter le score plus vite que d'améliorer une seule d'entre elles.</div>
-    </div>
-
-    <!-- Mini radar placeholder -->
-    <div style="display:flex;gap:20px;margin-top:10px;align-items:flex-start;">
+    <!-- Mini radar + scores -->
+    <div style="display:flex;gap:20px;margin-top:8px;align-items:flex-start;">
       {{RADAR_SVG_MINI}}
       <div style="flex:1;padding-top:8px;">
         <div class="label" style="color:var(--muted);margin-bottom:10px;">Scores par cadre</div>
@@ -988,30 +967,12 @@ Ce que votre organisation<br>révèle d'elle-même
       </div>
     </div>
 
-    <!-- Niveau de tension compact -->
-    <div style="margin-top:10px;display:flex;gap:14px;align-items:flex-start;">
-
-      <!-- Barre de tension réduite -->
-      <div style="flex:0 0 190px;">
-        <div style="font-family:'Jost',sans-serif;font-size:7px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;">Tension inter-cadres</div>
-        <div style="height:6px;background:linear-gradient(90deg,#3d7040 0%,#b8924a 45%,#8b5a3a 75%,#c4603a 100%);position:relative;margin-bottom:18px;">
-          <div style="position:absolute;top:-4px;left:48%;width:2px;height:14px;background:var(--ink2);"></div>
-          <div style="position:absolute;top:14px;left:48%;transform:translateX(-50%);font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;color:var(--ink2);white-space:nowrap;">σ = {{SIGMA}}</div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-family:'Jost',sans-serif;font-size:7px;font-weight:300;color:var(--muted);">
-          <span>σ = 0</span><span>σ ≥ 4</span>
-        </div>
-        <div style="margin-top:8px;font-family:'Jost',sans-serif;font-size:8.5px;font-weight:500;color:#8b5a3a;">Tensions modérées</div>
+    <!-- Tension + par où commencer -->
+    <div style="margin-top:8px;padding:10px 14px;background:var(--warm);border:1px solid var(--frame);border-left:3px solid var(--gold2);">
+      <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:5px;">Tension inter-cadres · σ = {{SIGMA}} · Par où commencer</div>
+      <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.65;">
+        Votre {{FORCE_1_NOM}} ({{FORCE_1_SCORE}}/15) et votre {{FORCE_2_NOM}} ({{FORCE_2_SCORE}}/15) sont de vraies forces. Votre {{PRIO_1_NOM}} ({{PRIO_1_SCORE}}/15) et votre {{PRIO_2_NOM}} ({{PRIO_2_SCORE}}/15) freinent le reste. La stratégie la plus efficace : <strong style="font-weight:500;">s'attaquer d'abord à ce qui freine</strong>. Débloquer la {{PRIO_1_NOM}} libère immédiatement l'énergie de vos autres dimensions.
       </div>
-
-      <!-- Interprétation Lewin condensée -->
-      <div style="flex:1;padding:12px 14px;background:var(--warm);border:1px solid var(--frame);border-left:3px solid var(--gold2);">
-        <div style="font-family:'Jost',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:6px;">Par où commencer ? Enlever ce qui bloque, pas ajouter ce qui manque</div>
-        <div style="font-family:'Jost',sans-serif;font-size:9px;font-weight:300;color:var(--ink2);line-height:1.7;">
-          Votre {{FORCE_1_NOM}} ({{FORCE_1_SCORE}}) et votre {{FORCE_2_NOM}} ({{FORCE_2_SCORE}}) sont de vraies forces. Votre {{PRIO_1_NOM}} ({{PRIO_1_SCORE}}) et votre {{PRIO_2_NOM}} ({{PRIO_2_SCORE}}) freinent le reste — ils empêchent vos forces de se déployer pleinement. La stratégie la plus efficace : <strong style="font-weight:500;">s'attaquer d'abord à ce qui freine</strong>. Débloquer la {{PRIO_1_NOM}} libère immédiatement l'énergie déjà présente dans vos autres dimensions.
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
