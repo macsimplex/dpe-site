@@ -128,7 +128,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 /* ── Écran rapport ── */
 .rpt-screen{
   display:none;
-  height:100vh;
+  height:calc(100vh - 88px);
+  margin-top:88px;
   background:var(--bg);
 }
 .rpt-screen.visible{
