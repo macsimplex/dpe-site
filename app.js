@@ -265,7 +265,6 @@ function buildReport(){
   var st=document.getElementById('thankyou-status');
   if(st)st.textContent='Votre rapport est en cours de pr\u00e9paration\u2026';
 
-  /* 1. Demander le HTML du rapport au serveur */
   fetch('api/report.php',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -278,77 +277,58 @@ function buildReport(){
       return;
     }
 
-    /* Afficher l'aperçu HTML dans l'iframe */
-    var preview=document.getElementById('report-preview');
-    var frame=document.getElementById('report-frame');
-    if(frame){
-      var fdoc=frame.contentDocument||frame.contentWindow.document;
-      fdoc.open();fdoc.write(res.html);fdoc.close();
-      /* Redimensionner l'iframe pour s'adapter au conteneur */
-      var scaleFrame=function(){
-        var containerW=frame.parentElement.offsetWidth;
-        var scale=Math.min(1,containerW/794);
-        frame.style.transform='scale('+scale+')';
-        frame.parentElement.style.height=Math.round(1123*scale)+'px';
-      };
-      scaleFrame();
-      window.addEventListener('resize',scaleFrame);
+    /* Afficher le rapport dans la section d\u00e9di\u00e9e */
+    var reportSection=document.getElementById('report-section');
+    var reportContainer=document.getElementById('report-container');
+    var btnVoir=document.getElementById('btn-voir-rapport');
+
+    if(reportContainer){
+      var styleMatch=res.html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+      var bodyMatch=res.html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      var styleTag=styleMatch?'<style>'+styleMatch[1]+'</style>':'';
+      var bodyContent=bodyMatch?bodyMatch[1]:res.html;
+      reportContainer.innerHTML=styleTag+bodyContent;
     }
-    if(preview)preview.style.display='block';
+    if(reportSection)reportSection.style.display='block';
+    if(btnVoir)btnVoir.style.display='inline-block';
 
+    /* G\u00e9n\u00e9rer le PDF apr\u00e8s chargement des fonts */
     if(st)st.textContent='G\u00e9n\u00e9ration du PDF en cours\u2026';
-
-    /* 2. Utiliser l'iframe pour le rendu (les styles s'appliquent correctement) */
-    var renderFrame=document.createElement('iframe');
-    renderFrame.style.cssText='position:fixed;left:-9999px;top:0;width:794px;height:1123px;border:none;';
-    document.body.appendChild(renderFrame);
-    var rdoc=renderFrame.contentDocument||renderFrame.contentWindow.document;
-    rdoc.open();rdoc.write(res.html);rdoc.close();
-
-    /* 3. Attendre le chargement des fonts et images dans l'iframe */
-    renderFrame.onload=function(){
-      setTimeout(function(){
-        var container=rdoc.body;
-
-        /* 4. Charger html2pdf.js si pas déjà chargé */
-        loadLib('libs/html2pdf.min.js',function(){
-          html2pdf().set({
-            margin:0,
-            filename:'DPE-Rapport.pdf',
-            image:{type:'jpeg',quality:0.92},
-            html2canvas:{scale:2,useCORS:true,letterRendering:true,width:794,windowWidth:794,
-              foreignObjectRendering:false,logging:false},
-            jsPDF:{unit:'px',format:[794,1123],hotfixes:['px_scaling']},
-            pagebreak:{mode:['css'],avoid:'.kpi-row'}
-          }).from(container).toPdf().get('pdf').then(function(pdf){
-            var pdfB64=pdf.output('datauristring').split(',')[1];
-            document.body.removeChild(renderFrame);
-
-        /* 6. Envoyer le PDF au serveur pour email */
-        fetch('api/send.php',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({email:email,pdf:pdfB64,sgp:res.sgp})
-        })
-        .then(function(r){return r.json();})
-        .then(function(sendRes){
-          if(st){
-            if(sendRes.success){
-              st.innerHTML='\u2713 Votre rapport a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+email+'</strong>. Consultez votre bo\u00eete mail.';
-              st.className='hsub thankyou-ok';
-            }else{
-              st.innerHTML='Le rapport a \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9 mais l\u2019envoi a \u00e9chou\u00e9. Contactez-nous.';
-              st.className='hsub thankyou-err';
+    setTimeout(function(){
+      loadLib('libs/html2pdf.min.js',function(){
+        html2pdf().set({
+          margin:0,
+          filename:'DPE-Rapport.pdf',
+          image:{type:'jpeg',quality:0.92},
+          html2canvas:{scale:2,useCORS:true,letterRendering:true,width:794,windowWidth:794,
+            foreignObjectRendering:false,logging:false},
+          jsPDF:{unit:'px',format:[794,1123],hotfixes:['px_scaling']},
+          pagebreak:{mode:['css']}
+        }).from(reportContainer).toPdf().get('pdf').then(function(pdf){
+          var pdfB64=pdf.output('datauristring').split(',')[1];
+          fetch('api/send.php',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({email:email,pdf:pdfB64,sgp:res.sgp})
+          })
+          .then(function(r){return r.json();})
+          .then(function(sendRes){
+            if(st){
+              if(sendRes.success){
+                st.innerHTML='\u2713 Votre rapport a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+email+'</strong>. Consultez votre bo\u00eete mail.';
+                st.className='hsub thankyou-ok';
+              }else{
+                st.innerHTML='Le rapport a \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9 mais l\u2019envoi a \u00e9chou\u00e9. Contactez-nous.';
+                st.className='hsub thankyou-err';
+              }
             }
-          }
-        })
-        .catch(function(){
-          if(st){st.innerHTML='Erreur de connexion lors de l\u2019envoi.';st.className='hsub thankyou-err';}
+          })
+          .catch(function(){
+            if(st){st.innerHTML='Erreur de connexion lors de l\u2019envoi.';st.className='hsub thankyou-err';}
+          });
         });
       });
-        });
-      },2000);
-    };
+    },3000);
   })
   .catch(function(){
     if(st){st.innerHTML='Erreur de connexion. Veuillez r\u00e9essayer.';st.className='hsub thankyou-err';}
