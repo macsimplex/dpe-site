@@ -8,17 +8,19 @@
 <link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="stylesheet" href="style.min.css?v=4">
 <style>
-.rapport-loading{display:flex;align-items:center;justify-content:center;min-height:80vh;flex-direction:column;gap:16px;padding-top:48px}
+.rapport-screen{height:calc(100vh - 48px);margin-top:48px;display:grid;grid-template-rows:1fr auto auto;background:var(--bg)}
+.rapport-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.rapport-wrap{max-width:794px;margin:0 auto}
+.rapport-actions{text-align:center;padding:10px 24px;border-top:1px solid var(--brd)}
+.rapport-actions button{font-family:Arial,sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:10px 24px;background:transparent;border:1px solid var(--g);color:var(--g);cursor:pointer}
+.rapport-actions button:hover{background:var(--g);color:var(--bg)}
+.rapport-loading{display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:16px}
 .rapport-loading p{font-family:Arial,sans-serif;font-size:13px;color:#7a6a50}
-.rapport-error{display:flex;align-items:center;justify-content:center;min-height:80vh;flex-direction:column;gap:16px;text-align:center;padding:24px;padding-top:48px}
-.rapport-error h1{font-size:24px;font-weight:normal;color:#c9a052}
+.rapport-error{display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:16px;text-align:center;padding:24px}
+.rapport-error h1{font-size:24px;font-weight:normal;color:var(--g)}
 .rapport-error p{font-family:Arial,sans-serif;font-size:14px;color:#7a6a50;line-height:1.7;max-width:400px}
-.rapport-error a{color:#c9a052;font-family:Arial,sans-serif;font-size:13px}
-.rapport-wrap{max-width:794px;margin:0 auto;padding-top:48px}
-.rapport-actions{text-align:center;padding:20px 24px;border-top:1px solid #2a2218}
-.rapport-actions button{font-family:Arial,sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:10px 24px;background:transparent;border:1px solid #c9a052;color:#c9a052;cursor:pointer}
-.rapport-actions button:hover{background:#c9a052;color:#090805}
-@media print{.site-nav,.rapport-actions,.site-footer{display:none}.rapport-wrap{padding-top:0}}
+.rapport-error a{color:var(--g);font-family:Arial,sans-serif;font-size:13px}
+@media print{.site-nav,.rapport-actions,.site-footer{display:none}.rapport-screen{height:auto;margin-top:0;display:block}.rapport-scroll{overflow:visible}}
 </style>
 </head>
 <body>
@@ -26,36 +28,36 @@
 <nav class="site-nav">
   <div class="nav-logo"><a href="index.html"><img src="assets/mark.svg" alt="DPE" class="nav-mark" width="22" height="22">DPE</a></div>
   <button class="nav-burger" aria-label="Menu">&#9776;</button>
-  <div class="nav-links">
+  <div class="nav-links" id="nav-links">
     <a href="index.html">Accueil</a>
     <a href="auto-evaluation.html">Auto-évaluation</a>
-    <a href="#" class="active">Rapport</a>
+    <a href="#" class="active" id="nav-rapport">Rapport</a>
     <a href="facilitateurs.html">Facilitateurs</a>
   </div>
 </nav>
 
-<div class="rapport-loading" id="loading">
-  <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
-  <p>Chargement de votre rapport...</p>
+<div class="rapport-screen">
+  <div class="rapport-scroll" id="scroll-area">
+    <div class="rapport-loading" id="loading">
+      <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
+      <p>Chargement de votre rapport...</p>
+    </div>
+    <div class="rapport-error" id="error" style="display:none">
+      <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
+      <h1>Rapport introuvable</h1>
+      <p>Ce lien n'est pas valide ou a expiré. Si vous avez réalisé une évaluation, vérifiez le lien dans votre email.</p>
+      <a href="auto-evaluation.html">Faire une évaluation →</a>
+    </div>
+    <div class="rapport-wrap" id="rapport" style="display:none"></div>
+  </div>
+  <div class="rapport-actions" id="actions" style="display:none">
+    <button onclick="window.print()">Enregistrer en PDF ↓</button>
+  </div>
+  <footer class="site-footer">
+    <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo" width="140" height="44">
+    <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="engagements.html">Engagements</a></p>
+  </footer>
 </div>
-
-<div class="rapport-error" id="error" style="display:none">
-  <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
-  <h1>Rapport introuvable</h1>
-  <p>Ce lien n'est pas valide ou a expiré. Si vous avez réalisé une évaluation, vérifiez le lien dans votre email.</p>
-  <a href="auto-evaluation.html">Faire une évaluation →</a>
-</div>
-
-<div class="rapport-wrap" id="rapport" style="display:none"></div>
-
-<div class="rapport-actions" id="actions" style="display:none">
-  <button onclick="window.print()">Enregistrer en PDF ↓</button>
-</div>
-
-<footer class="site-footer" id="footer" style="display:none">
-  <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo" width="140" height="44">
-  <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="engagements.html">Engagements</a></p>
-</footer>
 
 <script>
 (function(){
@@ -67,9 +69,21 @@
     links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
   }
 
+  /* Token + propagation aux liens de la nav */
   var params=new URLSearchParams(window.location.search);
   var token=params.get('t');
   if(!token){showError();return;}
+
+  /* Ajouter ?t=token à tous les liens internes de la nav */
+  document.querySelectorAll('.nav-links a').forEach(function(a){
+    var href=a.getAttribute('href');
+    if(href&&href.indexOf('#')!==0&&href.indexOf('http')!==0){
+      a.href=href+(href.indexOf('?')!==-1?'&':'?')+'t='+token;
+    }
+  });
+  /* Le lien Rapport pointe vers la page actuelle */
+  var navRapport=document.getElementById('nav-rapport');
+  if(navRapport)navRapport.href='rapport.html?t='+token;
 
   fetch('api/rapport-data.php?t='+encodeURIComponent(token))
     .then(function(r){return r.json();})
@@ -80,7 +94,6 @@
       wrap.innerHTML=res.html;
       wrap.style.display='block';
       document.getElementById('actions').style.display='block';
-      document.getElementById('footer').style.display='block';
       document.title='Rapport DPE \u00b7 '+res.sgp+'/25';
     })
     .catch(function(){showError();});

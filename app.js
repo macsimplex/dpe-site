@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var params=new URLSearchParams(window.location.search);
   var token=params.get('t');
   if(token&&links){
+    /* Ajouter l'onglet Rapport */
     var facLink=links.querySelector('a[href*="facilitateurs"]');
     if(facLink){
       var rapportLink=document.createElement('a');
@@ -20,6 +21,13 @@ document.addEventListener('DOMContentLoaded',function(){
       rapportLink.textContent='Rapport';
       links.insertBefore(rapportLink,facLink);
     }
+    /* Propager le token dans tous les liens de la nav */
+    links.querySelectorAll('a').forEach(function(a){
+      var href=a.getAttribute('href');
+      if(href&&href.indexOf('?t=')===-1&&href.indexOf('&t=')===-1&&href.indexOf('#')!==0){
+        a.href=href+(href.indexOf('?')!==-1?'&':'?')+'t='+token;
+      }
+    });
   }
 
   /* ── Reveal au scroll ── */
