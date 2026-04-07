@@ -290,7 +290,7 @@ class DpeCalculator
             $data['CADRE_' . $i . '_PCT']       = $pctC;
             $data['CADRE_' . $i . '_COLOR']     = self::CADRE_COLORS[$i];
             $data['CADRE_' . $i . '_BADGE']     = $col;
-            $data['CADRE_' . $i . '_BAR_WIDTH'] = round(($s / 15) * 100);
+            $data['CADRE_' . $i . '_BAR_WIDTH'] = round(($s / 15) * 100) . '%';
             $data['CADRE_' . $i . '_DESC']      = self::CADRE_DESCS[$i];
             $data['CADRE_' . $i . '_INTERP']    = $pctC < 50 ? self::CADRE_LOW[$i] : self::CADRE_HIGH[$i];
         }
