@@ -65,11 +65,11 @@ $htmlBody = '
 
 $brevoPayload = [
     'sender' => [
-        'name'  => $nom,
-        'email' => $email
+        'name'  => SENDER_NAME,
+        'email' => SENDER_EMAIL
     ],
     'to' => [
-        ['email' => 'maxime@simplex.coach', 'name' => 'DPE']
+        ['email' => 'maxime@simplex.coach', 'name' => 'Maxime Bui']
     ],
     'replyTo' => [
         'email' => $email,
