@@ -125,32 +125,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .thankyou-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
 .hcta-outline{background:transparent;border:1px solid var(--g);color:var(--g)}
 .hcta-outline:hover{background:var(--g);color:var(--bg)}
-/* ── Écran rapport ── */
-.rpt-screen{
-  display:none;
-  height:calc(100vh - 88px);
-  margin-top:88px;
-  background:var(--bg);
-}
-.rpt-screen.visible{
-  display:grid;
-  grid-template-rows:auto 1fr auto;
-}
-.rpt-title{
-  font-family:Arial,sans-serif;
-  font-size:11px;
-  letter-spacing:.3em;
-  text-transform:uppercase;
-  color:var(--g);
-  text-align:center;
-  padding:14px 0 8px;
-}
-.rpt-iframe{
-  border:none;
-  width:100%;
-  height:100%;
-  display:block;
-}
 .rcov{background:var(--bg);color:#ede8e0;padding:50px 18px 38px;position:relative;overflow:hidden}
 .rcov::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,160,82,.09) 0%,transparent 60%);pointer-events:none}
 .rcin{max-width:700px;margin:0 auto;position:relative}

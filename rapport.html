@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Votre rapport · DPE</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#090805;color:#ede8e0;font-family:Georgia,serif;min-height:100vh}
+.loading{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px}
+.loading p{font-family:Arial,sans-serif;font-size:13px;color:#7a6a50}
+.error{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;text-align:center;padding:24px}
+.error h1{font-size:24px;font-weight:normal;color:#c9a052}
+.error p{font-family:Arial,sans-serif;font-size:14px;color:#7a6a50;line-height:1.7;max-width:400px}
+.error a{color:#c9a052;font-family:Arial,sans-serif;font-size:13px}
+.rapport-wrap{max-width:794px;margin:0 auto}
+.rapport-bar{position:fixed;bottom:0;left:0;right:0;background:#090805;border-top:1px solid #2a2218;padding:10px 24px;display:flex;align-items:center;justify-content:center;gap:20px;z-index:100}
+.rapport-bar a{font-family:Arial,sans-serif;font-size:11px;color:#7a6a50;text-decoration:none}
+.rapport-bar a:hover{color:#c9a052}
+.rapport-bar button{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 20px;background:transparent;border:1px solid #c9a052;color:#c9a052;cursor:pointer}
+.rapport-bar button:hover{background:#c9a052;color:#090805}
+@media print{.rapport-bar{display:none}}
+</style>
+</head>
+<body>
+
+<div class="loading" id="loading">
+  <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
+  <p>Chargement de votre rapport...</p>
+</div>
+
+<div class="error" id="error" style="display:none">
+  <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
+  <h1>Rapport introuvable</h1>
+  <p>Ce lien n'est pas valide ou a expiré. Si vous avez réalisé une évaluation, vérifiez le lien dans votre email.</p>
+  <a href="auto-evaluation.html">Faire une évaluation →</a>
+</div>
+
+<div class="rapport-wrap" id="rapport" style="display:none"></div>
+
+<div class="rapport-bar" id="bar" style="display:none">
+  <a href="index.html">Accueil</a>
+  <a href="facilitateurs.html">Trouver un facilitateur</a>
+  <button onclick="window.print()">Enregistrer en PDF ↓</button>
+</div>
+
+<script>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var token=params.get('t');
+  if(!token){showError();return;}
+
+  fetch('api/rapport-data.php?t='+encodeURIComponent(token))
+    .then(function(r){return r.json();})
+    .then(function(res){
+      if(!res.success||!res.html){showError();return;}
+      document.getElementById('loading').style.display='none';
+      var wrap=document.getElementById('rapport');
+      wrap.innerHTML=res.html;
+      wrap.style.display='block';
+      document.getElementById('bar').style.display='flex';
+      document.title='Rapport DPE · '+res.sgp+'/25';
+    })
+    .catch(function(){showError();});
+
+  function showError(){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('error').style.display='flex';
+  }
+})();
+</script>
+</body>
+</html>

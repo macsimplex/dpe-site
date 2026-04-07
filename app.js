@@ -263,113 +263,28 @@ function buildReport(){
   if(!email)return;
 
   var st=document.getElementById('thankyou-status');
-  if(st)st.textContent='Votre rapport est en cours de pr\u00e9paration\u2026';
+  if(st)st.textContent='Envoi en cours\u2026';
 
-  fetch('api/report.php',{
+  fetch('api/submit.php',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({email:email,role:ST.role,secteur:ST.sec,effectif:ST.hc,scores:csc})
   })
   .then(function(r){return r.json();})
   .then(function(res){
-    if(!res.success||!res.html){
-      if(st){st.innerHTML='Erreur lors de la pr\u00e9paration du rapport.';st.className='hsub thankyou-err';}
-      return;
-    }
-
-    /* Afficher le rapport dans l'iframe */
-    var reportSection=document.getElementById('report-section');
-    var frame=document.getElementById('report-frame');
-    var btnVoir=document.getElementById('btn-voir-rapport');
-
-    if(frame){
-      var fdoc=frame.contentDocument||frame.contentWindow.document;
-      fdoc.open();
-      fdoc.write(res.html);
-      fdoc.close();
-    }
-    if(reportSection)reportSection.classList.add('visible');
-    if(btnVoir)btnVoir.style.display='inline-block';
     if(st){
-      st.innerHTML='\u2713 Votre rapport est pr\u00eat ci-dessous.';
-      st.className='hsub thankyou-ok';
+      if(res.success){
+        st.innerHTML='Un email vient d\u2019\u00eatre envoy\u00e9 \u00e0 <strong>'+email+'</strong> avec un lien vers votre rapport.';
+        st.className='hsub thankyou-ok';
+      }else{
+        st.innerHTML='L\u2019envoi a \u00e9chou\u00e9. V\u00e9rifiez votre adresse email.';
+        st.className='hsub thankyou-err';
+      }
     }
-
-    /* G\u00e9n\u00e9rer le PDF une fois les fonts charg\u00e9es dans l'iframe */
-    if(st)st.innerHTML='\u2713 Votre rapport est pr\u00eat ci-dessous. Envoi par email en cours\u2026';
-    var fwin=frame.contentWindow;
-    var fontsReady=fwin&&fwin.document&&fwin.document.fonts?fwin.document.fonts.ready:Promise.resolve();
-    fontsReady.then(function(){
-      generatePdfFromIframe(frame,function(pdfB64){
-        if(pdfB64){
-          fetch('api/send.php',{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({email:email,pdf:pdfB64,sgp:res.sgp})
-          })
-          .then(function(r){return r.json();})
-          .then(function(sendRes){
-            if(st){
-              if(sendRes.success){
-                st.innerHTML='\u2713 Votre rapport a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+email+'</strong>. Consultez-le ci-dessous ou dans votre bo\u00eete mail.';
-              }else{
-                st.innerHTML='\u2713 Votre rapport est pr\u00eat ci-dessous. L\u2019envoi par email a \u00e9chou\u00e9.';
-                st.className='hsub thankyou-err';
-              }
-            }
-          })
-          .catch(function(){});
-        }else{
-          /* Fallback : envoyer via MPDF c\u00f4t\u00e9 serveur */
-          fetch('api/submit.php',{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({email:email,role:ST.role,secteur:ST.sec,effectif:ST.hc,scores:csc})
-          })
-          .then(function(r){return r.json();})
-          .then(function(sendRes){
-            if(st&&sendRes.success){
-              st.innerHTML='\u2713 Votre rapport a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>'+email+'</strong>. Consultez-le ci-dessous ou dans votre bo\u00eete mail.';
-            }
-          })
-          .catch(function(){});
-        }
-      });
-    });
   })
   .catch(function(){
     if(st){st.innerHTML='Erreur de connexion. Veuillez r\u00e9essayer.';st.className='hsub thankyou-err';}
   });
-}
-
-/* ── Générer PDF depuis l'intérieur de l'iframe ── */
-function generatePdfFromIframe(frame,cb){
-  try{
-    var fwin=frame.contentWindow;
-    var fdoc=fwin.document;
-    /* Injecter html2pdf.js dans l'iframe */
-    var script=fdoc.createElement('script');
-    script.src=location.origin+'/libs/html2pdf.min.js';
-    script.onload=function(){
-      try{
-        var pages=fdoc.querySelectorAll('.page');
-        var target=pages.length?fdoc.body:fdoc.body;
-        fwin.html2pdf().set({
-          margin:0,
-          filename:'DPE-Rapport.pdf',
-          image:{type:'jpeg',quality:0.85},
-          html2canvas:{scale:1.5,useCORS:true,logging:false,width:794},
-          jsPDF:{unit:'px',format:[794,1123],hotfixes:['px_scaling']},
-          pagebreak:{mode:['css']}
-        }).from(fdoc.body).toPdf().get('pdf').then(function(pdf){
-          var b64=pdf.output('datauristring').split(',')[1];
-          cb(b64);
-        }).catch(function(){cb(null);});
-      }catch(e){cb(null);}
-    };
-    script.onerror=function(){cb(null);};
-    fdoc.head.appendChild(script);
-  }catch(e){cb(null);}
 }
 
 /* ── Chargement différé de librairies ── */
