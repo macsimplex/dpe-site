@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded',function(){
     links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
   }
 
+  /* ── Lien Rapport dans la nav si token dans l'URL ── */
+  var params=new URLSearchParams(window.location.search);
+  var token=params.get('t');
+  if(token&&links){
+    var facLink=links.querySelector('a[href*="facilitateurs"]');
+    if(facLink){
+      var rapportLink=document.createElement('a');
+      rapportLink.href='rapport.html?t='+token;
+      rapportLink.textContent='Rapport';
+      links.insertBefore(rapportLink,facLink);
+    }
+  }
+
   /* ── Reveal au scroll ── */
   var reveals=document.querySelectorAll('.reveal');
   if(reveals.length){

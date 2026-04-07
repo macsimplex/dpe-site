@@ -6,32 +6,40 @@
 <title>Votre rapport · DPE</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="stylesheet" href="style.min.css?v=4">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#090805;color:#ede8e0;font-family:Georgia,serif;min-height:100vh}
-.loading{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px}
-.loading p{font-family:Arial,sans-serif;font-size:13px;color:#7a6a50}
-.error{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;text-align:center;padding:24px}
-.error h1{font-size:24px;font-weight:normal;color:#c9a052}
-.error p{font-family:Arial,sans-serif;font-size:14px;color:#7a6a50;line-height:1.7;max-width:400px}
-.error a{color:#c9a052;font-family:Arial,sans-serif;font-size:13px}
-.rapport-wrap{max-width:794px;margin:0 auto}
-.rapport-bar{position:fixed;bottom:0;left:0;right:0;background:#090805;border-top:1px solid #2a2218;padding:10px 24px;display:flex;align-items:center;justify-content:center;gap:20px;z-index:100}
-.rapport-bar a{font-family:Arial,sans-serif;font-size:11px;color:#7a6a50;text-decoration:none}
-.rapport-bar a:hover{color:#c9a052}
-.rapport-bar button{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 20px;background:transparent;border:1px solid #c9a052;color:#c9a052;cursor:pointer}
-.rapport-bar button:hover{background:#c9a052;color:#090805}
-@media print{.rapport-bar{display:none}}
+.rapport-loading{display:flex;align-items:center;justify-content:center;min-height:80vh;flex-direction:column;gap:16px;padding-top:48px}
+.rapport-loading p{font-family:Arial,sans-serif;font-size:13px;color:#7a6a50}
+.rapport-error{display:flex;align-items:center;justify-content:center;min-height:80vh;flex-direction:column;gap:16px;text-align:center;padding:24px;padding-top:48px}
+.rapport-error h1{font-size:24px;font-weight:normal;color:#c9a052}
+.rapport-error p{font-family:Arial,sans-serif;font-size:14px;color:#7a6a50;line-height:1.7;max-width:400px}
+.rapport-error a{color:#c9a052;font-family:Arial,sans-serif;font-size:13px}
+.rapport-wrap{max-width:794px;margin:0 auto;padding-top:48px}
+.rapport-actions{text-align:center;padding:20px 24px;border-top:1px solid #2a2218}
+.rapport-actions button{font-family:Arial,sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:10px 24px;background:transparent;border:1px solid #c9a052;color:#c9a052;cursor:pointer}
+.rapport-actions button:hover{background:#c9a052;color:#090805}
+@media print{.site-nav,.rapport-actions,.site-footer{display:none}.rapport-wrap{padding-top:0}}
 </style>
 </head>
 <body>
 
-<div class="loading" id="loading">
+<nav class="site-nav">
+  <div class="nav-logo"><a href="index.html"><img src="assets/mark.svg" alt="DPE" class="nav-mark" width="22" height="22">DPE</a></div>
+  <button class="nav-burger" aria-label="Menu">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="auto-evaluation.html">Auto-évaluation</a>
+    <a href="#" class="active">Rapport</a>
+    <a href="facilitateurs.html">Facilitateurs</a>
+  </div>
+</nav>
+
+<div class="rapport-loading" id="loading">
   <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
   <p>Chargement de votre rapport...</p>
 </div>
 
-<div class="error" id="error" style="display:none">
+<div class="rapport-error" id="error" style="display:none">
   <img src="assets/mark.svg" alt="" width="48" height="48" style="opacity:.5">
   <h1>Rapport introuvable</h1>
   <p>Ce lien n'est pas valide ou a expiré. Si vous avez réalisé une évaluation, vérifiez le lien dans votre email.</p>
@@ -40,14 +48,25 @@ body{background:#090805;color:#ede8e0;font-family:Georgia,serif;min-height:100vh
 
 <div class="rapport-wrap" id="rapport" style="display:none"></div>
 
-<div class="rapport-bar" id="bar" style="display:none">
-  <a href="index.html">Accueil</a>
-  <a href="facilitateurs.html">Trouver un facilitateur</a>
+<div class="rapport-actions" id="actions" style="display:none">
   <button onclick="window.print()">Enregistrer en PDF ↓</button>
 </div>
 
+<footer class="site-footer" id="footer" style="display:none">
+  <img src="assets/logo-dark.svg" alt="DPE" class="footer-logo" width="140" height="44">
+  <p><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="engagements.html">Engagements</a></p>
+</footer>
+
 <script>
 (function(){
+  /* Nav mobile burger */
+  var burger=document.querySelector('.nav-burger');
+  var links=document.querySelector('.nav-links');
+  if(burger&&links){
+    burger.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+  }
+
   var params=new URLSearchParams(window.location.search);
   var token=params.get('t');
   if(!token){showError();return;}
@@ -60,8 +79,9 @@ body{background:#090805;color:#ede8e0;font-family:Georgia,serif;min-height:100vh
       var wrap=document.getElementById('rapport');
       wrap.innerHTML=res.html;
       wrap.style.display='block';
-      document.getElementById('bar').style.display='flex';
-      document.title='Rapport DPE · '+res.sgp+'/25';
+      document.getElementById('actions').style.display='block';
+      document.getElementById('footer').style.display='block';
+      document.title='Rapport DPE \u00b7 '+res.sgp+'/25';
     })
     .catch(function(){showError();});
 
