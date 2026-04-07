@@ -346,3 +346,35 @@ details.ref-dark .ref-dpe{color:var(--g)}
 .footer-logo{width:140px;margin-bottom:12px;opacity:.6}
 .site-footer p{font-family:Arial,sans-serif;font-size:12px;color:var(--dim);line-height:1.8}
 .site-footer a{color:var(--mu)}
+
+/* ── Responsive mobile ── */
+@media(max-width:540px){
+  .hero{padding:40px 18px}
+  .section{padding:40px 18px}
+  .cta-footer-section .cta-section{padding:40px 18px}
+  .krow{grid-template-columns:1fr}
+  .ccgrid{grid-template-columns:1fr}
+  .wkgrid{grid-template-columns:1fr}
+  .bkgrid{grid-template-columns:1fr}
+  .roig{grid-template-columns:1fr}
+  .nw{max-width:100%}
+  .ni{width:100%}
+  .fac-search{width:100%}
+  .fac-grid{grid-template-columns:1fr}
+  .fac-parcours{grid-template-columns:1fr}
+  .fac-form-row{grid-template-columns:1fr}
+  .erow{flex-direction:column}
+  .einp{border-right:1px solid var(--dim)}
+  .slrow{flex-wrap:wrap}
+  .sll{width:auto;flex:1}
+  .btns{flex-wrap:wrap;gap:8px;justify-content:center}
+  .pills{gap:5px}
+  .pill{font-size:13px;padding:6px 10px}
+  .modal-box{margin:16px;padding:24px}
+  .modal-buttons{flex-direction:column}
+  .audit-table{font-size:11px}
+  .audit-table th,.audit-table td{padding:6px 8px}
+  .thankyou-inner{padding:24px 18px}
+  .thankyou-buttons{flex-direction:column;align-items:center}
+  .legal{padding:40px 18px}
+}

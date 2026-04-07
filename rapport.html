@@ -10,7 +10,7 @@
 <style>
 .rapport-screen{height:calc(100vh - 48px);margin-top:48px;display:grid;grid-template-rows:1fr auto auto;background:#f5f0e6;overflow:hidden}
 .rapport-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
-.rapport-wrap{max-width:794px;margin:0 auto}
+.rapport-wrap{max-width:794px;margin:0 auto;padding:0 16px}
 .rapport-actions{text-align:center;padding:10px 24px;border-top:1px solid var(--brd)}
 .rapport-actions button{font-family:Arial,sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:10px 24px;background:transparent;border:1px solid var(--g);color:var(--g);cursor:pointer}
 .rapport-actions button:hover{background:var(--g);color:var(--bg)}
@@ -20,6 +20,10 @@
 .rapport-error h1{font-size:24px;font-weight:normal;color:var(--g)}
 .rapport-error p{font-family:Arial,sans-serif;font-size:14px;color:#7a6a50;line-height:1.7;max-width:400px}
 .rapport-error a{color:var(--g);font-family:Arial,sans-serif;font-size:13px}
+@media(max-width:540px){
+  .rapport-wrap{padding:0 8px}
+  .rapport-actions button{font-size:12px;padding:8px 16px}
+}
 @media print{.site-nav,.rapport-actions,.site-footer{display:none}.rapport-screen{height:auto;margin-top:0;display:block}.rapport-scroll{overflow:visible}}
 </style>
 </head>
